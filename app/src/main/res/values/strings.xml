@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Leaf</string>
+
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="about_activity_title">Leaf</string>
+    <string name="about_activity_overview">Version alpha1.0</string>
+    <string name="about_activity_contributors">221600111\n221600136\n221600137\n221600138</string>
+    <string name="g_confirm">确定</string>
+    <string name="g_back">返回</string>
+    <string name="add">+</string>
+    <string name="action_settings">设置</string>
+</resources>

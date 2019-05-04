@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/leaf_green</color>
+    <color name="colorPrimaryDark">@color/leaf_green</color>
+    <color name="colorAccent">@color/leaf_deepBlue</color>
+
+    <color name="black_overlay">#66000000</color>
+
+    <color name="transparent">#0fff</color>
+
+    <color name="white">#fff</color>
+    <color name="ll_gray">#eee</color>
+    <color name="gray">#ccc</color>
+
+    <color name="leaf_deepBlue">#69e</color>
+    <color name="leaf_blue">#5af</color>
+    <color name="leaf_blueGreen">#7cd</color>
+    <color name="leaf_green">#1b3</color>
+    <color name="leaf_springGreen">#5c9</color>
+
+</resources>
