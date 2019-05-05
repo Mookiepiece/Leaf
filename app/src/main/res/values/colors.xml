@@ -10,7 +10,9 @@
 
     <color name="white">#fff</color>
     <color name="ll_gray">#eee</color>
-    <color name="gray">#ccc</color>
+    <color name="l_gray">#ccc</color>
+    <color name="gray">#999</color>
+    <color name="dark_gray">#333</color>
 
     <color name="leaf_deepBlue">#69e</color>
     <color name="leaf_blue">#5af</color>

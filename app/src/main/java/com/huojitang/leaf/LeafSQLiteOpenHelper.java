@@ -31,6 +31,7 @@ public class LeafSQLiteOpenHelper extends SQLiteOpenHelper {
         //创建‘测试’标签
         db.execSQL("INSERT INTO Tag VALUES('mytag1',1,60000,'860',0,'commtentfsdf')");
         db.execSQL("INSERT INTO Tag VALUES('mytag2',2,40000,'068',0,'commtentf565sdf')");
+        db.execSQL("INSERT INTO Tag VALUES('标签的名字',0,40000,'a0a',0,'标签的描述描述描述描述描述描述')");
     }
 
     @Override
@@ -65,6 +66,43 @@ class TagDAO{
         return getTags("SELECT * FROM Tag WHERE tagMode != -1 ORDER BY tagIndex ");
     }
 
+    /**
+     * 从编辑页传入数组，根据在数组的位置更新index,包括fromPosition和toPosition
+     * @param arr
+     */
+    public void updateTagIndexes(List<TagEntity> arr,int fromPosition,int toPosition){
+        for(int i=fromPosition;i<=toPosition;i++){
+            db.execSQL("UPDATE Tag SET tagIndex=? WHERE tagName=?",new String[]{String.valueOf(i),arr.get(i).getTagName()});
+        }
+    }
+
+    /**
+     * 不判断参数直接插入tag
+     * @param tagName
+     * @param tagLimit
+     * @param color
+     * @param comment
+     * @return
+     */
+    public boolean insertTag(String tagName, String tagLimit, String color, String comment){
+        int tagIndex=this.getCountWithoutDefault()+1;
+        db.execSQL("INSERT INTO Tag VALUES (?,?,?,?,1,?)",new String[]{tagName,String.valueOf(tagIndex),String.valueOf(tagIndex),color,comment});
+        return true;
+    }
+
+    private void execTransaction(final String[] sql){
+        if(db==null) return;
+        db.beginTransaction();
+        try{
+            for(String s:sql)
+                db.execSQL(s,null);
+            db.setTransactionSuccessful();
+        }
+        finally{
+            db.endTransaction();
+        }
+    }
+
     private ArrayList<TagEntity> getTags(String sql){
         if(db==null) return null;
         ArrayList<TagEntity> list=new ArrayList<>();
@@ -85,6 +123,11 @@ class TagDAO{
         return TagEntityFromCursor(c);
     }
 
+    public int getCountWithoutDefault(){
+        Cursor c = db.rawQuery("SELECT Count(tagName) FROM Tag WHERE tagMode != -1 ORDER BY tagIndex",null);
+        c.moveToFirst();
+        return c.getInt(0);
+    }
 
     private TagEntity TagEntityFromCursor(Cursor c){
         String tagName = c.getString(c.getColumnIndex("tagName"));

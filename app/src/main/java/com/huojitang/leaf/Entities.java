@@ -26,6 +26,10 @@ class TagEntity{
         this.comment = comment;
     }
 
+    public TagEntity() {
+
+    }
+
     public String getTagName() {
         return tagName;
     }

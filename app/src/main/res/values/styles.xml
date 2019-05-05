@@ -46,4 +46,11 @@
         <item name="android:textSize">24sp</item>
     </style>
 
+    <style name="btn_dialog_option">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:background">@drawable/leaf_btn_dialog_option</item>
+        <item name="android:letterSpacing">1</item>
+    </style>
 </resources>

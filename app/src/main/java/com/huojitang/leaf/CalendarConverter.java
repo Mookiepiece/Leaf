@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-class CalendarManager {
+class CalendarConverter {
     private static final SimpleDateFormat sdf7 = new SimpleDateFormat("yyyy-MM");
     private static final SimpleDateFormat sdf10 = new SimpleDateFormat("yyyy-MM-dd");
 

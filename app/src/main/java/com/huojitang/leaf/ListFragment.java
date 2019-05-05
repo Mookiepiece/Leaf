@@ -1,8 +1,5 @@
 package com.huojitang.leaf;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,7 +25,7 @@ public class ListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedTnstanceState){
-        View view = inflater.inflate(R.layout.fragment1,container,false);
+        View view = inflater.inflate(R.layout.fragment_list,container,false);
 
         list();
         listView = (ListView) view.findViewById(R.id.LV_1);

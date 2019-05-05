@@ -26,7 +26,7 @@ public class WishFragment<FragmentAdapter> extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedTnstanceState){
-        View view = inflater.inflate(R.layout.fragment2,container,false);
+        View view = inflater.inflate(R.layout.fragment_wish,container,false);
 
         listView = (ListView) view.findViewById(R.id.LV_2);
 
