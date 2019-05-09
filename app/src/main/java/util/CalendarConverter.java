@@ -1,4 +1,4 @@
-package com.huojitang.leaf;
+package util;
 
 import android.graphics.Color;
 
@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-class CalendarConverter {
+public class CalendarTransUtil {
     private static final SimpleDateFormat sdf7 = new SimpleDateFormat("yyyy-MM");
     private static final SimpleDateFormat sdf10 = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -17,7 +17,7 @@ class CalendarConverter {
      * 例：“2022-02”，“2022-02-22”
      * @param str yyyy-MM-dd/yyyy-MM-dd
      */
-    static Calendar ToCalendar(String str){
+    public static Calendar ToCalendar(String str){
         SimpleDateFormat sdf;
 
         //先转Date类型再转Calendar类型
@@ -38,14 +38,14 @@ class CalendarConverter {
     /**
      * 输入日期转年月yyyy-MM
      */
-    static String StrYearMonth(Calendar calendar){
+    public static String StrYearMonth(Calendar calendar){
         return sdf7.format(calendar.getTime());
     }
 
     /**
      * 输入日期转年月日yyyy-MM-DD
      */
-    static String StrYearMonthDay(Calendar calendar){
+    public static String StrYearMonthDay(Calendar calendar){
         return sdf10.format(calendar.getTime());
     }
 }

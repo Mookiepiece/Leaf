@@ -1,0 +1,4 @@
+package DAO;
+
+class WishDAO {
+}
