@@ -11,6 +11,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+/**
+ * 添加标签对话框
+ * 传入一个TagEntity对象并对其进行修改
+ */
 public class AddTagDialog extends Dialog {
 
     private Button cancel;

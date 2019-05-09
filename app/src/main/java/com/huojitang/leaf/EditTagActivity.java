@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 编辑标签界面
+ */
 public class EditTagActivity extends AppCompatActivity {
     private TagDAO tagDAO;
     List<TagEntity> tagList=new ArrayList<>();

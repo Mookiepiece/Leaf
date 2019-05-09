@@ -76,7 +76,7 @@ public class ListFragment extends Fragment {
          */
         public View getView(final int position, View convertView, ViewGroup parent) {
             View view = getLayoutInflater().inflate(R.layout.listview1_item,null);
-            TextView textView1 = (TextView) view.findViewById(R.id.tagtitle);
+            TextView textView1 = (TextView) view.findViewById(R.id.tag_title);
 
 
             // 为textview1和textview2赋值

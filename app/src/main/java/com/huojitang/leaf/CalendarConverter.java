@@ -20,6 +20,7 @@ class CalendarConverter {
     static Calendar ToCalendar(String str){
         SimpleDateFormat sdf;
 
+        //先转Date类型再转Calendar类型
         Date date = null;
         try {
             if(str.length()==7)
@@ -34,9 +35,16 @@ class CalendarConverter {
         return calendar;
     }
 
+    /**
+     * 输入日期转年月yyyy-MM
+     */
     static String StrYearMonth(Calendar calendar){
         return sdf7.format(calendar.getTime());
     }
+
+    /**
+     * 输入日期转年月日yyyy-MM-DD
+     */
     static String StrYearMonthDay(Calendar calendar){
         return sdf10.format(calendar.getTime());
     }

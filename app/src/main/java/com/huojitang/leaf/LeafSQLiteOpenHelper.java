@@ -12,8 +12,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-
+/*
+ * MK_TIP
+ * [SQLiteOpenHelper]:是用于创建和返回数据库的类，此处实现它
+ */
 public class LeafSQLiteOpenHelper extends SQLiteOpenHelper {
+
     @Override
     public void onCreate(SQLiteDatabase db) {
 
@@ -47,6 +51,10 @@ public class LeafSQLiteOpenHelper extends SQLiteOpenHelper {
     }
 }
 
+/*
+ * MK_TIP
+ * DAO:【数据库】在后端编程中数据访问对象（DAO，Data Access Object）是用于执行SQL语句的一种类，通常一个表对应一个DAO
+ */
 class TagDAO{
     SQLiteDatabase db;
 
