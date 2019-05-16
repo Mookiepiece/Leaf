@@ -1,4 +1,4 @@
-package DAO;
+package com.huojitang.DAO;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,7 +9,7 @@ import com.huojitang.leaf.LeafSQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import entities.TagEntity;
+import com.huojitang.entities.TagEntity;
 
 /*
  * MK_TIP

@@ -17,9 +17,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import DAO.TagDAO;
-import entities.TagEntity;
-import util.ColorConverter;
+import com.huojitang.DAO.TagDAO;
+import com.huojitang.entities.TagEntity;
+import com.huojitang.util.ColorConverter;
 
 /**
  * 编辑标签界面

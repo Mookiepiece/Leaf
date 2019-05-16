@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import entities.TagEntity;
+import com.huojitang.entities.TagEntity;
 
 
 /**

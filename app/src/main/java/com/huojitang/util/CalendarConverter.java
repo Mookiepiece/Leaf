@@ -1,6 +1,4 @@
-package util;
-
-import android.graphics.Color;
+package com.huojitang.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

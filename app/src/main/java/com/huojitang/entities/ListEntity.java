@@ -1,6 +1,6 @@
-package entities;
+package com.huojitang.entities;
 
-import util.PriceTransUtil;
+import com.huojitang.util.PriceTransUtil;
 
 public class ListEntity{
     private String month;

@@ -1,7 +1,5 @@
-package entities;
+package com.huojitang.entities;
 
-
-import util.PriceTransUtil;
 
 public class WishEntity{
     private int wishId;

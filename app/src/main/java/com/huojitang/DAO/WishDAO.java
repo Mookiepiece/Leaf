@@ -1,4 +1,4 @@
-package DAO;
+package com.huojitang.DAO;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,7 +8,7 @@ import com.huojitang.leaf.LeafSQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-import entities.WishEntity;
+import com.huojitang.entities.WishEntity;
 
 public class WishDAO{
     SQLiteDatabase db;

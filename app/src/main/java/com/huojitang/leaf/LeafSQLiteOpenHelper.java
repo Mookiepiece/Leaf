@@ -1,17 +1,8 @@
 package com.huojitang.leaf;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import entities.ItemEntity;
-import entities.ListEntity;
-import entities.TagEntity;
-import entities.WishEntity;
 
 /*
  * MK_TIP

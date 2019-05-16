@@ -1,4 +1,4 @@
-package DAO;
+package com.huojitang.DAO;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,8 +8,8 @@ import com.huojitang.leaf.LeafSQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-import entities.ItemEntity;
-import entities.ListEntity;
+import com.huojitang.entities.ItemEntity;
+import com.huojitang.entities.ListEntity;
 
 public class ListDAO{
     SQLiteDatabase db;
