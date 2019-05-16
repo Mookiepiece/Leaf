@@ -7,9 +7,8 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import entities.TagEntity;
 
 
 /**
@@ -18,11 +17,16 @@ import android.widget.Toast;
  */
 public class AddTagDialog extends Dialog {
 
+    //一些从界面里的组件
     private Button cancel;
     private EditText name;
     private EditText limit;
     private Button confirm;
+
+    //TODO MK 是否是合法输入的flag,现在缺乏参数判断
     private boolean properInput=false;
+
+    //TODO MK 构造方法里传入的空的一个实体，但是得想办法给它赋值并返回
     private TagEntity tagEntity;
 
     public AddTagDialog(Context context,TagEntity tagEntity, final ConfirmOnclickListener listener) {
@@ -49,6 +53,8 @@ public class AddTagDialog extends Dialog {
                 AddTagDialog.this.dismiss();
             }
         });
+
+        //TODO MK 未完成的文本框输入判断
         name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -73,6 +79,10 @@ public class AddTagDialog extends Dialog {
 
     }
 
+    /*
+    TODO MK listener接口，为了每次实例化这个对话框都能必须实现onclick功能
+    TODO MK 但是本对话框类的功能很固定，现在在想是否将本对话框弄成EditTagActivity的内部类
+    */
     public interface ConfirmOnclickListener {
         public void ConfirmClick();
     }

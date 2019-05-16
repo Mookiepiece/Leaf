@@ -7,12 +7,16 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <!-- 设置界面单独的主题 -->
     <style name="AppSettingTheme" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="colorPrimaryDark">@color/ll_gray</item>
     </style>
 
+
+    <!--遗弃的全屏类型主题>
     <style name="FullscreenTheme" parent="AppTheme">
         <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
         <item name="android:windowActionBarOverlay">true</item>
@@ -25,10 +29,12 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
-    <style name="tag_edit_dialog" parent="@android:style/Theme.Dialog">
-        <item name="android:background">@color/black_overlay</item>
-    </style>
 
+    <!style name="tag_edit_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:background">@color/black_overlay</item>
+    </style-->
+
+    <!-- 确定按钮（满屏） -->
     <style name="btn_ok_full">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">44dp</item>
@@ -37,6 +43,7 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <!-- 添加按钮 -->
     <style name="btn_add_full">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">40dp</item>
@@ -46,6 +53,8 @@
         <item name="android:textSize">24sp</item>
     </style>
 
+
+    <!-- 自定义对话框底下的确定取消按钮 -->
     <style name="btn_dialog_option">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>

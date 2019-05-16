@@ -40,7 +40,6 @@ public class WishFragment<FragmentAdapter> extends Fragment {
                 builder.setTitle("删除？").setNegativeButton(R.string.g_back,null);
                 builder.setPositiveButton(R.string.g_confirm, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-
                         getActivity().notifyAll();
                     }
                 });
@@ -86,11 +85,11 @@ public class WishFragment<FragmentAdapter> extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = getLayoutInflater().inflate(R.layout.wish_list,null);
 
-            TextView textView1 = (TextView) view.findViewById(R.id.wish_name);
-            TextView textView2 = (TextView) view.findViewById(R.id.wish_price);
-            TextView textView3 = (TextView) view.findViewById(R.id.wish_state);
-            TextView textView4 = (TextView) view.findViewById(R.id.wish_start_time);
-            TextView textView5 = (TextView) view.findViewById(R.id.wish_end_time);
+            TextView textView1 = view.findViewById(R.id.wish_name);
+            TextView textView2 = view.findViewById(R.id.wish_price);
+            TextView textView3 = view.findViewById(R.id.wish_state);
+            TextView textView4 = view.findViewById(R.id.wish_start_time);
+            TextView textView5 = view.findViewById(R.id.wish_end_time);
 
             textView1.setText(names[position]);
             textView2.setText(price[position]);

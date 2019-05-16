@@ -17,6 +17,7 @@ public class OptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option);
 
+        //初始化
         wv=findViewById(R.id.setting_web_view);
         wv.getSettings().setJavaScriptEnabled(true);
         wv.loadUrl("file:////android_asset/localhost/conf.html");
@@ -30,9 +31,11 @@ public class OptionActivity extends AppCompatActivity {
             }
         });
 
-        wv.addJavascriptInterface(new JavaFunc(this),"java");
+        //暴露java方法
+        wv.addJavascriptInterface(new JavaFunc(),"java");
     }
 
+    //返回本窗口则调用JS加载FadeIn动画
     @Override
     protected void onResume() {
         super.onResume();
@@ -40,8 +43,6 @@ public class OptionActivity extends AppCompatActivity {
     }
 
     private class JavaFunc{
-        private Context c;
-        JavaFunc(Context c){ this.c=c; }
 
         @JavascriptInterface
         public void Back(){

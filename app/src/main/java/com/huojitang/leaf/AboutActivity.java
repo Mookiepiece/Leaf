@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+
+
 public class AboutActivity extends AppCompatActivity {
 
     @Override
@@ -20,7 +22,6 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

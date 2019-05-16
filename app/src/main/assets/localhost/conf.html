@@ -6,7 +6,6 @@
 
 <title>设置</title>
 
-
 <!-- TODO REACT CDN -->
 <!--script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script-->
@@ -14,95 +13,46 @@
 <style>
     *{margin:0px;padding:0px;position: relative;box-sizing:border-box}
     html,body{ height: 100%;}
-    #main{overflow: hidden;width: 100%;  height: 100%;}
+    body{background: #eee}
+    #main{overflow: hidden;width: 100%; }
 
-    #main > div{
+    /*基础容器*/
+    .container > div{ 
+        height: 100%; 
+        overflow:hidden;
+        margin-top:-0.25rem;    
+        background: white;
+        border-top: 2px #eee solid;
+    }
+    .container > div:active{
+        background: #bbb;
+        border-top-color:#bbb;
+    }
+
+    .retransDiv{height: 100%; overflow:visible}
+
+    .container{
         width: 100%;
-        height:20%;
-        overflow: hidden;
+        height:3.5rem;
+        overflow: visible;
     }
 
-    #main > div > div{ height: 100%; }
-
-    .optionTitle,.optionPic{
+    #back{
+        width: 33%;
+        height: 3.5rem;
         position: absolute;
-    }
-
-    .optionTitle{
-        font-size:28px;
-        letter-spacing: 1rem;
-        color: white;
-        font-weight: 100;
+        top: 0;
+        left: 0;
         z-index: 1;
     }
 
-    .optionPic{
-        height:6rem;
-        width:6rem;
-        bottom: 0%;
-        filter: invert(100);
-        opacity: .8;
+    #me{
+        width: 100%;
+        height:13rem;
+        padding-top: 3rem;
     }
 
-
-    #main > div:nth-child(odd) .optionTitle{right:10%;}
-    #main > div:nth-child(even) .optionTitle{left:10%;top:25%}
-    #main > div:nth-child(odd) .optionPic{left:10%;}
-    #main > div:nth-child(even) .optionPic{right:10%;}
-
-    div#back{    background: #eee;}
-    div#me{      background: #7af;height: 35%;}
-    div#tag{     background: linear-gradient(150deg,#7af,#8cd);}
-    div#setting{ background: linear-gradient(150deg,#8cd,#6ea);}
-    div#about{   background: linear-gradient(150deg,#6ea,#8e9);height: 25%;}
-
-    #main > div:nth-child(odd){animation:showTimeOdd .5s forwards}
-    #main > div:nth-child(even){animation:showTimeEven .5s forwards}
-    @keyframes showTimeEven{
-        from{
-            bottom:-10%;
-            left: -100%;
-        }
-        to{
-            bottom:0;
-            left: 0;
-        }
-    }
-    @keyframes showTimeOdd{
-        from{
-            top:-10%;
-            right: -100%;
-        }
-        to{
-            top:0;
-            right: 0;
-        }
-    }
-
-    @keyframes hideTimeEven{
-        from{
-            bottom:0;
-            left: 0;
-        }
-        to{
-            bottom:-10%;
-            left: -100%;
-        }
-    }
-    @keyframes hideTimeOdd{
-        from{
-            top:0;
-            right: 0;
-        }
-        to{
-            top:-10%;
-            right: -100%;
-        }
-    }
-
-    #back .optionPic{ transform: scale(.4,.4) translate(-100%) rotate(-134deg);filter: invert(0);}
-    #about .optionPic{ transform: scale(.8,.8) ; bottom: 65%;}
-
+    /*个人信息的东西，头像，经验条*/
     #portrait{
         height: 5rem;
         width: 5rem;
@@ -138,6 +88,66 @@
     }
 
 
+
+    /*选项的名称和图标*/
+    .optionTitle,.optionPic{ position: absolute; }
+
+    .optionTitle{
+        font-size:1rem;
+        letter-spacing: 1rem;
+        color: black;
+        font-weight: 100;
+        z-index: 1;
+        top:.6rem;
+        left:10%;
+        opacity: .8;
+    }
+
+    .optionPic{
+        height:2rem;
+        width:2rem;
+        bottom: 0%;
+        opacity: .8;
+        right:10%;
+        top:-25%;
+        filter: brightness(0)
+    }
+
+    @keyframes showAni{
+        from{
+            transform: translate(-100%,50%);
+        }
+        to{
+            transform: translate(0,0);
+        }
+    }
+
+    @keyframes hideAni{
+        from{
+            transform: translate(0,0);
+        }
+        to{
+            transform: translate(100%,-50%);
+        }
+    }
+
+    /*已遗弃功能，奇偶选项的样式不同
+    .container:nth-child(odd) .optionTitle{right:10%;}
+    .container:nth-child(even)  .optionTitle{left:10%;top:25%}
+    .container:nth-child(odd) .optionPic{left:10%;}
+    .container:nth-child(even) .optionPic{right:10%;}*/
+
+    /*细化*/
+    #back .optionPic{ transform: rotate(-134deg); top:25%;left:10%;}
+    div#back,div#me{      background: #7af;}
+
+    /**已遗弃功能,亮瞎眼的渐变
+    div#tag{     background: linear-gradient(150deg,#7af,#8cd);}
+    div#tag:active{background: #47a}
+    div#setting{ background: linear-gradient(150deg,#8cd,#6ea);}
+    div#setting:active{background: #7aa}
+    div#about{   background: linear-gradient(150deg,#6ea,#8e9);}
+    div#about:active{background:#5a9}*/
 </style>
 
 <script>
@@ -150,14 +160,15 @@ const $$$=(css,root)=>{
     return Array.prototype.slice.call(root.querySelectorAll(css));
 };
 
-window.onresize =function (){
+window.onresize =()=>{
     resizeDivs();
 }
 
-window.onload=function(){
+window.onload=()=>{
     TraceOn();
     InitEventHandlers();
     resizeDivs();
+    FadeIn();
 }
 
 function TraceOn(){
@@ -165,32 +176,24 @@ function TraceOn(){
 }
 
 function FadeOut(){
-    let a=$$$("#main > div");
-    for(let i=0;i<a.length;i++){
-        if(i%2==0)
-            a[i].style.animation="hideTimeOdd .5s forwards";
-        else
-            a[i].style.animation="hideTimeEven .5s forwards";
-    }
+    let a=$$$(".container");
+    for(let i=0;i<a.length;i++) 
+        window.setTimeout(()=>a[i].style.animation="hideAni .5s forwards",i*50);   
 }
 function FadeIn(){
-    let a=$$$("#main > div");
-    for(let i=0;i<a.length;i++){
-        if(i%2==0)
-            a[i].style.animation="showTimeOdd .5s forwards";
-        else
-            a[i].style.animation="showTimeEven .5s forwards";
-    }
+    let a=$$$(".container");
+    for(let i=0;i<a.length;i++)
+        window.setTimeout(()=>a[i].style.animation="showAni .5s forwards",i*50);    
 }
 
 function resizeDivs(){
     document.documentElement.style.fontSize = document.documentElement.clientWidth/20  + 'px';
     
-    let a=$$$("#main > div");
+    let a=$$$(".container > div");
     let top=0;
 
-    var s1=`matrix(1, ${-  a[0].offsetHeight/ a[0].offsetWidth *0.5}, 0, 1,0, ${- a[0].offsetHeight / 2})`;
-    var s2=`matrix(1, ${  a[0].offsetHeight/ a[0].offsetWidth *0.5}, 0, 1,0, ${ a[0].offsetHeight / 4})`;
+    var s1=`matrix(1, ${- a[0].offsetHeight/ a[0].offsetWidth *0.5}, 0, 1, 0, ${- a[0].offsetHeight / 2})`;
+    var s2=`matrix(1, ${  a[0].offsetHeight/ a[0].offsetWidth *0.5}, 0, 1, 0, ${  a[0].offsetHeight / 4})`;
 
     for(let i =0;i<a.length-1;i++){
         a[i].style.transform=s1;
@@ -230,37 +233,50 @@ function InitEventHandlers(){
 <body>
 
 <div id="main">
+
+    
     <div id="back">
         <div class="retransDiv">
             <img class="optionPic" src="pic/firework_783px_1219721_easyicon.net.png" alt="picture"/>
         </div>
     </div>
+
     <div id="me">
-        <div class="retransDiv">
             <div id="portrait"></div>
             <div id="expBar">
                 <div id="progress"></div>
             </div>
+    </div>
+
+    <div id="options">
+        <div class="container">
+            <div id="tag">
+                <div class="retransDiv">
+                    <div class="optionTitle">标签</div>
+                    <img class="optionPic" src="pic/tag_976px_1219680_easyicon.net.png" alt="picture"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div id="setting">
+                <div class="retransDiv">
+                    <div class="optionTitle">设置</div>
+                    <img class="optionPic" src="pic/dollar_symbol_783px_1221371_easyicon.net.png" alt="picture"/>        
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div id="about">
+                <div class="retransDiv">
+                    <div class="optionTitle">关于</div>
+                    <img class="optionPic" src="pic/snow_globe_875px_1219652_easyicon.net.png" alt="picture"/>        
+                </div>
+            </div>
         </div>
     </div>
-    <div id="tag">
-        <div class="retransDiv">
-            <div class="optionTitle">标签</div>
-            <img class="optionPic" src="pic/tag_976px_1219680_easyicon.net.png" alt="picture"/>
-        </div>
-    </div>
-    <div id="setting">
-        <div class="retransDiv">
-            <div class="optionTitle">设置</div>
-            <img class="optionPic" src="pic/dollar_symbol_783px_1221371_easyicon.net.png" alt="picture"/>        
-        </div>
-    </div>
-    <div id="about">
-        <div class="retransDiv">
-            <div class="optionTitle">关于</div>
-            <img class="optionPic" src="pic/snow_globe_875px_1219652_easyicon.net.png" alt="picture"/>        
-        </div>
-    </div>
+
 </div>
 
 </body>

@@ -1,8 +1,5 @@
 package com.huojitang.leaf;
 
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,13 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import DAO.TagDAO;
+import entities.TagEntity;
+import util.ColorConverter;
 
 /**
  * 编辑标签界面
@@ -52,6 +52,7 @@ public class EditTagActivity extends AppCompatActivity {
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(rv);
 
+        //添加标签按钮
         Button add=findViewById(R.id.edit_tag_activity_add_btn);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +72,7 @@ public class EditTagActivity extends AppCompatActivity {
         new AddTagDialog(EditTagActivity.this,tagEntity, new AddTagDialog.ConfirmOnclickListener(){
             @Override
             public void ConfirmClick() {
-
+                //TODO MK 给数据库更新
             }
         }).show();
 //
@@ -89,8 +90,10 @@ public class EditTagActivity extends AppCompatActivity {
             this.adapter = adapter;
         }
 
+
         @Override
         public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+            //响应上下的拖动操作，不响应滑动操作
             return makeMovementFlags(ItemTouchHelper.DOWN|ItemTouchHelper.UP,0);
         }
 
@@ -99,6 +102,7 @@ public class EditTagActivity extends AppCompatActivity {
             int fromPosition = viewHolder1.getAdapterPosition();
             int toPosition = viewHolder2.getAdapterPosition();
 
+            //拖动则对起始位置和结束位置的item遍历，让他们逐个+1移动
             if (fromPosition <  toPosition){
              for (int i = fromPosition; i < toPosition; i++){
               Collections.swap(tagList,i,i+1);
@@ -108,6 +112,7 @@ public class EditTagActivity extends AppCompatActivity {
                 Collections.swap(tagList,i,i-1);
                 }
             }
+            //提醒刷新
             adapter.notifyItemMoved(fromPosition,toPosition);
 
             //标记哪些位置需要更新到数据库
@@ -139,8 +144,10 @@ public class EditTagActivity extends AppCompatActivity {
         }
     }
 
+    //适配器负责将Entity内容映射成item
     class EditTagAdapter extends RecyclerView.Adapter<EditTagViewHolder>{
 
+        //创建ViewHolder
         @Override
         public EditTagViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
             //View view = LayoutInflater.from(EditTagActivity.this).inflate(R.layout.tag_item, null);
@@ -148,10 +155,11 @@ public class EditTagActivity extends AppCompatActivity {
             return new EditTagViewHolder(view);
         }
 
+        //为item赋值
         @Override
         public void onBindViewHolder(EditTagViewHolder editTagViewHolder, int i) {
             editTagViewHolder.name.setText( tagList.get(i).getTagName());
-            int color=ColorConverter.String2Color(tagList.get(i).getColor());
+            int color= ColorConverter.String2Color(tagList.get(i).getColor());
             editTagViewHolder.name.setTextColor(color );
             editTagViewHolder.color.setBackgroundColor(color);
             editTagViewHolder.limit.setText(tagList.get(i).getTagLimitDecimal());
@@ -164,6 +172,7 @@ public class EditTagActivity extends AppCompatActivity {
         }
     }
 
+    //ViewHolder负责缓存界面组件的id，避免重复读id以提升性能
     class EditTagViewHolder extends RecyclerView.ViewHolder{
         TextView name;
         TextView limit;
