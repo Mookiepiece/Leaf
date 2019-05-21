@@ -20,7 +20,7 @@ public class OptionActivity extends AppCompatActivity {
         //初始化
         wv=findViewById(R.id.setting_web_view);
         wv.getSettings().setJavaScriptEnabled(true);
-        wv.loadUrl("file:////android_asset/localhost/conf.html");
+        wv.loadUrl("file:////android_asset/localhost/option.html");
 
         //禁用跳转到默认浏览器
         wv.setWebViewClient(new WebViewClient() {

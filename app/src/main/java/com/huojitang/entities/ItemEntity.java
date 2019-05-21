@@ -3,23 +3,40 @@ package com.huojitang.entities;
 import com.huojitang.util.PriceTransUtil;
 
 public  class ItemEntity{
+    private int id;
     private String month;
-    private int itemIndex;
+    private short day;
     private String itemName;
     private int price100;
     private String tagName;
 
-    public ItemEntity() {
-    }
-
-    public ItemEntity(String month, int itemIndex, String itemName, int price100, String tagName) {
+    public ItemEntity(int id, String month, short day, String itemName, int price100, String tagName) {
+        this.id = id;
         this.month = month;
-        this.itemIndex = itemIndex;
+        this.day = day;
         this.itemName = itemName;
         this.price100 = price100;
         this.tagName = tagName;
     }
 
+    public ItemEntity() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public short getDay() {
+        return day;
+    }
+
+    public void setDay(short day) {
+        this.day = day;
+    }
     public String getMonth() {
         return month;
     }
@@ -28,13 +45,6 @@ public  class ItemEntity{
         this.month = month;
     }
 
-    public int getItemIndex() {
-        return itemIndex;
-    }
-
-    public void setItemIndex(int itemIndex) {
-        this.itemIndex = itemIndex;
-    }
 
     public String getItemName() {
         return itemName;

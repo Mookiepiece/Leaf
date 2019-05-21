@@ -20,7 +20,6 @@
     .container > div{ 
         height: 100%; 
         overflow:hidden;
-        margin-top:-0.25rem;    
         background: white;
         border-top: 2px #eee solid;
     }
@@ -33,47 +32,66 @@
 
     .container{
         width: 100%;
-        height:3.5rem;
+        height:100px;
         overflow: visible;
     }
 
     #back{
         width: 33%;
-        height: 3.5rem;
+        height: 100px;
         position: absolute;
         top: 0;
         left: 0;
         z-index: 1;
     }
+    #backPic{ 
+        transform: rotate(-134deg); 
+        top:20px;
+        left:10%;
+        height:60px;
+        width:60px;
+        bottom: 0%;
+        opacity: .8;
+        filter: brightness(0)
+    }
 
     #me{
         width: 100%;
-        height:13rem;
-        padding-top: 3rem;
+        height:50vw;
+        min-height:300px;
+        max-height:390px;
+        padding-top: 100px;
     }
 
     /*个人信息的东西，头像，经验条*/
     #portrait{
-        height: 5rem;
-        width: 5rem;
+        height: 96px;
+        width: 96px;
         background: url(pic/portrait.jpg) center/cover;
-        position: relative;
+        position: absolute;
         border-radius: 50%;
-        margin-left: 12rem;
+        right: 5vw;
+    }
+
+    #nameLabel{
+        top: 20px;
+        left: 10%;
+        font-size: 24px;
     }
 
     #expBar{
-        width: 70%;
-        height: 3%;
+        height:6px;
         left: 10%;
         background: white;
         border-radius: 3px;
+        width: 50%;
         max-width: 500px;
-        margin-top: .5rem;
+        top: 50px;
     }
+
     #expBar:before{
         content:"exp";
-        font-size:.5em;
+        font-size:14px;
         font-weight: bold;
         display: block;
         position: absolute;
@@ -93,24 +111,24 @@
     .optionTitle,.optionPic{ position: absolute; }
 
     .optionTitle{
-        font-size:1rem;
-        letter-spacing: 1rem;
+        font-size: 24px;
+        letter-spacing: 1em;
         color: black;
         font-weight: 100;
         z-index: 1;
-        top:.6rem;
-        left:10%;
+        top: 20%;
+        left: 10%;
         opacity: .8;
     }
 
     .optionPic{
-        height:2rem;
-        width:2rem;
+        height: 64px;
+        width: 64px;
         bottom: 0%;
         opacity: .8;
-        right:10%;
-        top:-25%;
-        filter: brightness(0)
+        right: 10%;
+        top: -30%;
+        filter: brightness(0);
     }
 
     @keyframes showAni{
@@ -138,8 +156,8 @@
     .container:nth-child(even) .optionPic{right:10%;}*/
 
     /*细化*/
-    #back .optionPic{ transform: rotate(-134deg); top:25%;left:10%;}
-    div#back,div#me{      background: #7af;}
+    
+    div#back,div#me{      background: #5c9;}
 
     /**已遗弃功能,亮瞎眼的渐变
     div#tag{     background: linear-gradient(150deg,#7af,#8cd);}
@@ -187,7 +205,6 @@ function FadeIn(){
 }
 
 function resizeDivs(){
-    document.documentElement.style.fontSize = document.documentElement.clientWidth/20  + 'px';
     
     let a=$$$(".container > div");
     let top=0;
@@ -236,13 +253,12 @@ function InitEventHandlers(){
 
     
     <div id="back">
-        <div class="retransDiv">
-            <img class="optionPic" src="pic/firework_783px_1219721_easyicon.net.png" alt="picture"/>
-        </div>
+            <img id="backPic" src="pic/firework_783px_1219721_easyicon.net.png" alt="picture"/>
     </div>
 
     <div id="me">
             <div id="portrait"></div>
+            <div id="nameLabel">Mookiepiece</div>
             <div id="expBar">
                 <div id="progress"></div>
             </div>

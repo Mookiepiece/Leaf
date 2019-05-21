@@ -14,12 +14,37 @@ public class LeafSQLiteOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         //创建基本的4个表
-        db.execSQL("CREATE TABLE Tag (tagName TEXT PRIMARY KEY, tagIndex INTEGER NOT NULL, tagLimit INTEGER, color TEXT NOT NULL, tagMode INTEGER NOT NULL, comment TEXT)");
-        db.execSQL("CREATE TABLE List (month TEXT PRIMARY KEY, balance INTEGER NOT NULL,note TEXT)");
-        db.execSQL("CREATE TABLE Item (month TEXT, itemIndex INTEGER, itemName TEXT, price INTEGER, tagName TEXT," +
-                " FOREIGN KEY(month) REFERENCES List(month),FOREIGN KEY(tagName) REFERENCES Tag(tagName)," +
-                "PRIMARY KEY(month,itemIndex))");
-        db.execSQL("CREATE TABLE Wish (wishId INTEGER PRIMARY KEY AUTOINCREMENT,wishName TEXT NOT NULL, wishIndex INTEGER NOT NULL, price INTEGER, startTime TEXT, endTime TEXT, comment TEXT)");
+        db.execSQL("CREATE TABLE Tag (" +
+                "tagName TEXT PRIMARY KEY, " +
+                "tagIndex INTEGER NOT NULL, " +
+                "tagLimit INTEGER, " +
+                "color TEXT NOT NULL, " +
+                "tagMode INTEGER NOT NULL, " +
+                "comment TEXT)");
+
+        db.execSQL("CREATE TABLE List (" +
+                "month TEXT PRIMARY KEY, " +
+                "balance INTEGER NOT NULL," +
+                "note TEXT)");
+
+        db.execSQL("CREATE TABLE Item (" +
+                "itemId INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "month TEXT, " +
+                "day INTEGER, " +
+                "itemName TEXT, " +
+                "price INTEGER, " +
+                "tagName TEXT," +
+                " FOREIGN KEY(month) REFERENCES List(month)," +
+                "FOREIGN KEY(tagName) REFERENCES Tag(tagName))");
+
+        db.execSQL("CREATE TABLE Wish (" +
+                "wishId INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "wishName TEXT NOT NULL, " +
+                "wishIndex INTEGER NOT NULL, " +
+                "price INTEGER, " +
+                "startTime TEXT, " +
+                "endTime TEXT, " +
+                "comment TEXT)");
 
         //创建‘未分类’标签，排在第100位
         db.execSQL("INSERT INTO Tag VALUES('default',100,NULL,'ddd',-1,NULL)");

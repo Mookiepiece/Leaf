@@ -8,11 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <!-- 设置界面单独的主题 -->
+    <!-- 选项界面单独的主题 -->
     <style name="AppSettingTheme" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="colorPrimaryDark">@color/ll_gray</item>
+        <item name="colorPrimaryDark">@color/leaf_springGreen</item>
     </style>
 
 
