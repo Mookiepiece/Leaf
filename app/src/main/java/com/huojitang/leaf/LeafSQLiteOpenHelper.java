@@ -19,6 +19,7 @@ public class LeafSQLiteOpenHelper extends SQLiteOpenHelper {
                 "tagIndex INTEGER NOT NULL, " +
                 "tagLimit INTEGER, " +
                 "color TEXT NOT NULL, " +
+                "img INTEGER NOT NULL, " +
                 "tagMode INTEGER NOT NULL, " +
                 "comment TEXT)");
 
@@ -47,12 +48,12 @@ public class LeafSQLiteOpenHelper extends SQLiteOpenHelper {
                 "comment TEXT)");
 
         //创建‘未分类’标签，排在第100位
-        db.execSQL("INSERT INTO Tag VALUES('default',100,NULL,'ddd',-1,NULL)");
+        db.execSQL("INSERT INTO Tag VALUES('default',100,NULL,'ddd',0,-1,NULL)");
 
         //创建‘测试’标签
-        db.execSQL("INSERT INTO Tag VALUES('mytag1',1,60000,'860',0,'commtentfsdf')");
-        db.execSQL("INSERT INTO Tag VALUES('mytag2',2,40000,'068',0,'commtentf565sdf')");
-        db.execSQL("INSERT INTO Tag VALUES('标签的名字',0,40000,'a0a',0,'标签的描述描述描述描述描述描述')");
+        db.execSQL("INSERT INTO Tag VALUES('mytag1',1,60000,'860',0,0,'commtentfsdf')");
+        db.execSQL("INSERT INTO Tag VALUES('mytag2',2,40000,'068',0,0,'commtentf565sdf')");
+        db.execSQL("INSERT INTO Tag VALUES('标签的名字',0,40000,'a0a',0,0,'标签的描述描述描述描述描述描述')");
     }
 
     @Override

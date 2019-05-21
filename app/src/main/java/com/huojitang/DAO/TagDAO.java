@@ -107,8 +107,9 @@ public class TagDAO{
         int tagIndex = c.getInt(c.getColumnIndex("tagIndex"));
         int tagLimit100 = c.getInt(c.getColumnIndex("tagLimit"));
         String color = c.getString(c.getColumnIndex("color"));
+        int img = c.getInt(c.getColumnIndex("img"));
         short tagMode = c.getShort(c.getColumnIndex("tagMode"));
         String comment = c.getString(c.getColumnIndex("comment"));
-        return new TagEntity(tagName,tagIndex,tagLimit100,color,tagMode,comment);
+        return new TagEntity(tagName,tagIndex,tagLimit100,color,img,tagMode,comment);
     }
 }

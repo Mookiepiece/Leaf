@@ -74,12 +74,13 @@ public class ListDAO{
     }
 
     private ItemEntity ItemEntityFromCursor(Cursor c){
+        int itemId=c.getInt(c.getColumnIndex("itemId"));
         String month=c.getString(c.getColumnIndex("month"));
-        int itemIndex=c.getInt(c.getColumnIndex("itemIndex"));
+        short day=c.getShort(c.getColumnIndex("day"));
         String itemName=c.getString(c.getColumnIndex("itemName"));
         int price100=c.getInt(c.getColumnIndex("price"));
         String tagName=c.getString(c.getColumnIndex("tagName"));
-        return new ItemEntity(month,itemIndex,itemName,price100,tagName);
+        return new ItemEntity(itemId,month,day,itemName,price100,tagName);
     }
 
 }
