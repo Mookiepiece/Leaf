@@ -44,10 +44,11 @@ public class WishDAO{
         int wishId=c.getInt(c.getColumnIndex("wishId"));
         int wishIndex=c.getInt(c.getColumnIndex("wishIndex"));
         String wishName=c.getString(c.getColumnIndex("wishName"));
+        short wishState=c.getShort(c.getColumnIndex("wishState"));
         int price100=c.getInt(c.getColumnIndex("price"));
         String startTime=c.getString(c.getColumnIndex("startTime"));
         String endTime=c.getString(c.getColumnIndex("endTime"));
         String comment=c.getString(c.getColumnIndex("comment"));
-        return new WishEntity(wishId,wishIndex,wishName,price100,startTime,endTime,comment);
+        return new WishEntity(wishId,wishIndex,wishName,wishState,price100,startTime,endTime,comment);
     }
 }

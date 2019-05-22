@@ -41,6 +41,7 @@ public class LeafSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE Wish (" +
                 "wishId INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "wishName TEXT NOT NULL, " +
+                "wishState INTEGER NOT NULL, " +
                 "wishIndex INTEGER NOT NULL, " +
                 "price INTEGER, " +
                 "startTime TEXT, " +

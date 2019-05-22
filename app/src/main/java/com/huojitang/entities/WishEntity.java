@@ -5,6 +5,7 @@ public class WishEntity{
     private int wishId;
     private int wishIndex;
     private String wishName;
+    private short wishState;
     private int price100;
     private String startTime;
     private String endTime;
@@ -13,10 +14,11 @@ public class WishEntity{
     public WishEntity() {
     }
 
-    public WishEntity(int wishId, int wishIndex, String wishName, int price100, String startTime, String endTime, String comment) {
+    public WishEntity(int wishId, int wishIndex, String wishName,short wishState, int price100, String startTime, String endTime, String comment) {
         this.wishId = wishId;
         this.wishIndex = wishIndex;
         this.wishName = wishName;
+        this.wishState = wishState;
         this.price100 = price100;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -45,6 +47,14 @@ public class WishEntity{
 
     public void setWishName(String wishName) {
         this.wishName = wishName;
+    }
+
+    public short getWishState() {
+        return wishState;
+    }
+
+    public void setWishState(short wishState) {
+        this.wishState = wishState;
     }
 
     public int getPrice100() {
