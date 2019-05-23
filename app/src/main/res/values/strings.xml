@@ -1,20 +1,23 @@
 <resources>
-    <string name="app_name">Leaf</string>
+  <string name="app_name">Leaf</string>
 
-    <string name="title_activity_setting">SettingActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="about_activity_title">Leaf</string>
-    <string name="about_activity_overview">Version alpha1.0</string>
-    <string name="about_activity_contributors">221600111\n221600136\n221600137\n221600138</string>
-    <string name="g_confirm">确定</string>
-    <string name="g_back">返回</string>
-    <string name="g_cancel">取消</string>
-    <string name="add">+</string>
-    <string name="action_settings">设置</string>
-    <string name="dialog_add_tag_title">添加标签</string>
-    <string name="tag_name">标签名称</string>
-    <string name="tag_limit">标签额度</string>
-    <string name="tag_color">标签颜色</string>
-    <string name="tag_comment">标签描述</string>
+  <string name="title_activity_setting">SettingActivity</string>
+  <string name="dummy_button">Dummy Button</string>
+  <string name="dummy_content">DUMMY\nCONTENT</string>
+  <string name="about_activity_title">Leaf</string>
+  <string name="about_activity_overview">Version alpha1.0</string>
+  <string name="about_activity_contributors">221600111\n221600136\n221600137\n221600138</string>
+  <string name="g_confirm">确定</string>
+  <string name="g_back">返回</string>
+  <string name="g_cancel">取消</string>
+  <string name="add">+</string>
+  <string name="action_settings">设置</string>
+  <string name="dialog_add_tag_title">添加标签</string>
+  <string name="tag_name">标签名称</string>
+  <string name="tag_limit">标签额度</string>
+  <string name="tag_color">标签颜色</string>
+  <string name="tag_comment">标签描述</string>
+  <string name="prev_month_button_text">上一月</string>
+  <string name="next_month_button_text">下一月</string>
+  <string name="current_month_text_view_text">当前月份：%s</string>
 </resources>
