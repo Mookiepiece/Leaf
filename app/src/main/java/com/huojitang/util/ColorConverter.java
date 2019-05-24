@@ -15,6 +15,7 @@ public class ColorConverter {
             str=""+str.charAt(0)+str.charAt(1)+str.charAt(1)+str.charAt(2)+str.charAt(2)+str.charAt(3)+str.charAt(3);
         }
         return Color.parseColor(str);
+
     }
 
     /**

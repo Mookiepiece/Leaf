@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -164,6 +165,12 @@ public class EditTagActivity extends AppCompatActivity {
             editTagViewHolder.color.setBackgroundColor(color);
             editTagViewHolder.limit.setText(tagList.get(i).getTagLimitDecimal());
             editTagViewHolder.cmt.setText( tagList.get(i).getComment());
+            editTagViewHolder.layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(EditTagActivity.this,"oooooo",Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         @Override
@@ -178,6 +185,7 @@ public class EditTagActivity extends AppCompatActivity {
         TextView limit;
         TextView color;
         TextView cmt;
+        LinearLayout layout;
 
         public EditTagViewHolder(View itemView) {
             super(itemView);
@@ -185,6 +193,7 @@ public class EditTagActivity extends AppCompatActivity {
             this.limit=itemView.findViewById(R.id.edit_tag_item_limit);
             this.color=itemView.findViewById(R.id.edit_tag_item_color);
             this.cmt=itemView.findViewById(R.id.edit_tag_item_comment);
+            this.layout=itemView.findViewById(R.id.edit_tag_layout);
         }
     }
 
