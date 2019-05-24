@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<litepal>
+    <!-- 数据库的名称 -->
+    <dbname value="leaf-data" />
+
+    <!-- 数据库的版本号 -->
+    <!-- 当数据库发生变动时，记得来这里改版本号！！！ -->
+    <version value="1" />
+
+    <!-- LitePal 要管理的实体类（待添加）-->
+    <list>
+        <mapping class="com.huojitang.leaf.model.Wish" />
+        <mapping class="com.huojitang.leaf.model.Tag" />
+    </list>
+</litepal>
