@@ -1,5 +1,6 @@
 package com.huojitang.leaf.model;
 
+import org.litepal.LitePal;
 import org.litepal.crud.LitePalSupport;
 
 import java.util.ArrayList;
@@ -96,9 +97,14 @@ public class Tag extends LitePalSupport {
         this.comment = comment;
     }
 
-
     public List<BillItem> getBillItems() {
-        return billItems;
+        return LitePal.where("tag_id = ?", String.valueOf(id))
+                .find(BillItem.class);
+    }
+
+    public List<BillItem> getBillItems(MonthlyBill monthlyBill) {
+        return LitePal.where("tag_id = ? and monthlyBill_id = ?", String.valueOf(id), String.valueOf(monthlyBill.getId()))
+                .find(BillItem.class);
     }
 
     public void setBillItems(List<BillItem> billItems) {
