@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="15dp"
-    android:showDividers="middle|beginning|end">
+    android:showDividers="middle|beginning|end"
+    android:id="@+id/edit_tag_layout">
 
     <LinearLayout
         android:layout_width="match_parent"
