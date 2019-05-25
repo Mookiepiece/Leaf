@@ -27,8 +27,8 @@ public class Wish extends LitePalSupport {
     /** 心愿创建的时间 */
     private String startTime;
 
-    /** 心愿完成的时间 */
-    private String achievedTime;
+    /** 心愿结束的时间（放弃/取消或者实现） */
+    private String finishedTime;
 
     /** 心愿的备注 */
     private String comment;
@@ -102,12 +102,12 @@ public class Wish extends LitePalSupport {
         this.startTime = startTime;
     }
 
-    public String getAchievedTime() {
-        return achievedTime;
+    public String getFinishedTime() {
+        return finishedTime;
     }
 
-    public void setAchievedTime(String achievedTime) {
-        this.achievedTime = achievedTime;
+    public void setFinishedTime(String finishedTime) {
+        this.finishedTime = finishedTime;
     }
 
     public String getComment() {
