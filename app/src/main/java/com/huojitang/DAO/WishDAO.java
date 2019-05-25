@@ -11,14 +11,7 @@ import java.util.ArrayList;
 import com.huojitang.entities.WishEntity;
 
 public class WishDAO{
-    SQLiteDatabase db;
-    public WishDAO(Context context) {
-        this.db = new LeafSQLiteOpenHelper(context).getWritableDatabase();
-    }
 
-    public WishDAO(SQLiteDatabase db){
-        this.db =db;
-    }
 
     private ArrayList<WishEntity> getWishes(String sql){
         if(db==null) return null;
@@ -50,5 +43,22 @@ public class WishDAO{
         String endTime=c.getString(c.getColumnIndex("endTime"));
         String comment=c.getString(c.getColumnIndex("comment"));
         return new WishEntity(wishId,wishIndex,wishName,wishState,price100,startTime,endTime,comment);
+    }
+
+    SQLiteDatabase db;
+    private static WishDAO instance;
+
+    public static WishDAO getInstance(){
+        if(instance==null)
+            synchronized(WishDAO.class) {
+                if (instance == null) {
+                    instance = new WishDAO();
+                }
+            }
+        return instance;
+    }
+
+    private WishDAO() {
+        this.db = LeafSQLiteOpenHelper.getInstance().getWritableDatabase();
     }
 }

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +26,7 @@ import com.huojitang.util.ColorConverter;
  * 编辑标签界面
  */
 public class EditTagActivity extends AppCompatActivity {
-    private TagDAO tagDAO;
+    private TagDAO tagDAO=TagDAO.getInstance();
     List<TagEntity> tagList=new ArrayList<>();
 
     @Override
@@ -33,8 +34,8 @@ public class EditTagActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_tag);
 
-        tagDAO=new TagDAO(this);
-        tagList=tagDAO.getTagsWithoutDefault();
+
+        tagList=tagDAO.getAllTagsWithoutDefault();
 
         //RecyclerView代码
         RecyclerView rv=findViewById(R.id.edit_tag_recycler_view);
@@ -159,11 +160,17 @@ public class EditTagActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(EditTagViewHolder editTagViewHolder, int i) {
             editTagViewHolder.name.setText( tagList.get(i).getTagName());
-            int color= ColorConverter.String2Color(tagList.get(i).getColor());
-            editTagViewHolder.name.setTextColor(color );
+            int color= tagList.get(i).getColor();
+            editTagViewHolder.name.setTextColor(color);
             editTagViewHolder.color.setBackgroundColor(color);
             editTagViewHolder.limit.setText(tagList.get(i).getTagLimitDecimal());
             editTagViewHolder.cmt.setText( tagList.get(i).getComment());
+            editTagViewHolder.layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(EditTagActivity.this,"oooooo",Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         @Override
@@ -178,6 +185,7 @@ public class EditTagActivity extends AppCompatActivity {
         TextView limit;
         TextView color;
         TextView cmt;
+        LinearLayout layout;
 
         public EditTagViewHolder(View itemView) {
             super(itemView);
@@ -185,6 +193,7 @@ public class EditTagActivity extends AppCompatActivity {
             this.limit=itemView.findViewById(R.id.edit_tag_item_limit);
             this.color=itemView.findViewById(R.id.edit_tag_item_color);
             this.cmt=itemView.findViewById(R.id.edit_tag_item_comment);
+            this.layout=itemView.findViewById(R.id.edit_tag_layout);
         }
     }
 

@@ -4,11 +4,24 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.huojitang.global.LeafApplication;
+
 /*
  * MK_TIP
  * 是用于创建和返回数据库的类，此处实现它
  */
 public class LeafSQLiteOpenHelper extends SQLiteOpenHelper {
+    private static LeafSQLiteOpenHelper instance= new LeafSQLiteOpenHelper(LeafApplication.getContext());
+    public static LeafSQLiteOpenHelper getInstance(){
+        return instance;
+    }
+
+    private LeafSQLiteOpenHelper(Context context) {
+        super(context, "Leaf.db", null, 1);
+    }
+    private LeafSQLiteOpenHelper(Context context,int version) {
+        super(context, "Leaf.db", null, version);
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -16,9 +29,9 @@ public class LeafSQLiteOpenHelper extends SQLiteOpenHelper {
         //创建基本的4个表
         db.execSQL("CREATE TABLE Tag (" +
                 "tagName TEXT PRIMARY KEY, " +
-                "tagIndex INTEGER NOT NULL, " +
+                "tagIndex INTEGER NOT NULL UNIQUE, " +
                 "tagLimit INTEGER, " +
-                "color TEXT NOT NULL, " +
+                "color INTEGER NOT NULL, " +
                 "img INTEGER NOT NULL, " +
                 "tagMode INTEGER NOT NULL, " +
                 "comment TEXT)");
@@ -62,11 +75,6 @@ public class LeafSQLiteOpenHelper extends SQLiteOpenHelper {
         //TODO MK
     }
 
-    public LeafSQLiteOpenHelper(Context context) {
-        super(context, "Leaf.db", null, 1);
-    }
-    public LeafSQLiteOpenHelper(Context context,int version) {
-        super(context, "Leaf.db", null, version);
-    }
+
 }
 

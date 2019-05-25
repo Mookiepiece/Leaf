@@ -6,13 +6,13 @@ public class TagEntity{
     private String tagName;
     private int tagIndex;
     private int tagLimit100;
-    private String color;
+    private int color;
     private int img;
     private short tagMode;
     private String comment;
 
 
-    public TagEntity(String tagName, int tagIndex, int tagLimit100, String color, int img, short tagMode, String comment) {
+    public TagEntity(String tagName, int tagIndex, int tagLimit100, int color, int img, short tagMode, String comment) {
         this.tagName = tagName;
         this.tagIndex = tagIndex;
         this.tagLimit100 = tagLimit100;
@@ -63,11 +63,11 @@ public class TagEntity{
         this.tagLimit100 = tagLimit100;
     }
 
-    public String getColor() {
+    public int getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(int color) {
         this.color = color;
     }
 
