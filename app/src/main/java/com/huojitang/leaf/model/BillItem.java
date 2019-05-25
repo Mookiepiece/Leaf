@@ -18,8 +18,8 @@ public class BillItem extends LitePalSupport {
     /** 消费的内容（e.g. 游玩、吃喝、购买 xxxx 等） */
     private String name;
 
-    /** 消费的时间 */
-    private String recordTime;
+    /** 消费的日期（值在 1~31 之间，其与 MonthlyBill 中的 date 共同构成消费日期） */
+    private int day;
 
     /** 消费记录所对应的种类的标签 */
     private Tag tag;
@@ -54,14 +54,6 @@ public class BillItem extends LitePalSupport {
         this.name = name;
     }
 
-    public String getRecordTime() {
-        return recordTime;
-    }
-
-    public void setRecordTime(String recordTime) {
-        this.recordTime = recordTime;
-    }
-
     public Tag getTag() {
         return tag;
     }
@@ -76,5 +68,13 @@ public class BillItem extends LitePalSupport {
 
     public void setMonthlyBill(MonthlyBill monthlyBill) {
         this.monthlyBill = monthlyBill;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
     }
 }
