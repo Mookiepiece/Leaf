@@ -1,13 +1,13 @@
 package com.huojitang.global;
 
-import android.app.Application;
 import android.content.Context;
+import org.litepal.LitePalApplication;
 
 
 /**
  * 全局的Context，其他地方需要Context时调用
  */
-public class LeafApplication extends Application {
+public class LeafApplication extends LitePalApplication {
     private static Context mContext;
 
     @Override
