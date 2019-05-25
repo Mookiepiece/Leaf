@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>wish</title>
+
+<!-- libraries -->
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<style>
+    
+    *{margin:0px;padding:0px;position: relative;box-sizing:border-box}
+
+
+    #root{ 
+        height: 100vh;
+        overflow: scroll;
+    }
+
+    .month,#beginDiv,#endDiv{
+        width:100%;
+        min-height:150px;
+        border:solid #ddd;
+        border-width:2px 0;
+    }
+    
+    .sobar{
+        width:20px;
+        position:absolute;
+        height:100%;
+        color:#666;
+        border-right:1px dotted #ddd;
+    }
+
+    .month-label{
+        transform: rotate(90deg) ;
+        transform-origin: 0 100%;        
+        width: 150px;
+        font-size: 14px;
+    }
+
+    .item-list{
+        padding-top:5px;
+        width:auto;
+        margin-left: 20px;
+        height: 100%;
+    }
+
+    .item{
+        display: inline-block;
+        width: 30%;
+        margin-right: 2.5%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 8px;
+        /* white-space用于限制文本只能显示一行 */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        animation: fadeIn .25s backwards;
+        background: red; /*TODO*/
+        font-size: 14px;
+        text-align: center;
+    }
+    
+    .item:nth-child(3n+1){
+        margin-left: 2.5%;
+    }
+
+    .item.small{
+        font-size:14px;
+    }
+
+    .item.xsmall{
+        font-size:12px;
+    }
+
+    .item.resolved{
+        background:#bfb;
+    }
+
+    .item.cancelled{
+        background: #fed;
+    color: #666;
+    }
+    .item.onprogress{
+        background:#9cf;
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: .2;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    #switcher{
+        position: fixed;
+        width:30px;
+        height:70px;
+        background:forestgreen;
+        bottom: 25px;
+        right: 0px;
+        border: 0;
+        outline: 0;
+        border-radius: 10% 0 0 10%;
+    }
+    #switcher:active{
+        background:greenyellow;
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <button id="switcher">pressme</button>
+
+    <script type="text/babel" src="wish.1.jsx" ></script>
+
+</body>
+</html>
