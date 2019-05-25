@@ -28,6 +28,9 @@ public class Tag extends LitePalSupport {
     /** 该标签是否为系统预留标签，默认为 false */
     private boolean reserved = false;
 
+    /** index，用于界面对标签进行排序（不太懂原理所在） */
+    private int index;
+
     /** 标签对应的图标（我不清楚这里怎么存储的，求解释） */
     private int icon;
 
@@ -79,6 +82,14 @@ public class Tag extends LitePalSupport {
 
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public int getIcon() {
