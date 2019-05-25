@@ -11,5 +11,7 @@
     <list>
         <mapping class="com.huojitang.leaf.model.Wish" />
         <mapping class="com.huojitang.leaf.model.Tag" />
+        <mapping class="com.huojitang.leaf.model.BillItem" />
+        <mapping class="com.huojitang.leaf.model.MonthlyBill" />
     </list>
 </litepal>
