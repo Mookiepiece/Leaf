@@ -20,7 +20,6 @@ import java.util.List;
 
 import com.huojitang.DAO.TagDAO;
 import com.huojitang.entities.TagEntity;
-import com.huojitang.util.ColorConverter;
 
 /**
  * 编辑标签界面
@@ -151,7 +150,6 @@ public class EditTagActivity extends AppCompatActivity {
         //创建ViewHolder
         @Override
         public EditTagViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            //View view = LayoutInflater.from(EditTagActivity.this).inflate(R.layout.tag_item, null);
             View view = LayoutInflater.from(EditTagActivity.this).inflate(R.layout.tag_item, viewGroup,false);
             return new EditTagViewHolder(view);
         }
