@@ -5,13 +5,20 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.BounceInterpolator;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +38,7 @@ public class WishFragment<FragmentAdapter> extends Fragment {
     private String[] endtime = {"2019-03","2019-04","2019-03","","2019-05"};
 
     private List<WishMessage> wishMessageList = new ArrayList<>();
-    SwipeMenuListView mListView;
+    ListView mListView;
 
 
     @Nullable
@@ -41,97 +48,86 @@ public class WishFragment<FragmentAdapter> extends Fragment {
                              @Nullable Bundle savedTnstanceState){
         View view = inflater.inflate(R.layout.fragment_wish,container,false);
 
-        mListView = (SwipeMenuListView) view.findViewById(R.id.LV_2);
+        mListView = (ListView) view.findViewById(R.id.LV_2);
         initWishMessage();
 
         final WishFragment.FragmentAdapter fragmentAdapter = new WishFragment.FragmentAdapter();
         mListView.setAdapter(fragmentAdapter);
 
-        SwipeMenuCreator creator = new SwipeMenuCreator() {
-            @Override
-            public void create(SwipeMenu menu) {
-                SwipeMenuItem finishItem = new SwipeMenuItem(getContext());
-                finishItem.setBackground(new ColorDrawable(Color.rgb(0xc9,0xc9,0xce)));
-                finishItem.setWidth(dp2px(90));
-                finishItem.setTitle("完成");
-                finishItem.setTitleSize(18);
-                finishItem.setTitleColor(Color.WHITE);
-
-                menu.addMenuItem(finishItem);
-
-                SwipeMenuItem cancelItem = new SwipeMenuItem(getContext());
-                cancelItem.setBackground(new ColorDrawable(Color.rgb(0xd4,0xd4,0xdc)));
-                cancelItem.setWidth(dp2px(90));
-                cancelItem.setTitle("取消");
-                cancelItem.setTitleSize(18);
-                cancelItem.setTitleColor(Color.WHITE);
-
-                menu.addMenuItem(cancelItem);
-
-                SwipeMenuItem addItem = new SwipeMenuItem(getContext());
-                addItem.setBackground(new ColorDrawable(Color.rgb(0xf9,0x3f,0x25)));
-                addItem.setWidth(dp2px(90));
-                addItem.setTitle("添加");
-                addItem.setTitleSize(18);
-                addItem.setTitleColor(Color.WHITE);
-
-                menu.addMenuItem(addItem);
-            }
-        };
-
-        mListView.setMenuCreator(creator);
-
-        mListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                WishMessage message = wishMessageList.get(position);
-                switch (index){
-                    case 0:
-                        Toast.makeText(getContext(),"you clicked finish",Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1:
-                        Toast.makeText(getContext(),"you clicked cancel",Toast.LENGTH_SHORT).show();
-                        break;
-                    case 2:
-                        Toast.makeText(getContext(),"you clicked add",Toast.LENGTH_SHORT).show();
-                        break;
-                }
-                return false;
-            }
-        });
-        mListView.setOnSwipeListener(new SwipeMenuListView.OnSwipeListener() {
-            @Override
-            public void onSwipeStart(int position) {
-
-            }
-
-            @Override
-            public void onSwipeEnd(int position) {
-
-            }
-        });
-
-        mListView.setOnMenuStateChangeListener(new SwipeMenuListView.OnMenuStateChangeListener() {
-            @Override
-            public void onMenuOpen(int position) {
-
-            }
-
-            @Override
-            public void onMenuClose(int position) {
-
-            }
-        });
-
-        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        mListView.setOnItemLongClickListener (new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(),position+"long click",Toast.LENGTH_SHORT).show();
+                PopupMenu popupMenu = new PopupMenu(getContext(), view);
+                popupMenu.inflate(R.menu.popup_menu);
+                popupMenu.show();
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.wish_finish:
+                                Toast.makeText(getContext(), "你选择了完成选项", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.wish_cancel:
+                                Toast.makeText(getContext(), "你选择了取消选项", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.add_wish:
+                                Toast.makeText(getContext(), "你选择了添加选项", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                        return false;
+                    }
+
+                });
                 return false;
             }
         });
-        setHasOptionsMenu(true);
+
         return view;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        MenuInflater inflater = new MenuInflater(getContext());
+        inflater.inflate(R.menu.popup_menu,menu);
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.wish_finish:
+                Toast.makeText(getContext(),"你选择了完成选项",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.wish_cancel:
+                Toast.makeText(getContext(),"你选择了取消选项",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.add_wish:
+                Toast.makeText(getContext(),"你选择了添加选项",Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.popup_menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.wish_finish:
+                Toast.makeText(getContext(),"你选择了完成选项",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.wish_cancel:
+                Toast.makeText(getContext(),"你选择了取消选项",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.add_wish:
+                Toast.makeText(getContext(),"你选择了添加选项",Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initWishMessage() {
@@ -141,7 +137,7 @@ public class WishFragment<FragmentAdapter> extends Fragment {
         }
     }
 
-    public class FragmentAdapter extends BaseSwipListAdapter{
+    public class FragmentAdapter extends BaseAdapter {
         @Override
         public int getCount() {
             return wishMessageList.size();
@@ -159,48 +155,35 @@ public class WishFragment<FragmentAdapter> extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view = getLayoutInflater().inflate(R.layout.wish_list,null);
-            new ViewHolder(view);
-
-            ViewHolder holder = (ViewHolder) view.getTag();
-
+            if (convertView == null) {
+                convertView = View.inflate(getContext(), R.layout.wish_list, null);
+                new ViewHolder(convertView);
+            }
+            ViewHolder holder = (ViewHolder) convertView.getTag();
             holder.wishName.setText(wishMessageList.get(position).getWishName());
             holder.wishPrice.setText(wishMessageList.get(position).getWishPrice());
             holder.wishState.setText(wishMessageList.get(position).getWishState());
             holder.startTime.setText(wishMessageList.get(position).getStartTime());
             holder.endTime.setText(wishMessageList.get(position).getEndTime());
-            return view;
+            return convertView;
         }
 
-        class ViewHolder{
+        class ViewHolder {
             TextView wishName;
             TextView wishPrice;
             TextView wishState;
             TextView startTime;
             TextView endTime;
 
-            public ViewHolder(View view){
+            public ViewHolder(View view) {
                 wishName = view.findViewById(R.id.wish_name);
                 wishPrice = view.findViewById(R.id.wish_price);
                 wishState = view.findViewById(R.id.wish_state);
                 startTime = view.findViewById(R.id.wish_start_time);
                 endTime = view.findViewById(R.id.wish_end_time);
-
                 view.setTag(this);
             }
         }
-    }
-    private int dp2px(int value){
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,value,getResources().getDisplayMetrics());
-    }
-    private int dp2px(float value){
-        final float scale = getResources().getDisplayMetrics().density;
-        return (int)(value*scale+0.5f);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
     }
 }
 
