@@ -17,28 +17,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/prev_month_button_text"
+            android:onClick="jumpToPrevMonth"
             style="?buttonBarButtonStyle" />
 
         <TextView
             android:id="@+id/currentMonthTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/current_month_text_view_text"/>
+            android:text="@string/current_month_text_view_text" />
 
         <Button
             android:id="@+id/nextMonthButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/next_month_button_text"
+            android:onClick="jumpToNextMonth"
             style="?buttonBarButtonStyle" />
     </LinearLayout>
 
     <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/lineChart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
     <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2" />
