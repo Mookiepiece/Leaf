@@ -14,6 +14,10 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.huojitang.leaf.dao.MonthlyBillDao
+import com.huojitang.leaf.model.BillItem
+import com.huojitang.util.LeafDateSupport
+import java.time.YearMonth
 
 /**
  * ChartActivity
@@ -27,6 +31,8 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
     private lateinit var prevMonthButton: Button
     private lateinit var nextMonthButton: Button
     private lateinit var currentMonthTextView: TextView
+    private lateinit var selectedYearMonth: YearMonth
+    private lateinit var billItems: List<BillItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +44,11 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
         prevMonthButton = findViewById(R.id.prevMonthButton)
         nextMonthButton = findViewById(R.id.nextMonthButton)
         currentMonthTextView = findViewById(R.id.currentMonthTextView)
+
+        selectedYearMonth = YearMonth.now()
+        currentMonthTextView.text = String.format(
+                resources.getString(R.string.current_month_text_view_text), selectedYearMonth
+        )
 
         setupLineChart()
     }
@@ -95,6 +106,10 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
      */
     fun jumpToPrevMonth(view: View) {
         // TODO: 设置“上一月”按钮的跳转事件
+        selectedYearMonth = LeafDateSupport.prevMonth(selectedYearMonth)
+        currentMonthTextView.text = String.format(
+                resources.getString(R.string.current_month_text_view_text), selectedYearMonth
+        )
     }
 
     /**
@@ -102,6 +117,10 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
      */
     fun jumpToNextMonth(view: View) {
         // TODO: 设置“下一月”按钮的跳转事件
+        selectedYearMonth = LeafDateSupport.nextMonth(selectedYearMonth)
+        currentMonthTextView.text = String.format(
+                resources.getString(R.string.current_month_text_view_text), selectedYearMonth
+        )
     }
 
     override fun onNothingSelected() {
@@ -118,5 +137,25 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
         if (e is PieEntry) {
             pieChart.centerText = generateSpannableString(e)
         }
+    }
+
+    private fun fetchBillItems() {
+        billItems = MonthlyBillDao.getInstance().getByDate(selectedYearMonth.toString()).billItems
+    }
+
+    private fun fetchPieChartData() {
+
+    }
+
+    /**
+     * 获取 LineChart 的数据（统计每日消费额数据）
+     * @return 一个 FloatArray，其长度为当月的长度，第 i 项表示当月第 i + 1 日的消费额
+     */
+    private fun fetchLineChartData(): FloatArray {
+        val result = FloatArray(selectedYearMonth.lengthOfMonth())
+        for (item in billItems) {
+            result[item.day - 1] += (item.value / 100.0f)
+        }
+        return result
     }
 }
