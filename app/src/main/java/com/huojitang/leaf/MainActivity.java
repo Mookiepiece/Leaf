@@ -24,10 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout.Tab one;
     private TabLayout.Tab two;
 
-    /*LeafSQLiteOpenHelper leafSQLiteOpenHelper;
-    SQLiteDatabase db;
-    private Menu menu;*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
