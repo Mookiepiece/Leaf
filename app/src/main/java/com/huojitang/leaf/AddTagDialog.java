@@ -8,8 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.huojitang.entities.TagEntity;
-
+import com.huojitang.leaf.model.Tag;
 
 /**
  * 添加标签对话框
@@ -27,13 +26,13 @@ public class AddTagDialog extends Dialog {
     private boolean properInput=false;
 
     //TODO MK 构造方法里传入的空的一个实体，但是得想办法给它赋值并返回
-    private TagEntity tagEntity;
+    private Tag tag;
 
-    public AddTagDialog(Context context,TagEntity tagEntity, final ConfirmOnclickListener listener) {
+    public AddTagDialog(Context context,Tag tag, final ConfirmOnclickListener listener) {
         super(context);
         this.setCancelable(true);
         this.setCanceledOnTouchOutside(true);
-        this.tagEntity=tagEntity;
+        this.tag=tag;
 
         this.setContentView(R.layout.dialog_add_tag);
         this.name=findViewById(R.id.dialog_add_tag_name);

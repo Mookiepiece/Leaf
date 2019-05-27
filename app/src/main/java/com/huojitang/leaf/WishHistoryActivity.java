@@ -7,8 +7,23 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.huojitang.leaf.dao.WishDao;
+import com.huojitang.leaf.model.Wish;
+
+import java.time.YearMonth;
+
 public class WishHistoryActivity extends AppCompatActivity {
+
+    class WishWao{
+        JSONObject jsonObject=JSON.parseObject("{'StartTime':'2019-10','endTime':'2023-8'}");
+    }
+
     WebView wv;
+    WishDao wishDao= WishDao.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,13 +49,13 @@ public class WishHistoryActivity extends AppCompatActivity {
 
     private class JavaFunc{
 
-        @JavascriptInterface
-        public void LoadInitialData(){
-
-        }
 
         @JavascriptInterface
-        public void LoadMonthData(){
+        public void LoadMonthData(String month){
+
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.put("date",month);
+            JSONArray itemArray=new JSONArray();
 
         }
 

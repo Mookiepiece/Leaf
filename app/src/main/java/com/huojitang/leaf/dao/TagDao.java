@@ -1,5 +1,7 @@
 package com.huojitang.leaf.dao;
 
+import android.content.ContentValues;
+
 import com.huojitang.leaf.model.Tag;
 import org.litepal.LitePal;
 
@@ -21,6 +23,31 @@ public class TagDao extends BaseDao<Tag> {
     @Override
     public List<Tag> listAll() {
         return LitePal.findAll(Tag.class);
+    }
+
+    /** MK 指定是否查询关于系统保留标签 */
+    public List<Tag> list(boolean includesDefault) {
+        return LitePal.where(includesDefault?"":"reserved = 0").find(Tag.class);
+    }
+
+    /** MK 查询总数 */
+    public int getCount(boolean includesDefault){
+        return LitePal.where(includesDefault?"":"reserved = 0").count(Tag.class);
+    }
+
+    /** MK 拖拽排序更新位置， 包括start 及 end  */
+    public void updateTagIndexes(List<Tag> arr,int start,int end){
+        ContentValues values;
+        for(int i=start;i<=end;i++){
+            values= new ContentValues();
+            values.put("index", i);
+            LitePal.update(Tag.class, values, arr.get(i).getId());
+        }
+    }
+
+    /** MK 从数据表中删除By id  */
+    public void delete(int id) {
+        LitePal.delete(Tag.class,id);
     }
 
     private static TagDao instance = new TagDao();

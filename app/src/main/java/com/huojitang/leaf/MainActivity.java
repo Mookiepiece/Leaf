@@ -8,6 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.huojitang.global.LeafApplication;
+import com.huojitang.leaf.dao.TagDao;
+import com.huojitang.leaf.model.Tag;
+
+import org.litepal.tablemanager.Connector;
 
 public class MainActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
@@ -17,13 +24,14 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout.Tab one;
     private TabLayout.Tab two;
 
-    LeafSQLiteOpenHelper leafSQLiteOpenHelper;
+    /*LeafSQLiteOpenHelper leafSQLiteOpenHelper;
     SQLiteDatabase db;
-    private Menu menu;
+    private Menu menu;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         initViews();
     }
