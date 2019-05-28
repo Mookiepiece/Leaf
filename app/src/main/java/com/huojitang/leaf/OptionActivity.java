@@ -9,19 +9,20 @@ import android.webkit.WebViewClient;
 
 
 public class OptionActivity extends AppCompatActivity {
-    WebView wv;
+    WebView webView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
 
         //初始化
-        wv=findViewById(R.id.web_view);
-        wv.getSettings().setJavaScriptEnabled(true);
-        wv.loadUrl("file:////android_asset/localhost/option.html");
+        webView =findViewById(R.id.web_view);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("file:////android_asset/localhost/option.html");
 
         //禁用跳转到默认浏览器
-        wv.setWebViewClient(new WebViewClient() {
+        webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
@@ -30,29 +31,29 @@ public class OptionActivity extends AppCompatActivity {
         });
 
         //暴露java方法
-        wv.addJavascriptInterface(new JavaFunc(),"java");
+        webView.addJavascriptInterface(new JavaFunc(),"java");
     }
 
     //返回本窗口则调用JS加载FadeIn动画
     @Override
     protected void onResume() {
         super.onResume();
-        wv.loadUrl("javascript:FadeIn()");
+        webView.loadUrl("javascript:FadeIn()");
     }
 
     private class JavaFunc{
         @JavascriptInterface
-        public void Back(){
+        public void back(){
             OptionActivity.this.finish();
         }
 
         @JavascriptInterface
-        public void About(){
+        public void about(){
             startActivity(new Intent(OptionActivity.this ,AboutActivity.class));
         }
 
         @JavascriptInterface
-        public void Tag(){
+        public void tag(){
             startActivity(new Intent(OptionActivity.this ,EditTagActivity.class));
         }
     }
