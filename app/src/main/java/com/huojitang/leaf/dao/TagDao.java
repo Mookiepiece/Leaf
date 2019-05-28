@@ -1,5 +1,7 @@
 package com.huojitang.leaf.dao;
 
+import com.huojitang.leaf.model.BillItem;
+import com.huojitang.leaf.model.MonthlyBill;
 import com.huojitang.leaf.model.Tag;
 import org.litepal.LitePal;
 
@@ -21,6 +23,17 @@ public class TagDao extends BaseDao<Tag> {
     @Override
     public List<Tag> listAll() {
         return LitePal.findAll(Tag.class);
+    }
+
+    /**
+     * 获得给定标签在给定月份下的消费总额
+     * @param tag   需要统计的标签
+     * @param monthlyBill   需要统计的月份
+     * @return 一个整数，表示该标签在该月下的消费总额（实际值为模拟值除以 100）
+     */
+    public int getConsumption(Tag tag, MonthlyBill monthlyBill) {
+        return LitePal.where("tag_id = ? and monthlybill_id = ?", String.valueOf(tag.getId()), String.valueOf(monthlyBill.getId()))
+                .sum(BillItem.class, "value", int.class);
     }
 
     private static TagDao instance = new TagDao();
