@@ -45,12 +45,14 @@
         <TextView
             android:id="@+id/wish_name"
             android:layout_weight="1"
+            android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/wish_price"
             android:layout_weight="1"
+            android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -65,16 +67,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/wish_state"
+            android:textSize="20dp"
             android:layout_weight="1"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/wish_start_time"
+            android:textSize="20dp"
             android:layout_weight="1"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/wish_end_time"
+            android:textSize="20dp"
             android:layout_weight="1"/>
     </LinearLayout>
 </LinearLayout>
