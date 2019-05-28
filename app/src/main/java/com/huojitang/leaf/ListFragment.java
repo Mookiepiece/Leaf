@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -34,7 +36,12 @@ public class ListFragment extends Fragment {
     int status = 0;
     private ProgressBar bar;
 
-    static class MyHandler extends Handler {
+    private Bean mBean;
+    RecyclerView c_RecyclerView;
+    private RvAdapter mRvAdapter;
+
+
+    private class MyHandler extends Handler {
         private WeakReference<ListFragment> activity;
         MyHandler(WeakReference<ListFragment> activity){
             this.activity = activity;
@@ -46,11 +53,7 @@ public class ListFragment extends Fragment {
             }
         }
     }
-    MyHandler mHandler = new MyHandler(new WeakReference<ListFragment>(this));
-
-    private Bean mBean;
-    RecyclerView c_RecyclerView;
-    private RvAdapter mRvAdapter;
+    final MyHandler mHandler = new MyHandler(new WeakReference<ListFragment>(this));
 
     @Nullable
     @Override
@@ -61,19 +64,27 @@ public class ListFragment extends Fragment {
         c_RecyclerView = (RecyclerView) view.findViewById(R.id.RV_1);
 
         bar = view.findViewById(R.id.bar);
+        status = 20;
         new Thread() {
             @Override
             public void run() {
-                while (status < 100) {
-                    status = doWork();
-                    mHandler.sendEmptyMessage(0x111);
-                }
+                status = 20;
+                mHandler.sendEmptyMessage(0x111);
             }
         }.start();
 
         ButterKnife.bind(getActivity());
 
         initdata();
+
+        //设置悬浮按钮的点击事件
+        FloatingActionButton floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButton2);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"你点击了悬浮按钮",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return view;
     }
@@ -103,23 +114,31 @@ public class ListFragment extends Fragment {
             List<Bean.DatasBean.Option> option = new ArrayList<>();
 
             Bean.DatasBean.Option optionBean = new Bean.DatasBean.Option();
-            optionBean.setDatas("物品" + i);
+            optionBean.setmDate("2018-03-01");
+            optionBean.setmName("早餐");
+            optionBean.setmPrice("4.00元");
             option.add(optionBean);
 
             Bean.DatasBean.Option optionBean1 = new Bean.DatasBean.Option();
-            optionBean1.setDatas("物品" + (i + 1));
+            optionBean1.setmDate("2018-03-01");
+            optionBean1.setmName("水费");
+            optionBean1.setmPrice("20.00元");
             option.add(optionBean1);
 
             Bean.DatasBean.Option optionBean2 = new Bean.DatasBean.Option();
-            optionBean2.setDatas("物品" + (i + 2));
+            optionBean2.setmDate("2018-03-02");
+            optionBean2.setmName("电费");
+            optionBean2.setmPrice("300.00元");
             option.add(optionBean2);
 
             Bean.DatasBean.Option optionBean3 = new Bean.DatasBean.Option();
-            optionBean3.setDatas("物品" + (i + 3));
+            optionBean3.setmDate("2018-03-03");
+            optionBean3.setmName("话费");
+            optionBean3.setmPrice("100.00元");
             option.add(optionBean3);
 
             datasBean.setOptions(option);
-            datasBean.setTitle("标签");
+            datasBean.setTitle("标签"+i);
             datas.add(datasBean);
         }
 
@@ -133,10 +152,11 @@ public class ListFragment extends Fragment {
 //        setHeaderView(c_RecyclerView);
     }
 
-    private void setHeaderView(RecyclerView view) {
-        View header = LayoutInflater.from(getContext()).inflate(R.layout.item_header,view,false);
+//    private void setHeaderView(RecyclerView view) {
+//
+//        View header = LayoutInflater.from(getContext()).inflate(R.layout.item_header,view,false);
 //        mRvAdapter.setHeaderView(header);
-    }
+//    }
 
     private void setFooterView(RecyclerView view){
         View footer = LayoutInflater.from(getContext()).inflate(R.layout.item_footer,view,false);
@@ -146,8 +166,7 @@ public class ListFragment extends Fragment {
     public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder> {
         //新增itemType
         public static final int ITEM_TYPE = 100;
-
-        //    private static final int TYPE_HEADER = 0; //说明带有header
+//        private static final int TYPE_HEADER = 0; //说明带有header
         private static final int TYPE_FOOTER = 1; //说明带有footer
 //    private static final int TYPE_NORMAL = 2; //说明不带有header和footer
 
@@ -155,7 +174,7 @@ public class ListFragment extends Fragment {
         private List<Bean.DatasBean> mList;
 
         private View mFooterView;
-        private View mHeaderView;
+//        private View mHeaderView;
 
         public RvAdapter(Context context, List<Bean.DatasBean> list) {
             mContext = context;
@@ -238,11 +257,17 @@ public class ListFragment extends Fragment {
 
         @Override
         public int getItemCount() {
+//            if(mFooterView == null&&mHeaderView == null){
+//                return mList.size();
+//            } else if(mFooterView != null && mHeaderView == null){
+//                return mList.size()+1;
+//            } else if(mFooterView == null && mHeaderView != null){
+//                return mList.size()+1;
+//            }
             if(mFooterView == null){
                 return mList.size();
-            } else{
-                return mList.size()+1;
             }
+            return mList.size()+1;
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
@@ -281,6 +306,23 @@ public class ListFragment extends Fragment {
 
         public void setFooterView(View footerView){
             mFooterView = footerView;
+            Button btn1 = footerView.findViewById(R.id.note);
+            Button btn2 = footerView.findViewById(R.id.chart);
+
+            btn1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(),"您点击了笔记按钮，正在为您跳转",Toast.LENGTH_SHORT).show();
+                    //TODO
+                }
+            });
+            btn2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(),"您点击了分析报表按钮，正在为您跳转",Toast.LENGTH_SHORT).show();
+                    //TODO
+                }
+            });
             notifyItemInserted(getItemCount()-1);
         }
     }
@@ -318,7 +360,10 @@ public class ListFragment extends Fragment {
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.lay_option.setTag(position);
 
-            holder.tvOption.setText(mList.get(position).getDatas());
+            holder.op_date.setText(mList.get(position).getmDate());
+            holder.op_name.setText(mList.get(position).getmName());
+            holder.op_price.setText(mList.get(position).getmPrice());
+
             if (mList.get(position).isSelect()) {
                 holder.lay_option.setBackgroundResource(R.drawable.background_grid_unselect);
             } else {
@@ -336,8 +381,12 @@ public class ListFragment extends Fragment {
         class ViewHolder extends RecyclerView.ViewHolder {
             @BindView(R.id.lay_option)
             LinearLayout lay_option;
-            @BindView(R.id.tv_option)
-            TextView tvOption;
+            @BindView(R.id.OP_date)
+            TextView op_date;
+            @BindView(R.id.OP_name)
+            TextView op_name;
+            @BindView(R.id.OP_price)
+            TextView op_price;
 
             ViewHolder(View view) {
                 super(view);
@@ -362,7 +411,7 @@ public class ListFragment extends Fragment {
                                     }
                                 }
                                 Toast.makeText(getContext(),
-                                        datasBeans.get(position).getTitle() + "-" + option.get(tag).getDatas(),
+                                        datasBeans.get(position).getTitle() + "-" + option.get(tag).getmName(),
                                         Toast.LENGTH_SHORT).show();
 
                             } else {
