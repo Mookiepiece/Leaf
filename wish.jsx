@@ -9,31 +9,30 @@ const javaGetValueEvent = new CustomEvent("javaGetValue");
 
 //从java获取起始与结束的月份
 var BeginMonth = { year: 2019, month: 10 }, EndMonth = { year: 2023, month: 8 };
+//JAVA暴露的对象
+
+var java;
+
+
 
 //通往java的钥匙
 var javaDataLoader = (() => {
     let V = {};
     V.lock = false;
 
-    //TODO 从java获取值
-    V.javaGetMonthVal = (date, length = 1) => {
-        if (length <= 1) {
-            V.javaReturnVal = [{
-                date: date,
-                item: [
-                    { name: "item1", state: "resolved" },
-                    { name: "item2", state: "resolved" },
-                    { name: "item2", state: "resolved" },
-                    { name: "item2", state: "resolved" },
-                    { name: "item2", state: "resolved" },
-                    { name: "item2", state: "resolved" },
-                ]
-            }]
-        }
-        else {
-            V.javaReturnVal =  getInitialVal();
-        }
+    V.getBeginAndEndMonth=()=>{
+        
+    }
 
+    //TODO 从java获取值
+    V.javaGetMonthVal = (str) => {
+
+        V.javaReturnVal = JSON.parse(str)
+
+
+            // V.javaReturnVal =  getInitialVal();
+        
+        
         window.dispatchEvent(javaGetValueEvent);
     }
     return V;
@@ -76,67 +75,60 @@ class Root extends React.Component {
     componentDidMount() {
         this.root = $$("#root");
         this.root.scrollTop = 152;
-        //使用onscroll事件判断屏幕是否划到两端
-        this.scrollFlag = false;//主要使用定时器触发加载而非滚轮事件，onscroll事件太过频繁
 
         this.root.onscroll = () => { this.scrollHandler() };//rootDiv滚动事件
-        this.scrollInterval = setInterval(() => {
-            console.log(this.root.scrollTop);
-            if (!this.scrollFlag)
-                return;
-            this.scrollFlag = false;
-
-            if (javaDataLoader.lock == true)
-                return;
-            javaDataLoader.lock = true;
-            //TODO 是否使用React ref替换DOM和魔法值
-            if (this.beginDiv.current && this.insight({ offsetTop: 0, clientHeight: 150 })) { //名为startdiv的块处于视野 加载上月值
-                let targetMonth = preMonth(this.getBeginDate());//begin
-                if (hasMonthVal(targetMonth)) {
-                    this.beforeScroll = { direction: "begin" };//begin
-                    new Promise((resolve, reject) => {
-                        this.listener = () => { resolve() };
-                        window.addEventListener("javaGetValue", this.listener);//监听java返回值
-                        javaDataLoader.javaGetMonthVal(targetMonth);//call java
-                    }).then(() => {
-                        window.removeEventListener("javaGetValue", this.listener);
-                        this.setState((state) => ({
-                            monthes: [...javaDataLoader.javaReturnVal, ...state.monthes],//begin
-                        }));
-                    });
-                }
-                else {
-                    this.setState(() => ({ beginDivOff: true }));
-                }
-                return;
-            }
-            if (this.endDiv.current && this.insight({ offsetTop: this.root.scrollHeight - 150, clientHeight: 150 })) { //名为enddiv的块处于视野 加载下月值
-                let targetMonth = nextMonth(this.getEndDate());//end
-                if (hasMonthVal(targetMonth)) {
-                    this.beforeScroll = { direction: "end" };//end
-                    new Promise((resolve, reject) => {
-                        this.listener = () => { resolve() };
-                        window.addEventListener("javaGetValue", this.listener);
-                        javaDataLoader.javaGetMonthVal(targetMonth);
-                    }).then(() => {
-                        window.removeEventListener("javaGetValue", this.listener);
-                        this.setState((state) => ({
-                            monthes: [...state.monthes, ...javaDataLoader.javaReturnVal],//end
-                        }));
-                    });
-                }
-                else {
-                    this.setState(() => ({ endDivOff: true }));
-                }
-                return;
-            }
-            javaDataLoader.lock = false;
-        }, 50);
     }
 
     scrollHandler() {
-        this.scrollFlag = true;
-        console.log("scrolled" + this.root.scrollTop);
+        console.log(this.root.scrollTop);
+
+        if (javaDataLoader.lock == true)
+            return;
+        javaDataLoader.lock = true;
+        //TODO 是否使用React ref替换DOM和魔法值
+        if (this.beginDiv.current && this.insight({ offsetTop: 0, clientHeight: 150 })) { //名为startdiv的块处于视野 加载上月值
+            let targetMonth = preMonth(this.getBeginDate());//begin
+            if (hasMonthVal(targetMonth)) {
+                this.beforeScroll = { direction: "begin" };//begin
+                
+                new Promise((resolve, reject) => {
+                    this.listener = () => { resolve() };
+                    window.addEventListener("javaGetValue", this.listener);//监听java返回值
+                    javaDataLoader.javaGetMonthVal(targetMonth);//call java
+                }).then(() => {
+                    window.removeEventListener("javaGetValue", this.listener);
+                    this.setState((state) => ({
+                        monthes: [...javaDataLoader.javaReturnVal, ...state.monthes],//begin
+                    }));
+                });
+            }
+            else {
+                this.setState(() => ({ beginDivOff: true }));
+            }
+            return;
+        }
+        if (this.endDiv.current && this.insight({ offsetTop: this.root.scrollHeight - 150, clientHeight: 150 })) { //名为enddiv的块处于视野 加载下月值
+            let targetMonth = nextMonth(this.getEndDate());//end
+            if (hasMonthVal(targetMonth)) {
+                this.beforeScroll = { direction: "end" };//end
+
+                new Promise((resolve, reject) => {
+                    this.listener = () => { resolve() };
+                    window.addEventListener("javaGetValue", this.listener);
+                    javaDataLoader.javaGetMonthVal(targetMonth);
+                }).then(() => {
+                    window.removeEventListener("javaGetValue", this.listener);
+                    this.setState((state) => ({
+                        monthes: [...state.monthes, ...javaDataLoader.javaReturnVal],//end
+                    }));
+                });
+            }
+            else {
+                this.setState(() => ({ endDivOff: true }));
+            }
+            return;
+        }
+        javaDataLoader.lock = false;
     }
 
     getBeginDate = () => {
@@ -262,59 +254,59 @@ function nextMonth(ym) {
 }
 
 
-/**
- * TEST
- */
-function getInitialVal() {
-    return [
-        {
-            date: { year: 2021, month: 12 },
-            item: [
-                { name: "item1", state: "resolved" },
-                { name: "item2", state: "cancelled" },
-                { name: "item2", state: "cancelled" },
-                { name: "item2", state: "resolved" },
-                { name: "item2", state: "onprogress" },
-            ]
-        },
-        {
-            date: { year: 2022, month: 1 },
-            item: [
-                { name: "item1", state: "resolved" },
-                { name: "item2", state: "resolved" },
-            ]
-        },
-        {
-            date: { year: 2022, month: 2 },
-            item: [
-                { name: "item1", state: "resolved" },
-                { name: "item2", state: "resolved" },
-            ]
-        },
-        {
-            date: { year: 2022, month: 3 },
-            item: [
-                { name: "item1", state: "resolved" },
-                { name: "item2", state: "resolved" },
-            ]
-        },
-        {
-            date: { year: 2022, month: 4 },
-            item: [
-                { name: "item1", state: "resolved" },
-                { name: "item2", state: "resolved" },
-                { name: "item2", state: "resolved" },
-                { name: "item2", state: "resolved" },
-                { name: "item2", state: "resolved" },
-                { name: "item2", state: "resolved" },
-            ]
-        },
-        {
-            date: { year: 2022, month: 5 },
-            item: [
-                { name: "item1", state: "resolved" },
-                { name: "item2", state: "resolved" },
-            ]
-        }
-    ];
-}
+// /**
+//  * TEST
+//  */
+// function getInitialVal() {
+//     return [
+//         {
+//             date: { year: 2021, month: 12 },
+//             item: [
+//                 { name: "item1", state: "resolved" },
+//                 { name: "item2", state: "cancelled" },
+//                 { name: "item2", state: "cancelled" },
+//                 { name: "item2", state: "resolved" },
+//                 { name: "item2", state: "onprogress" },
+//             ]
+//         },
+//         {
+//             date: { year: 2022, month: 1 },
+//             item: [
+//                 { name: "item1", state: "resolved" },
+//                 { name: "item2", state: "resolved" },
+//             ]
+//         },
+//         {
+//             date: { year: 2022, month: 2 },
+//             item: [
+//                 { name: "item1", state: "resolved" },
+//                 { name: "item2", state: "resolved" },
+//             ]
+//         },
+//         {
+//             date: { year: 2022, month: 3 },
+//             item: [
+//                 { name: "item1", state: "resolved" },
+//                 { name: "item2", state: "resolved" },
+//             ]
+//         },
+//         {
+//             date: { year: 2022, month: 4 },
+//             item: [
+//                 { name: "item1", state: "resolved" },
+//                 { name: "item2", state: "resolved" },
+//                 { name: "item2", state: "resolved" },
+//                 { name: "item2", state: "resolved" },
+//                 { name: "item2", state: "resolved" },
+//                 { name: "item2", state: "resolved" },
+//             ]
+//         },
+//         {
+//             date: { year: 2022, month: 5 },
+//             item: [
+//                 { name: "item1", state: "resolved" },
+//                 { name: "item2", state: "resolved" },
+//             ]
+//         }
+//     ];
+// }
