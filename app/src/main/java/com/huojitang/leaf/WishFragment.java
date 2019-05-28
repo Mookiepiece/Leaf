@@ -1,25 +1,50 @@
 package com.huojitang.leaf;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.PopupMenu;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.BounceInterpolator;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.TimeZone;
 
 public class WishFragment<FragmentAdapter> extends Fragment {
     private String[] names = {"相机","小米九","平板电脑","内存条","移动硬盘"};
     private String[] price = {"2000.00元","3199.00元","1700.00元","300.00元","500.00元"};
     private String[] states = {"已完成","已完成","已取消","未完成","已取消"};
-    private String[] starttime = {"2019-1","2019-1","2019-2","2019-4","2019-4"};
-    private String[] endtime = {"2019-3","2019-4","2019-3","","2019-5"};
-    ListView listView;
+    private String[] starttime = {"2019-01","2019-01","2019-02","2019-04","2019-04"};
+    private String[] endtime = {"2019-03","2019-04","2019-03","","2019-05"};
+
+    private List<WishMessage> wishMessageList = new ArrayList<>();
+    ListView mListView;
+    Calendar calendar;
+    String year;
+    String month;
+
 
     @Nullable
     @Override
@@ -27,48 +52,126 @@ public class WishFragment<FragmentAdapter> extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedTnstanceState){
         View view = inflater.inflate(R.layout.fragment_wish,container,false);
+        calendar = Calendar.getInstance();
+        calendar.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+        year = String.valueOf(calendar.get(Calendar.YEAR));
+        if(calendar.get(Calendar.MONTH)<10){
+            month = "0" + String.valueOf(calendar.get(Calendar.MONTH)+1);
+        }else {
+            month = String.valueOf(calendar.get(Calendar.MONTH)+1);
+        }
 
-        listView = (ListView) view.findViewById(R.id.LV_2);
+        mListView = (ListView) view.findViewById(R.id.LV_2);
+        initWishMessage();
 
-        WishFragment.FragmentAdapter fragmentAdapter = new WishFragment.FragmentAdapter();
-        listView.setAdapter(fragmentAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        final WishFragment.FragmentAdapter fragmentAdapter = new WishFragment.FragmentAdapter();
+        mListView.setAdapter(fragmentAdapter);
+
+        mListView.setOnItemLongClickListener (new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("删除？").setNegativeButton(R.string.g_back,null);
-                builder.setPositiveButton(R.string.g_confirm, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        getActivity().notifyAll();
-                    }
-                });
-                builder.show();
-            }
-        });
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                if(wishMessageList.get(position).getWishState().equals("未完成")){
+                    PopupMenu popupMenu = new PopupMenu(getContext(), view);
+                    popupMenu.inflate(R.menu.popup_menu);
+                    popupMenu.show();
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.wish_finish:
+                                    wishMessageList.get(position).setWishState("已完成");
+                                    wishMessageList.get(position).setEndTime(year+"-"+month);
+                                    fragmentAdapter.notifyDataSetChanged();
+                                    Toast.makeText(getContext(), "你选择了完成选项", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.wish_cancel:
+                                    wishMessageList.get(position).setWishState("已取消");
+                                    wishMessageList.get(position).setEndTime(year+"-"+month);
+                                    fragmentAdapter.notifyDataSetChanged();
+                                    Toast.makeText(getContext(), "你选择了取消选项", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.add_wish:
+                                    Toast.makeText(getContext(), "你选择了添加选项", Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                            return false;
+                        }
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("添加？").setNegativeButton(R.string.g_back,null);
-                builder.setPositiveButton(R.string.g_confirm, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        ;
-                    }
-                });
-                builder.show();
+                    });
+                }else {
+                    PopupMenu popupMenu = new PopupMenu(getContext(), view);
+                    popupMenu.inflate(R.menu.other_popup_menu);
+                    popupMenu.show();
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.other_add_wish:
+                                    Toast.makeText(getContext(), "你选择了添加选项", Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                            return false;
+                        }
+
+                    });
+                }
                 return false;
             }
         });
+
         return view;
     }
 
-    public class FragmentAdapter extends BaseAdapter{
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        MenuInflater inflater = new MenuInflater(getContext());
+        inflater.inflate(R.menu.other_popup_menu,menu);
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.other_add_wish:
+                Toast.makeText(getContext(),"你选择了添加选项",Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.popup_menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.wish_finish:
+//                Toast.makeText(getContext(),"你选择了完成选项",Toast.LENGTH_SHORT).show();
+//                break;
+//            case R.id.wish_cancel:
+//                Toast.makeText(getContext(),"你选择了取消选项",Toast.LENGTH_SHORT).show();
+//                break;
+//            case R.id.add_wish:
+//                Toast.makeText(getContext(),"你选择了添加选项",Toast.LENGTH_SHORT).show();
+//                break;
+//        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void initWishMessage() {
+        for(int i = 0;i<names.length;i++){
+            WishMessage wishMessage = new WishMessage(names[i],price[i],states[i],starttime[i],endtime[i]);
+            wishMessageList.add(wishMessage);
+        }
+    }
+
+    public class FragmentAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return names.length;
+            return wishMessageList.size();
         }
 
         @Override
@@ -83,20 +186,34 @@ public class WishFragment<FragmentAdapter> extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view = getLayoutInflater().inflate(R.layout.wish_list,null);
+            if (convertView == null) {
+                convertView = View.inflate(getContext(), R.layout.wish_list, null);
+                new ViewHolder(convertView);
+            }
+            ViewHolder holder = (ViewHolder) convertView.getTag();
+            holder.wishName.setText(wishMessageList.get(position).getWishName());
+            holder.wishPrice.setText(wishMessageList.get(position).getWishPrice());
+            holder.wishState.setText(wishMessageList.get(position).getWishState());
+            holder.startTime.setText(wishMessageList.get(position).getStartTime());
+            holder.endTime.setText(wishMessageList.get(position).getEndTime());
+            return convertView;
+        }
 
-            TextView textView1 = view.findViewById(R.id.wish_name);
-            TextView textView2 = view.findViewById(R.id.wish_price);
-            TextView textView3 = view.findViewById(R.id.wish_state);
-            TextView textView4 = view.findViewById(R.id.wish_start_time);
-            TextView textView5 = view.findViewById(R.id.wish_end_time);
+        class ViewHolder {
+            TextView wishName;
+            TextView wishPrice;
+            TextView wishState;
+            TextView startTime;
+            TextView endTime;
 
-            textView1.setText(names[position]);
-            textView2.setText(price[position]);
-            textView3.setText(states[position]);
-            textView4.setText(starttime[position]);
-            textView5.setText(endtime[position]);
-            return view;
+            public ViewHolder(View view) {
+                wishName = view.findViewById(R.id.wish_name);
+                wishPrice = view.findViewById(R.id.wish_price);
+                wishState = view.findViewById(R.id.wish_state);
+                startTime = view.findViewById(R.id.wish_start_time);
+                endTime = view.findViewById(R.id.wish_end_time);
+                view.setTag(this);
+            }
         }
     }
 }
