@@ -19,5 +19,7 @@
     <color name="leaf_blueGreen">#7cd</color>
     <color name="leaf_green">#1b3</color>
     <color name="leaf_springGreen">#5c9</color>
+    <color name="GoldenColor">#e2b85f</color>
+    <color name="list_bac">#222d34</color>
 
 </resources>
