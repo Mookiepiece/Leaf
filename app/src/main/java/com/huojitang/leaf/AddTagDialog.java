@@ -35,7 +35,7 @@ public class AddTagDialog extends Dialog {
         this.tag=tag;
 
         this.setContentView(R.layout.dialog_add_tag);
-        this.name=findViewById(R.id.dialog_add_tag_name);
+        /*this.name=findViewById(R.id.dialog_add_tag_name);
         this.limit=findViewById(R.id.dialog_add_tag_limit);
         this.confirm=findViewById(R.id.dialog_add_tag_confirm);
         this.cancel=findViewById(R.id.dialog_add_tag_cancel);
@@ -73,7 +73,7 @@ public class AddTagDialog extends Dialog {
                     properInput=true;
             }
 
-        });
+        });*/
 
 
     }

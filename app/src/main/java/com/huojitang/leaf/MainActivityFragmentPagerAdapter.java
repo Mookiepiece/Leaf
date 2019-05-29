@@ -1,8 +1,8 @@
 package com.huojitang.leaf;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 public class MainActivityFragmentPagerAdapter extends FragmentPagerAdapter {
     private String[] mTitles = new String[]{"帐单","心愿单"};

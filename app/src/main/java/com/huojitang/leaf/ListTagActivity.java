@@ -1,53 +1,49 @@
 package com.huojitang.leaf;
 
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import com.huojitang.leaf.dao.TagDao;
+import com.huojitang.leaf.model.Tag;
+import com.huojitang.util.PriceTransUtil;
 
-import com.huojitang.DAO.TagDAO;
-import com.huojitang.entities.TagEntity;
-import com.huojitang.util.ColorConverter;
 
 /**
  * 编辑标签界面
  */
-public class EditTagActivity extends AppCompatActivity {
-    private TagDAO tagDAO;
-    List<TagEntity> tagList=new ArrayList<>();
+public class ListTagActivity extends AppCompatActivity {
+    private TagDao tagDao=TagDao.getInstance();
+    List<Tag> tagList=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_tag);
+        setContentView(R.layout.activity_list_tag);
 
-        tagDAO=new TagDAO(this);
-        tagList=tagDAO.getTagsWithoutDefault();
+        tagList=tagDao.list(false);
 
         //RecyclerView代码
         RecyclerView rv=findViewById(R.id.edit_tag_recycler_view);
-
         rv.setHasFixedSize(true);//优化性能?
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
         rv.setLayoutManager(layoutManager);
-
         EditTagAdapter adapter=new EditTagAdapter();
         rv.setAdapter(adapter);
-
         EditTagTouchCallback callback=new EditTagTouchCallback(adapter);
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(rv);
@@ -63,20 +59,18 @@ public class EditTagActivity extends AppCompatActivity {
     }
 
     public void ShowAddTagDialog(){
-        if(tagDAO.getCountWithoutDefault()>=99){
-            Toast.makeText(EditTagActivity.this,"不能再增加标签数量了",Toast.LENGTH_SHORT).show();
+        if(tagDao.getCount(true)>=99){
+            Toast.makeText(ListTagActivity.this,"不能再增加标签数量了", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        TagEntity tagEntity=new TagEntity();
-        new AddTagDialog(EditTagActivity.this,tagEntity, new AddTagDialog.ConfirmOnclickListener(){
+        Tag tag=new Tag();
+        new AddTagDialog(ListTagActivity.this,tag, new AddTagDialog.ConfirmOnclickListener(){
             @Override
             public void ConfirmClick() {
                 //TODO MK 给数据库更新
             }
         }).show();
-//
-//        tagDAO.insertTag();
 
     }
 
@@ -138,7 +132,7 @@ public class EditTagActivity extends AppCompatActivity {
 
             //更新被标记移动的tag的index
             if(swapStartPosition!=-1&&swapEndPosition!=-1)
-            tagDAO.updateTagIndexes(tagList,swapStartPosition,swapEndPosition);
+            tagDao.updateTagIndexes(tagList,swapStartPosition,swapEndPosition);
             //重置标记
             swapStartPosition=swapEndPosition=-1;
         }
@@ -150,20 +144,26 @@ public class EditTagActivity extends AppCompatActivity {
         //创建ViewHolder
         @Override
         public EditTagViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            //View view = LayoutInflater.from(EditTagActivity.this).inflate(R.layout.tag_item, null);
-            View view = LayoutInflater.from(EditTagActivity.this).inflate(R.layout.tag_item, viewGroup,false);
+            View view = LayoutInflater.from(ListTagActivity.this).inflate(R.layout.tag_item, viewGroup,false);
             return new EditTagViewHolder(view);
         }
 
         //为item赋值
         @Override
         public void onBindViewHolder(EditTagViewHolder editTagViewHolder, int i) {
-            editTagViewHolder.name.setText( tagList.get(i).getTagName());
-            int color= ColorConverter.String2Color(tagList.get(i).getColor());
-            editTagViewHolder.name.setTextColor(color );
+            editTagViewHolder.name.setText( tagList.get(i).getName());
+            int color= tagList.get(i).getColor();
+            editTagViewHolder.name.setTextColor(color);
             editTagViewHolder.color.setBackgroundColor(color);
-            editTagViewHolder.limit.setText(tagList.get(i).getTagLimitDecimal());
+//            getBudget()
+            editTagViewHolder.limit.setText(PriceTransUtil.Int2Decimal(tagList.get(i).getBudget()));
             editTagViewHolder.cmt.setText( tagList.get(i).getComment());
+            editTagViewHolder.layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(ListTagActivity.this,"oooooo",Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         @Override
@@ -178,6 +178,7 @@ public class EditTagActivity extends AppCompatActivity {
         TextView limit;
         TextView color;
         TextView cmt;
+        LinearLayout layout;
 
         public EditTagViewHolder(View itemView) {
             super(itemView);
@@ -185,8 +186,7 @@ public class EditTagActivity extends AppCompatActivity {
             this.limit=itemView.findViewById(R.id.edit_tag_item_limit);
             this.color=itemView.findViewById(R.id.edit_tag_item_color);
             this.cmt=itemView.findViewById(R.id.edit_tag_item_comment);
+            this.layout=itemView.findViewById(R.id.edit_tag_layout);
         }
     }
-
-
 }

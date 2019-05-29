@@ -1,7 +1,7 @@
 package com.huojitang.leaf;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
@@ -54,7 +54,7 @@ public class OptionActivity extends AppCompatActivity {
 
         @JavascriptInterface
         public void tag(){
-            startActivity(new Intent(OptionActivity.this ,EditTagActivity.class));
+            startActivity(new Intent(OptionActivity.this , ListTagActivity.class));
         }
     }
 
