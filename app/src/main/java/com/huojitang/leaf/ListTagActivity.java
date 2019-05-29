@@ -21,7 +21,6 @@ import com.huojitang.leaf.dao.TagDao;
 import com.huojitang.leaf.model.Tag;
 import com.huojitang.util.PriceTransUtil;
 
-
 /**
  * 编辑标签界面
  */
@@ -143,21 +142,20 @@ public class ListTagActivity extends AppCompatActivity {
 
         //创建ViewHolder
         @Override
-        public EditTagViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        public EditTagViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
             View view = LayoutInflater.from(ListTagActivity.this).inflate(R.layout.tag_item, viewGroup,false);
             return new EditTagViewHolder(view);
         }
 
         //为item赋值
         @Override
-        public void onBindViewHolder(EditTagViewHolder editTagViewHolder, int i) {
-            editTagViewHolder.name.setText( tagList.get(i).getName());
-            int color= tagList.get(i).getColor();
+        public void onBindViewHolder(EditTagViewHolder editTagViewHolder, int position) {
+            editTagViewHolder.name.setText( tagList.get(position).getName());
+            int color= tagList.get(position).getColor();
             editTagViewHolder.name.setTextColor(color);
             editTagViewHolder.color.setBackgroundColor(color);
-//            getBudget()
-            editTagViewHolder.limit.setText(PriceTransUtil.Int2Decimal(tagList.get(i).getBudget()));
-            editTagViewHolder.cmt.setText( tagList.get(i).getComment());
+            editTagViewHolder.limit.setText(PriceTransUtil.Int2Decimal(tagList.get(position).getBudget()));
+            editTagViewHolder.cmt.setText( tagList.get(position).getComment());
             editTagViewHolder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

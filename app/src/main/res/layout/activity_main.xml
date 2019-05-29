@@ -10,17 +10,18 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="22dp"
+        android:layout_height="40dp"
         android:background="#00000000"
         app:tabIndicatorColor="#ff3336"
         app:tabIndicatorHeight="1dp"
-        app:tabTextColor="#0b0b0b"
+        app:tabMode="fixed"
         app:tabSelectedTextColor="#ff4433"
-        app:tabMode="fixed"/>
+        app:tabTextColor="#0b0b0b" />
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
 </LinearLayout>
