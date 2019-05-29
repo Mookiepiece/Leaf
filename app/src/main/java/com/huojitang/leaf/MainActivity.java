@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
     private void initViews() {
 
         //使用适配器将ViewPager与Fragment绑定在一起

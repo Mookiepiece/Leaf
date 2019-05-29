@@ -1,6 +1,8 @@
 package com.huojitang.global;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+
 import org.litepal.LitePalApplication;
 
 
@@ -9,15 +11,27 @@ import org.litepal.LitePalApplication;
  */
 public class LeafApplication extends LitePalApplication {
     private static Context mContext;
+    private static SharedPreferences preferences;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        //获取context
         mContext = getApplicationContext();
+        preferences = LeafApplication.getContext().getSharedPreferences("leaf-data", Context.MODE_PRIVATE);
     }
-    //创建一个静态的方法，以便获取context对象
+
+    //全局获取Context对象
     public static Context getContext(){
         return mContext;
+    }
+
+    //全局获取SharedPreferences对象
+    public static SharedPreferences getPreferences() {
+        return preferences;
+    }
+
+    //全局获取SharedPreferences.Edit对象
+    public static SharedPreferences.Editor getPreferencesEditor() {
+        return preferences.edit();
     }
 }
