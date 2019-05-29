@@ -1,6 +1,7 @@
 package com.huojitang.leaf;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -321,6 +322,8 @@ public class ListFragment extends Fragment {
                 public void onClick(View v) {
                     Toast.makeText(getContext(),"您点击了分析报表按钮，正在为您跳转",Toast.LENGTH_SHORT).show();
                     //TODO
+                    Intent intent = new Intent(getActivity(), ChartActivity.class);
+                    startActivity(intent);
                 }
             });
             notifyItemInserted(getItemCount()-1);
