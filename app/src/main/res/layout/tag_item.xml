@@ -19,8 +19,8 @@
 
         <com.huojitang.leaf.TagIconView
             android:id="@+id/edit_tag_item_color"
-            android:layout_width="25dp"
-            android:layout_height="25dp" />
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
 
         <TextView
             android:id="@+id/edit_tag_item_name"
