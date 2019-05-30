@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author Mookiepiece
  */
 public class EditTagFragmentPagerAdapter extends FragmentPagerAdapter {
-    private String[] mTitles = new String[]{"图标","背景色"};
+    private String[] mTitles = new String[]{"背景色","图标"};
     private ArrayList<Fragment> fragments;
 
     public EditTagFragmentPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {

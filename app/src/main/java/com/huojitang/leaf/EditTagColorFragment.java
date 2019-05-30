@@ -1,11 +1,14 @@
 package com.huojitang.leaf;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
@@ -27,14 +30,16 @@ public class EditTagColorFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tag_color_and_icons, container, false);
+        View view = inflater.inflate(R.layout.only_a_recycler_view, container, false);
         recyclerView = view.findViewById(R.id.tag_color_icon_fragment);
         initRecyclerView();
         return view;
     }
 
     private void initRecyclerView() {
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),5));
+
+        GridLayoutManager layoutManager=new GridLayoutManager(getContext(),EditTagActivity.ITEM_NUMBER_FOR_RECYCLER_VIEW);
+        recyclerView.setLayoutManager(layoutManager);
         tagColorAdapter = new TagColorAdapter();
         recyclerView.setAdapter(tagColorAdapter);
         tagColorAdapter.notifyDataSetChanged();
