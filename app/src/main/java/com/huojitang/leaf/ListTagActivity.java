@@ -2,14 +2,9 @@ package com.huojitang.leaf;
 
 import androidx.annotation.NonNull;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.huojitang.global.LeafApplication;
 import com.huojitang.leaf.dao.TagDao;
 import com.huojitang.leaf.model.Tag;
 import com.huojitang.util.PriceTransUtil;
@@ -46,7 +40,7 @@ public class ListTagActivity extends AppCompatActivity {
         tagList=tagDao.list(false);
 
         //RecyclerView代码
-        RecyclerView rv=findViewById(R.id.edit_tag_recycler_view);
+        RecyclerView rv=findViewById(R.id.list_tag_recycler_view);
         rv.setHasFixedSize(true);//优化性能?
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -58,7 +52,7 @@ public class ListTagActivity extends AppCompatActivity {
         helper.attachToRecyclerView(rv);
 
         //添加标签按钮
-        Button add=findViewById(R.id.edit_tag_activity_add_btn);
+        Button add=findViewById(R.id.list_tag_activity_add_btn);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +62,9 @@ public class ListTagActivity extends AppCompatActivity {
     }
 
     public void ShowAddTagDialog(){
-        if(tagDao.getCount(true)>=99){
+        startActivity(new Intent(ListTagActivity.this,EditTagActivity.class));
+        //TODO MK 实现传递tag数据
+        /*if(tagDao.getCount(true)>=99){
             Toast.makeText(ListTagActivity.this,"不能再增加标签数量了", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -77,9 +73,9 @@ public class ListTagActivity extends AppCompatActivity {
         new AddTagDialog(ListTagActivity.this,tag, new AddTagDialog.ConfirmOnclickListener(){
             @Override
             public void ConfirmClick() {
-                //TODO MK 给数据库更新
+
             }
-        }).show();
+        }).show();*/
 
     }
 

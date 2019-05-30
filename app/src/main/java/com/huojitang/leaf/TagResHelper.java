@@ -15,6 +15,14 @@ public class TagResHelper {
         return tagColors.get(position);
     }
 
+    public static ArrayList<Integer> getAllTagColorResId(){
+        return tagColors;
+    }
+
+    public static ArrayList<Integer> getAllTagIconResId(){
+        return tagIcons;
+    }
+
     public static int getTagIconsLength(){
         return tagIcons.size();
     }
@@ -22,6 +30,7 @@ public class TagResHelper {
     public static int getTagIconsResId(int position){
         return tagIcons.get(position);
     }
+
     static{
         int[] a={
                 R.color.tag_color_0,

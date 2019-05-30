@@ -59,19 +59,15 @@
                 android:hint="@string/tag_limit"
                 android:inputType="textPersonName|numberDecimal" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+            <com.huojitang.leaf.TagIconView
                 android:id="@+id/activity_edit_tag_shortcut"
                 android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:src="@drawable/leaf_btn_add_textcolor"
-                app:civ_border_width="2dp"
-                app:civ_border_color="#FF000000"/>
+                android:layout_height="96dp"/>
 
         </LinearLayout>
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/activity_edit_tag_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -81,19 +77,36 @@
 
     </LinearLayout>
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/activity_edit_tag_tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#00000000"
+        app:tabIndicatorColor="#ff3336"
+        app:tabIndicatorHeight="1dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="#ff4433"
+        app:tabTextColor="#0b0b0b" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/activity_edit_tag_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/dialog_add_tag_confirm"
+            android:id="@+id/activity_edit_tag_add_tag_confirm"
             style="@style/btn_dialog_option"
             android:layout_height="wrap_content"
             android:text="@string/g_confirm" />
 
         <Button
-            android:id="@+id/dialog_add_tag_cancel"
+            android:id="@+id/activity_edit_tag_add_tag_cancel"
             style="@style/btn_dialog_option"
             android:layout_height="wrap_content"
             android:layout_weight="1"

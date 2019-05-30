@@ -94,7 +94,7 @@ public class InitializeExampleData {
 
         SharedPreferences.Editor editor=LeafApplication.getPreferencesEditor();
         editor.putString("FirstWishStartTime","2019-01-15");
-        editor.putString("LastWishStartTime","2019-05-5");
+        editor.putString("LastWishEndTime","2019-05-5");
         editor.commit();
 
         MonthlyBillDao monthlyBillDao=MonthlyBillDao.getInstance();

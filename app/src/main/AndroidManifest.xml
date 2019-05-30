@@ -16,6 +16,7 @@
         <activity android:name=".ChartActivity" android:exported="true"></activity>
         <activity android:name=".AboutActivity" />
         <activity android:name=".ListTagActivity" />
+        <activity android:name=".EditTagActivity" />
         <activity
             android:name=".OptionActivity"
             android:label="@string/title_activity_setting"

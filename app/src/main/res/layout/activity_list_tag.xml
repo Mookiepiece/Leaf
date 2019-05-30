@@ -13,13 +13,13 @@
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/edit_tag_recycler_view"
+            android:id="@+id/list_tag_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
 
         <Button
-            android:id="@+id/edit_tag_activity_add_btn"
+            android:id="@+id/list_tag_activity_add_btn"
             android:text="@string/add"
             style="@style/btn_add_full" />
     </LinearLayout>

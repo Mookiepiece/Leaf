@@ -8,26 +8,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Toast;
-
 import androidx.annotation.Nullable;
-
-import com.huojitang.global.LeafApplication;
-import com.huojitang.util.LeafDateSupport;
 
 public class TagIconView extends View {
 
-    Paint paint; //画背景颜色
-    Bitmap bitmap; //缓存图标
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        //bitmap = Bitmap.createBitmap(getMeasuredWidth(), getMeasuredHeight(), Bitmap.Config.ARGB_4444);
-    }
+    private Paint paint; //画背景颜色
+    private Bitmap bitmap; //缓存图标
 
     public TagIconView(Context context, @Nullable AttributeSet attrs) {
         this(context,attrs,0);
@@ -43,6 +31,8 @@ public class TagIconView extends View {
                 case R.styleable.TagIconView_bgColor:
                     paint=new Paint();
                     paint.setColor(a.getColor(attr, Color.WHITE));
+                    paint.setStrokeWidth(5);
+                    paint.setAntiAlias(true);
                     break;
                 case R.styleable.TagIconView_fgIcon:
                     bitmap=BitmapFactory.decodeResource(getResources(),a.getResourceId(attr,R.drawable.baby_trolley));
@@ -72,25 +62,10 @@ public class TagIconView extends View {
         invalidate();
     }
 
-//    /**
-//     *
-//     * @param widthMeasureSpec
-//     * @param heightMeasureSpec
-//     */
-//    @Override
-//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//        int width = getMeasuredWidth();
-//        int height = getMeasuredHeight();
-//        // 初始化bitmap,Canvas
-//        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444);
-//        canvasCache = new Canvas(bitmap);
-//    }
-
-    final double SCALE=0.6;
-    final double SCALE_0=(1-SCALE)/2;
-    final double SCALE_1=SCALE+SCALE_0;
-
+    //图标缩放比
+    private final double SCALE=0.6;
+    private final double SCALE_0=(1-SCALE)/2;
+    private final double SCALE_1=SCALE+SCALE_0;
 
     @Override
     protected void onDraw(Canvas canvas) {
