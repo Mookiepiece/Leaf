@@ -22,6 +22,11 @@ public class BillItemDao extends BaseDao<BillItem> {
         return LitePal.findAll(BillItem.class);
     }
 
+    @Override
+    public int count() {
+        return LitePal.count(BillItem.class);
+    }
+
     private static BillItemDao instance = new BillItemDao();
 
     private BillItemDao() {}

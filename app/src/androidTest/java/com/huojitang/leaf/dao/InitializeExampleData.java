@@ -26,7 +26,7 @@ public class InitializeExampleData {
     @Test
     public void spTest(){
         SharedPreferences sp=LeafApplication.getPreferences();
-        assertEquals("2019-1-15",sp.getString("FirstWishStartTime",""));
+        assertEquals("2019-01-15",sp.getString("FirstWishStartTime",""));
     }
 
     @Test
@@ -68,30 +68,30 @@ public class InitializeExampleData {
         wish=new Wish();
         wish.setName("wish1");
         wish.setComment("454w252");
-        wish.setStartTime("2019-1-15");
+        wish.setStartTime("2019-01-15");
         wish.setFinishedTime("20");
         wish.setState(Wish.WISH_TODO);
         wishDao.add(wish);
         wish=new Wish();
         wish.setName("wish2");
         wish.setComment("454w252");
-        wish.setStartTime("2019-3-5");
+        wish.setStartTime("2019-03-05");
         wish.setFinishedTime("20");
         wish.setState(Wish.WISH_ACHIEVED);
-        wish.setFinishedTime("2019-5-5");
+        wish.setFinishedTime("2019-05-05");
         wishDao.add(wish);
         wish=new Wish();
         wish.setName("wish3");
         wish.setComment("454w252");
-        wish.setStartTime("2019-3-5");
+        wish.setStartTime("2019-03-05");
         wish.setFinishedTime("20");
         wish.setState(Wish.WISH_CANCELLED);
-        wish.setFinishedTime("2019-4-15");
+        wish.setFinishedTime("2019-04-15");
         wishDao.add(wish);
 
         SharedPreferences.Editor editor=LeafApplication.getPreferencesEditor();
-        editor.putString("FirstWishStartTime","2019-1-15");
-        editor.putString("LastWishStartTime","2019-5-5");
+        editor.putString("FirstWishStartTime","2019-01-15");
+        editor.putString("LastWishStartTime","2019-05-05");
         editor.commit();
 
         MonthlyBillDao monthlyBillDao=MonthlyBillDao.getInstance();
@@ -100,11 +100,11 @@ public class InitializeExampleData {
         monthlyBill=new MonthlyBill();
         monthlyBill.setBudget(120000);
         monthlyBill.setComment("comment of month");
-        monthlyBill.setDate("2019-5");
+        monthlyBill.setDate("2019-05");
         monthlyBillDao.add(monthlyBill);
         monthlyBill=new MonthlyBill();
         monthlyBill.setBudget(150000);
-        monthlyBill.setDate("2019-4");
+        monthlyBill.setDate("2019-04");
         monthlyBillDao.add(monthlyBill);
 
         BillItemDao billItemDao=BillItemDao.getInstance();
@@ -112,7 +112,7 @@ public class InitializeExampleData {
         BillItem billItem;
         billItem=new BillItem();
         billItem.setDay(4);
-        billItem.setMonthlyBill(monthlyBillDao.getByDate("2019-4"));
+        billItem.setMonthlyBill(monthlyBillDao.getByDate("2019-04"));
         billItem.setName("itemName0");
         billItem.setValue(1800);
         billItem.setTag(LitePal.where("name = '吃'").find(Tag.class).get(0));
@@ -120,7 +120,7 @@ public class InitializeExampleData {
 
         billItem=new BillItem();
         billItem.setDay(8);
-        billItem.setMonthlyBill(monthlyBillDao.getByDate("2019-4"));
+        billItem.setMonthlyBill(monthlyBillDao.getByDate("2019-04"));
         billItem.setName("itemName1");
         billItem.setValue(5000);
         billItem.setTag(LitePal.where("name = '吃'").find(Tag.class).get(0));
@@ -128,14 +128,14 @@ public class InitializeExampleData {
 
         billItem=new BillItem();
         billItem.setDay(8);
-        billItem.setMonthlyBill(monthlyBillDao.getByDate("2019-5"));
+        billItem.setMonthlyBill(monthlyBillDao.getByDate("2019-05"));
         billItem.setName("itemName222");
         billItem.setValue(5000);
         billItem.setTag(LitePal.where("name = '吃'").find(Tag.class).get(0));
         billItemDao.add(billItem);
         billItem=new BillItem();
         billItem.setDay(8);
-        billItem.setMonthlyBill(monthlyBillDao.getByDate("2019-5"));
+        billItem.setMonthlyBill(monthlyBillDao.getByDate("2019-05"));
         billItem.setName("金坷垃");
         billItem.setValue(180000);
         billItem.setTag(LitePal.where("name = '喝'").find(Tag.class).get(0));

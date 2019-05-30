@@ -34,6 +34,11 @@ public class MonthlyBillDao extends BaseDao<MonthlyBill> {
         return LitePal.findAll(MonthlyBill.class);
     }
 
+    @Override
+    public int count() {
+        return LitePal.count(MonthlyBill.class);
+    }
+
     private static MonthlyBillDao instance = new MonthlyBillDao();
 
     private MonthlyBillDao() {}
