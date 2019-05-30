@@ -23,7 +23,7 @@ public class TagColorItemView extends View {
     private boolean active;
 
     static{
-        borderPaint.setColor(ResourcesCompat.getColor(LeafApplication.getContext().getResources(), TagResHelper.getTagColorResId(R.color.GoldenColor), null));
+        borderPaint.setColor(ResourcesCompat.getColor(LeafApplication.getContext().getResources(),R.color.GoldenColor, null));
     }
 
     /**

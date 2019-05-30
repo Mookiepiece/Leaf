@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -170,7 +169,8 @@ public class ListTagActivity extends AppCompatActivity {
             editTagViewHolder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(ListTagActivity.this,"oooooo",Toast.LENGTH_SHORT).show();
+                    ShowAddTagDialog();//TODO
+
                 }
             });
         }
@@ -191,10 +191,10 @@ public class ListTagActivity extends AppCompatActivity {
 
         public EditTagViewHolder(View itemView) {
             super(itemView);
-            this.name=itemView.findViewById(R.id.edit_tag_item_name);
-            this.limit=itemView.findViewById(R.id.edit_tag_item_limit);
-            this.icon =itemView.findViewById(R.id.edit_tag_item_color);
-            this.cmt=itemView.findViewById(R.id.edit_tag_item_comment);
+            this.name=itemView.findViewById(R.id.list_tag_item_name);
+            this.limit=itemView.findViewById(R.id.list_tag_item_limit);
+            this.icon =itemView.findViewById(R.id.list_tag_item_icon);
+            this.cmt=itemView.findViewById(R.id.list_tag_item_comment);
             this.layout=itemView.findViewById(R.id.edit_tag_layout);
         }
     }

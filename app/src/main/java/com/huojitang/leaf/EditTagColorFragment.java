@@ -20,14 +20,10 @@ import java.util.List;
  */
 public class EditTagColorFragment extends Fragment {
 
-    //创建进度条
-    private int status = 0;
-    private ProgressBar bar;
-
     private RecyclerView recyclerView;
     private TagColorAdapter tagColorAdapter;
 
-    private static List<Integer> colorId= TagResHelper.getAllTagColorResId();;
+    private static List<Integer> colorIdList= TagResHelper.getAllTagColorResId();;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,18 +35,12 @@ public class EditTagColorFragment extends Fragment {
 
     private void initRecyclerView() {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),5));
-        tagColorAdapter = new TagColorAdapter(getContext(), colorId);
+        tagColorAdapter = new TagColorAdapter();
         recyclerView.setAdapter(tagColorAdapter);
         tagColorAdapter.notifyDataSetChanged();
     }
 
     public class TagColorAdapter extends RecyclerView.Adapter<TagColorAdapter.ViewHolder> {
-
-        private List<Integer> colorIdList;
-
-        private TagColorAdapter(Context context, List<Integer> list) {
-            colorIdList = list;
-        }
 
         @Override
         public int getItemCount() {
@@ -73,7 +63,7 @@ public class EditTagColorFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             holder.view.setBgColor(ResourcesCompat.getColor(getResources(),
-                    TagResHelper.getTagColorResId(colorIdList.get(position)), null));
+                    colorIdList.get(position), null));
             }
         }
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:leaf="http://schemas.android.com/apk/res-auto"
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,12 +17,12 @@
         android:showDividers="middle">
 
         <com.huojitang.leaf.TagIconView
-            android:id="@+id/edit_tag_item_color"
+            android:id="@+id/list_tag_item_icon"
             android:layout_width="50dp"
             android:layout_height="50dp" />
 
         <TextView
-            android:id="@+id/edit_tag_item_name"
+            android:id="@+id/list_tag_item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
@@ -31,7 +30,7 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/edit_tag_item_limit"
+            android:id="@+id/list_tag_item_limit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -42,7 +41,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/edit_tag_item_comment"
+        android:id="@+id/list_tag_item_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"

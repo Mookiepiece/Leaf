@@ -6,6 +6,5 @@
     <com.huojitang.leaf.TagIconItemView
         android:id="@+id/tag_icon_item_view"
         android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="TextView" />
+        android:layout_height="50dp" />
 </LinearLayout>

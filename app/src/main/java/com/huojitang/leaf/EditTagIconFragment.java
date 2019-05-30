@@ -27,7 +27,7 @@ public class EditTagIconFragment extends Fragment {
     private RecyclerView recyclerView;
     private TagColorAdapter tagColorAdapter;
 
-    private static List<Integer> resId = TagResHelper.getAllTagColorResId();;
+    private static List<Integer> resIdList = TagResHelper.getAllTagIconResId();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,31 +38,25 @@ public class EditTagIconFragment extends Fragment {
     }
 
     private void initRecyclerView() {
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
-        tagColorAdapter = new TagColorAdapter(getContext(), resId);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),5));
+        tagColorAdapter = new TagColorAdapter();
         recyclerView.setAdapter(tagColorAdapter);
         tagColorAdapter.notifyDataSetChanged();
     }
 
     public class TagColorAdapter extends RecyclerView.Adapter<TagColorAdapter.ViewHolder> {
 
-        private List<Integer> colorIdList;
-
-
-        private TagColorAdapter(Context context, List<Integer> list) {
-            colorIdList = list;
-        }
 
         @Override
         public int getItemCount() {
-            return colorIdList.size();
+            return resIdList.size();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            TagColorItemView view;
+            TagIconItemView view;
             ViewHolder(View view) {
                 super(view);
-                this.view=view.findViewById(R.id.tag_color_item_view);
+                this.view=view.findViewById(R.id.tag_icon_item_view);
             }
         }
         @Override
@@ -73,8 +67,7 @@ public class EditTagIconFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.view.setBgColor(ResourcesCompat.getColor(getResources(),
-                    TagResHelper.getTagColorResId(colorIdList.get(position)), null));
+            holder.view.setFgIcon(resIdList.get(position));
             }
         }
 }
