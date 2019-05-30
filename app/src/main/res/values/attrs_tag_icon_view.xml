@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="bgColor" format="reference"/>
+    <attr name="fgIcon" format="reference"/>
+
+    <declare-styleable name="TagIconView">
+        <attr name="bgColor" />
+        <attr name="fgIcon" />
+    </declare-styleable>
+</resources>

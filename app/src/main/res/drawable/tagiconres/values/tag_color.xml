@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="tag_color_0">@color/colorPrimary</color>
+    <color name="tag_color_1">@color/leaf_blueGreen</color>
+    <color name="tag_color_2">@color/leaf_deepBlue</color>
+    <color name="tag_color_3">@color/leaf_blue</color>
+</resources>

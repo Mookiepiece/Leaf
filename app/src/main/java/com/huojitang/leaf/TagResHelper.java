@@ -11,23 +11,23 @@ public class TagResHelper {
         return tagColors.size();
     }
 
-    public static int getTagColorResId(int id){
-        return tagColors.get(id);
+    public static int getTagColorResId(int position){
+        return tagColors.get(position);
     }
 
     public static int getTagIconsLength(){
         return tagIcons.size();
     }
 
-    public static int getTagIconsResId(int id){
-        return tagIcons.get(id);
+    public static int getTagIconsResId(int position){
+        return tagIcons.get(position);
     }
     static{
         int[] a={
-                R.drawable.tag_color_0,
-                R.drawable.tag_color_1,
-                R.drawable.tag_color_2,
-                R.drawable.tag_color_3,
+                R.color.tag_color_0,
+                R.color.tag_color_1,
+                R.color.tag_color_2,
+                R.color.tag_color_3,
         };
 
         for(int i : a)

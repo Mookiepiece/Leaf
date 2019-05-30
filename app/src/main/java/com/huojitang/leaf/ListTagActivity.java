@@ -1,8 +1,16 @@
 package com.huojitang.leaf;
 
 import androidx.annotation.NonNull;
+
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -17,6 +25,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import com.huojitang.global.LeafApplication;
 import com.huojitang.leaf.dao.TagDao;
 import com.huojitang.leaf.model.Tag;
 import com.huojitang.util.PriceTransUtil;
@@ -72,7 +82,6 @@ public class ListTagActivity extends AppCompatActivity {
         }).show();
 
     }
-
 
     class EditTagTouchCallback extends ItemTouchHelper.Callback {
         EditTagAdapter adapter;
@@ -150,12 +159,18 @@ public class ListTagActivity extends AppCompatActivity {
         //为item赋值
         @Override
         public void onBindViewHolder(EditTagViewHolder editTagViewHolder, int position) {
-            editTagViewHolder.name.setText( tagList.get(position).getName());
-            int color= tagList.get(position).getColor();
+            Tag tag=tagList.get(position);
+
+            int color= ResourcesCompat.getColor(getResources(), TagResHelper.getTagColorResId(tag.getColor()), null);
+
+            editTagViewHolder.name.setText(tag.getName());
             editTagViewHolder.name.setTextColor(color);
-            editTagViewHolder.color.setBackgroundColor(color);
-            editTagViewHolder.limit.setText(PriceTransUtil.Int2Decimal(tagList.get(position).getBudget()));
-            editTagViewHolder.cmt.setText( tagList.get(position).getComment());
+            editTagViewHolder.icon.setBgColor(color);
+            editTagViewHolder.icon.setFgIcon(TagResHelper.getTagIconsResId(tag.getIcon()));
+
+            editTagViewHolder.limit.setText(PriceTransUtil.Int2Decimal(tag.getBudget()));
+            editTagViewHolder.cmt.setText( tag.getComment());
+
             editTagViewHolder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -174,7 +189,7 @@ public class ListTagActivity extends AppCompatActivity {
     class EditTagViewHolder extends RecyclerView.ViewHolder{
         TextView name;
         TextView limit;
-        TextView color;
+        TagIconView icon;
         TextView cmt;
         LinearLayout layout;
 
@@ -182,7 +197,7 @@ public class ListTagActivity extends AppCompatActivity {
             super(itemView);
             this.name=itemView.findViewById(R.id.edit_tag_item_name);
             this.limit=itemView.findViewById(R.id.edit_tag_item_limit);
-            this.color=itemView.findViewById(R.id.edit_tag_item_color);
+            this.icon =itemView.findViewById(R.id.edit_tag_item_color);
             this.cmt=itemView.findViewById(R.id.edit_tag_item_comment);
             this.layout=itemView.findViewById(R.id.edit_tag_layout);
         }

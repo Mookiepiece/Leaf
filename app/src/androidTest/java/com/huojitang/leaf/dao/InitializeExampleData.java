@@ -36,14 +36,16 @@ public class InitializeExampleData {
         Tag tag;
         tag =new Tag();
         tag.setName("吃");
-        tag.setColor(ColorConverter.String2Color("8f0"));
+        tag.setColor(1);
+        tag.setIcon(1);
         tag.setBudget(50000);
         tag.setIndex(0);
         tagDao.add(tag);
 
         tag =new Tag();
         tag.setName("喝");
-        tag.setColor(ColorConverter.String2Color("346"));
+        tag.setColor(2);
+        tag.setIcon(3);
         tag.setBudget(100000);
         tag.setComment("123456789");
         tag.setIndex(1);
@@ -51,7 +53,8 @@ public class InitializeExampleData {
 
         tag =new Tag();
         tag.setName("pIao");
-        tag.setColor(ColorConverter.String2Color("8f0"));
+        tag.setColor(3);
+        tag.setIcon(0);
         tag.setBudget(50000);
         tagDao.add(tag);
         tag.setIndex(2);
