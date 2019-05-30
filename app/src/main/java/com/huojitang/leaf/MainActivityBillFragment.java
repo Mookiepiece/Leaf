@@ -45,7 +45,7 @@ public class MainActivityBillFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_bill, container, false);
         recyclerView = view.findViewById(R.id.RV_1);
         bar = view.findViewById(R.id.fragment_bill_progressbar);
         status = 20;
@@ -117,10 +117,8 @@ public class MainActivityBillFragment extends Fragment {
         private RvAdapter(Context context, List<Tag> list, View headerView, View footerView) {
             mContext = context;
             mList = list;
-            //TODO notifyItemInserted(0);
             if(headerView!=null)
                 this.headerView = headerView;
-            //TODO notifyItemInserted(getItemCount() - 1);
             if(headerView!=null)
                 this.footerView = footerView;
         }

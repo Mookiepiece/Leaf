@@ -44,7 +44,7 @@ public class WishHistoryActivity extends AppCompatActivity {
         webView.addJavascriptInterface(new JavaFunc(),"java");
     }
 
-    private JSONObject startAndEndTime=JSON.parseObject("{'StartTime':'2019-10','endTime':'2023-8'}");
+    private JSONObject startAndEndTime=JSON.parseObject("{'StartTime':'2019-10','finishedTime':'2023-8'}");
 
     private class JavaFunc{
 

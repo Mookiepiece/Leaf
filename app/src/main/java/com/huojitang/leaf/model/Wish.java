@@ -2,6 +2,8 @@ package com.huojitang.leaf.model;
 
 import org.litepal.crud.LitePalSupport;
 
+import java.time.YearMonth;
+
 /**
  * Wish - 心愿单实体类
  *
@@ -11,9 +13,6 @@ import org.litepal.crud.LitePalSupport;
 public class Wish extends LitePalSupport {
     /** id（LitePal 所要求的必须具有的属性）*/
     private int id;
-
-    /** index - 用于心愿单主页的排序功能（还需要做这个功能吗？）*/
-    private int index;
 
     /** 心愿的名称 */
     private String name;
@@ -60,14 +59,6 @@ public class Wish extends LitePalSupport {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
     }
 
     public String getName() {
