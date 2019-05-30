@@ -177,11 +177,11 @@ public class MainActivityBillFragment extends Fragment {
                 if (holder.mRvAdapter == null) {
                     holder.mRvAdapter = new RvvAdapter(mContext, holder.list, position);
 
-                        GridLayoutManager layoutManager = new GridLayoutManager(mContext, 1);
-                        holder.innerRecyclerView.addItemDecoration(new GridSpacingItemDecoration(1, 20, false));
+//                        GridLayoutManager layoutManager = new GridLayoutManager(mContext, 1);
+//                        holder.innerRecyclerView.addItemDecoration(new GridSpacingItemDecoration(1, 20, false));
 
-                    //LinearLayoutManager layoutManager=new LinearLayoutManager(mContext);
-                    //layoutManager.setOrientation(RecyclerView.VERTICAL);
+                    LinearLayoutManager layoutManager=new LinearLayoutManager(mContext);
+                    layoutManager.setOrientation(RecyclerView.VERTICAL);
                     holder.innerRecyclerView.setLayoutManager(layoutManager);
 
                     holder.innerRecyclerView.setAdapter(holder.mRvAdapter);
