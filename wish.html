@@ -9,11 +9,12 @@
 <script src="react.development.js"></script>
 <script src="react-dom.development.js"></script>
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script src="mdui.js"></script>
+<link rel="stylesheet" type="text/css" href="mdui.css">
 
 <style>
     
     *{margin:0px;padding:0px;position: relative;box-sizing:border-box}
-
 
     #root{ 
         height: 100vh;
@@ -51,45 +52,26 @@
 
     .item{
         display: inline-block;
-        width: 30%;
-        margin-right: 2.5%;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        border-radius: 8px;
+        min-width: 30%;
+        margin-left: 2.5%;
+        margin-bottom: .5em;
+        border-bottom: 1px solid #ddd;
+        animation: fadeIn .25s backwards;
+        font-weight: bold;
         /* white-space用于限制文本只能显示一行 */
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-
-        animation: fadeIn .25s backwards;
-        background: red; /*TODO*/
-        font-size: 14px;
-        text-align: center;
     }
-    
-    .item:nth-child(3n+1){
-        margin-left: 2.5%;
-    }
-
-    .item.small{
-        font-size:14px;
-    }
-
-    .item.xsmall{
-        font-size:12px;
-    }
-
-    .item.resolved{
-        background:#bfb;
-    }
-
-    .item.cancelled{
-        background: #fed;
-    color: #666;
-    }
-    .item.onprogress{
-        background:#9cf;
-    }
+    /* padding-top: 10px; */
+    /* padding-bottom: 10px; */
+    /* border-radius: 8px; */
+    /* white-space: nowrap; */
+    /* overflow: hidden; */
+    /* text-overflow: ellipsis; */
+    /* animation: fadeIn .25s backwards; */
+    /* font-size: 14px; */
+    /* text-align: center; */
 
     @keyframes fadeIn {
         0% {
@@ -101,17 +83,6 @@
         }
     }
 
-    #switcher{
-        position: fixed;
-        width:30px;
-        height:70px;
-        background:forestgreen;
-        bottom: 25px;
-        right: 0px;
-        border: 0;
-        outline: 0;
-        border-radius: 10% 0 0 10%;
-    }
     #switcher:active{
         background:greenyellow;
     }
@@ -125,8 +96,7 @@
 
     <div id="root"></div>
 
-    <button id="switcher">pressme</button>
-
+    <button class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-blue mdui-text-color-white-icon"><i class="mdui-icon material-icons">unfold_more</i></button>
     <script type="text/babel" src="wish.jsx" ></script>
 
 </body>
