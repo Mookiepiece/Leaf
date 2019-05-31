@@ -6,9 +6,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.huojitang.leaf.dao.MonthlyBillDao;
 import com.huojitang.leaf.dao.TagDao;
 import com.huojitang.leaf.model.BillItem;
+import com.huojitang.leaf.model.MonthlyBill;
 import com.huojitang.leaf.model.Tag;
+import com.huojitang.util.LeafDateSupport;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +27,8 @@ import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +43,10 @@ public class MainActivityBillFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RvAdapter mRvAdapter;
+    private AddBillDialog addBillDialog;
+    private String tagName;
+    private String itemName;
+    private int itemValue;
 
     List<Tag> tags;
     TagDao tagDao= TagDao.getInstance();
@@ -48,6 +57,7 @@ public class MainActivityBillFragment extends Fragment {
         recyclerView = view.findViewById(R.id.bill_recycler_view_1);
         bar = view.findViewById(R.id.fragment_bill_progressbar);
         status = 20;
+
         //bar.setProgress(status);
 
 //        ButterKnife.bind(getActivity());
@@ -62,6 +72,36 @@ public class MainActivityBillFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                addBillDialog = new AddBillDialog(getActivity(), new AddBillDialog.ConfirmOnclickListener() {
+                    @Override
+                    public void ConfirmClick() {
+                        if(addBillDialog.getName().getText().toString().trim().equals("")||addBillDialog.getPrice().getText().toString().trim().equals("")){
+                            Toast.makeText(getContext(),"物品名为空或者价格为空，无法添加",Toast.LENGTH_SHORT).show();
+                        }else{
+                            tagName = addBillDialog.getMessage();
+                            itemName = addBillDialog.getName().getText().toString();
+                            itemValue = Integer.parseInt(addBillDialog.getPrice().getText().toString());
+                            LocalDate localDate = LeafDateSupport.getCurrentLocalDate();
+                            YearMonth currentYearMonth = LeafDateSupport.getCurrentYearMonth();
+                            MonthlyBill currentMonthlyBill = MonthlyBillDao.getInstance().getByDate(currentYearMonth.toString());
+
+                            for(int i = 0;i < tags.size();i++){
+                                if(tagName.equals(tags.get(i).getName())){
+
+                                    BillItem billItem = new BillItem();
+                                    billItem.setName(itemName);
+                                    billItem.setValue(itemValue);
+                                    billItem.setMonthlyBill(currentMonthlyBill);
+                                    billItem.setDay(localDate.getDayOfMonth());
+                                    tags.get(i).getBillItems().add(billItem);
+                                    mRvAdapter.notifyDataSetChanged();
+                                }
+                            }
+                            Toast.makeText(getContext(),tagName+" "+itemName+" "+itemValue,Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                addBillDialog.show();
 
                 Toast.makeText(getContext(),"你点击了悬浮按钮",Toast.LENGTH_SHORT).show();
             }

@@ -76,4 +76,8 @@ public class LeafDateSupport {
     public static LocalDate oneMonthAfter(@NotNull LocalDate date) {
         return date.plusMonths(1);
     }
+
+    public static YearMonth getYearMonthFromLocalDate(LocalDate localDate) {
+        return YearMonth.of(localDate.getYear(), localDate.getMonth());
+    }
 }
