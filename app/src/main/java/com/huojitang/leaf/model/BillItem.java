@@ -42,8 +42,8 @@ public class BillItem extends LitePalSupport {
         return value;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setValue(double value) {
+        this.value = (int)(value*100);
     }
 
     public String getName() {

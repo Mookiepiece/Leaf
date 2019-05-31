@@ -29,7 +29,7 @@ public class AddBillDialog extends Dialog {
     private TagDao tagDao = TagDao.getInstance();
     private List<String> data_list;
     private ArrayAdapter<String> arr_adapter;
-    private String message;
+    private int id;
 
     //一些从界面里的组件
     private Button cancel;
@@ -90,7 +90,7 @@ public class AddBillDialog extends Dialog {
         tagName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                message = data_list.get(position);
+                id = position;
                 Toast.makeText(getContext(), "你选择了第" + position + "个", Toast.LENGTH_SHORT).show();
             }
 
@@ -110,8 +110,8 @@ public class AddBillDialog extends Dialog {
         }
     }
 
-    public String getMessage() {
-        return message;
+    public int getId() {
+        return id;
     }
 
     public EditText getName() {
