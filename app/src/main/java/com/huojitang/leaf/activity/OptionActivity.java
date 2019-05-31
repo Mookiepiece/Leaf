@@ -55,6 +55,11 @@ public class OptionActivity extends AppCompatActivity {
         }
 
         @JavascriptInterface
+        public void setting(){
+            startActivity(new Intent(OptionActivity.this , WishHistoryActivity.class));
+        }
+
+        @JavascriptInterface
         public void tag(){
             startActivity(new Intent(OptionActivity.this , ListTagActivity.class));
         }

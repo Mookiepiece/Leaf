@@ -17,6 +17,7 @@
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.ListTagActivity" />
         <activity android:name=".activity.EditTagActivity" />
+        <activity android:name=".activity.WishHistoryActivity" />
         <activity
             android:name=".activity.OptionActivity"
             android:label="@string/title_activity_setting"

@@ -25,19 +25,19 @@ public class WishDao extends BaseDao<Wish> {
     /**
      * MK
      * 根据开始时间获取部分心愿
-     * @param startTime 输入年月 2222-2
+     * @param startTime 输入年月 2222-02
      */
     public List<Wish> listByStartTime(String startTime){
-        return LitePal.where("startTime LIKE ?",startTime+"%").find(Wish.class);
+        return LitePal.where("startTime LIKE ?",startTime+"%").order("startTime asc").find(Wish.class);
     }
 
     /**
      * MK
      * 根据结束时间获取部分心愿，未完成的心愿是没有结束时间的
-     * @param endTime 输入年月 2222-2
+     * @param endTime 输入年月 2222-02
      */
     public List<Wish> listByFinishedTime(String endTime){
-        return LitePal.where("finishedTime LIKE ? ",endTime+"%").find(Wish.class);
+        return LitePal.where("finishedTime LIKE ? ",endTime+"%").order("finishedTime asc").find(Wish.class);
     }
 
     @Override

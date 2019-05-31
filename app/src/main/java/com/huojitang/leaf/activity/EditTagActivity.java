@@ -3,6 +3,7 @@ package com.huojitang.leaf.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -82,6 +83,13 @@ public class EditTagActivity extends AppCompatActivity {
 
         //其他组件
         iconResultView=findViewById(R.id.activity_edit_tag_icon_result);
+
+        findViewById(R.id.activity_edit_tag_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 
