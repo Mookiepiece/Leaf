@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.huojitang.leaf.dao.WishDao;
+import com.huojitang.leaf.global.LeafApplication;
 import com.huojitang.leaf.model.Wish;
 import com.huojitang.leaf.util.LeafDateSupport;
 
@@ -50,9 +51,9 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wish, container, false);
 
-        fab = view.findViewById(R.id.floatingActionButton);
+        fab = view.findViewById(R.id.floating_action_button_wish_fragment);
 
-        mListView = view.findViewById(R.id.LV_2);
+        mListView = view.findViewById(R.id.list_view_wish);
         initWishMessage();
 
         wishAdapter = new WishAdapter();
@@ -83,7 +84,7 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
                                     break;
                                 case R.id.see_details:
                                     Intent intent = new Intent(getContext(), WishDetailsActivity.class);
-                                    intent.putExtra("wishList", wishList.get(position).getId());
+                                    intent.putExtra(LeafApplication.LEAF_MASSAGE, wishList.get(position).getId());
                                     startActivity(intent);
                                     wishAdapter.notifyDataSetChanged();
                                     Toast.makeText(getContext(), "你选择了心愿详情选项", Toast.LENGTH_SHORT).show();

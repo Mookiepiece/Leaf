@@ -22,12 +22,10 @@
             android:name=".activity.OptionActivity"
             android:label="@string/title_activity_setting"
             android:theme="@style/AppSettingTheme" />
+        <activity android:name=".WishDetailsActivity" />
         <activity android:name=".activity.MainActivity">
-        <activity android:name=".WishDetailsActivity"/>
-        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

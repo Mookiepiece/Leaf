@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.huojitang.leaf.dao.WishDao;
+import com.huojitang.leaf.global.LeafApplication;
 import com.huojitang.leaf.model.Tag;
 import com.huojitang.leaf.model.Wish;
 
@@ -35,7 +36,7 @@ public class WishDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishdetails);
         Intent i = getIntent();
-        int po = i.getIntExtra("wishList",0);
+        int po = i.getIntExtra(LeafApplication.LEAF_MASSAGE,0);
         wish = wishDao.getById(po);
 
         wishName = findViewById(R.id.get_wish_details_name);
