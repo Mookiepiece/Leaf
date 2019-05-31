@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.UUID;
 
 public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
 
@@ -36,36 +37,25 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
 
     private List<Wish> wishList = new ArrayList<>();//TODO
     private WishDao wishDao = WishDao.getInstance();
-    ListView mListView;
-    FloatingActionButton fab;
-    AddWishDialog addWishDialog;
-    String wishName;
-    double wishPrice;
-    String wishDetails;
-    String year;
-    String month;
-    String day;
-    Calendar calendar;
+    private ListView mListView;
+    private FloatingActionButton fab;
+    private AddWishDialog addWishDialog;
+    private String wishName;
+    private double wishPrice;
+    private String wishDetails;
+    private WishAdapter wishAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wish, container, false);
-        calendar = Calendar.getInstance();
-        calendar.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-        year = String.valueOf(calendar.get(Calendar.YEAR));
-        if (calendar.get(Calendar.MONTH) < 10) {
-            month = "0" + String.valueOf(calendar.get(Calendar.MONTH) + 1);
-        } else {
-            month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
-        }
 
         fab = view.findViewById(R.id.floatingActionButton);
 
         mListView = view.findViewById(R.id.LV_2);
         initWishMessage();
 
-        final WishAdapter wishAdapter = new WishAdapter();
+        wishAdapter = new WishAdapter();
         mListView.setAdapter(wishAdapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -86,15 +76,16 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
                                     Toast.makeText(getContext(), "你选择了完成选项", Toast.LENGTH_SHORT).show();
                                     break;
                                 case R.id.wish_cancel:
-                                    wishList.get(position).setState(Wish.WISH_ACHIEVED);
+                                    wishList.get(position).setState(Wish.WISH_CANCELLED);
                                     wishList.get(position).setFinishedTime(LeafDateSupport.getCurrentLocalDate().toString());
                                     wishAdapter.notifyDataSetChanged();
                                     Toast.makeText(getContext(), "你选择了取消选项", Toast.LENGTH_SHORT).show();
                                     break;
                                 case R.id.see_details:
                                     Intent intent = new Intent(getContext(), WishDetailsActivity.class);
-                                    intent.putExtra("position", position);
+                                    intent.putExtra("wishList", wishList.get(position).getId());
                                     startActivity(intent);
+                                    wishAdapter.notifyDataSetChanged();
                                     Toast.makeText(getContext(), "你选择了心愿详情选项", Toast.LENGTH_SHORT).show();
                                     break;
                             }
@@ -150,7 +141,6 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
                 addWishDialog.show();
             }
         });
-
         return view;
     }
 
@@ -177,13 +167,20 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
                 convertView = View.inflate(getContext(), R.layout.wish_list, null);
                 new ViewHolder(convertView);
             }
+
             ViewHolder holder = (ViewHolder) convertView.getTag();
             holder.name.setText(wishList.get(position).getName());
-            holder.value.setText(String.valueOf(wishList.get(position).getValue()));
+            holder.value.setText(String.valueOf( (double) wishList.get(position).getValue()/100));
             holder.startTime.setText(wishList.get(position).getStartTime());
             holder.finishedTime.setText(wishList.get(position).getFinishedTime());
 
-            if(wishList)
+            if(wishList.get(position).getState()==0){
+                holder.state.setText("未完成");
+            }else if(wishList.get(position).getState()==1){
+                holder.state.setText("已取消");
+            }else {
+                holder.state.setText("已完成");
+            }
             return convertView;
         }
 
@@ -203,6 +200,12 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
                 view.setTag(this);
             }
         }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        wishList = wishDao.listAll();
+        wishAdapter.notifyDataSetChanged();
     }
 }
 

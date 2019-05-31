@@ -2,6 +2,8 @@ package com.huojitang.leaf;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,64 +19,72 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WishDetailsActivity extends AppCompatActivity {
-    List<Wish> wishList = new ArrayList<>();
-    WishDao wishDao = WishDao.getInstance();
-    EditText wishName;
-    EditText wishValue;
-    TextView wishState;
-    TextView wishStartTime;
-    TextView wishEndTime;
-    Button wishModify;
-    Button wishDelete;
-    Intent i = getIntent();
-    int position = i.getIntExtra("position",0);
+    private Wish wish;
+    private WishDao wishDao = WishDao.getInstance();
+    private EditText wishName;
+    private EditText wishValue;
+    private TextView wishState;
+    private TextView wishStartTime;
+    private TextView wishEndTime;
+    private EditText wishDetails;
+    private Button wishModify;
+    private Button wishDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishdetails);
+        Intent i = getIntent();
+        int po = i.getIntExtra("wishList",0);
+        wish = wishDao.getById(po);
 
-
-        wishList = wishDao.listAll();
         wishName = findViewById(R.id.get_wish_details_name);
         wishValue = findViewById(R.id.get_wish_details_price);
         wishState = findViewById(R.id.get_wish_details_state);
         wishStartTime = findViewById(R.id.get_wish_details_startTime);
         wishEndTime = findViewById(R.id.get_wish_details_endTime);
+        wishDetails = findViewById(R.id.get_wish_details_detail);
         wishModify = findViewById(R.id.detail_modify);
         wishDelete = findViewById(R.id.detail_delete);
 
-        initDetails();
+        wishName.setText(wish.getName());
+        wishValue.setText(String.valueOf((double)wish.getValue()/100));
+        wishDetails.setText(wish.getComment());
+        if(wish.getState()==0){
+            wishState.setText("未完成");
+        }else if(wish.getState()==1){
+            wishState.setText("已取消");
+        }else {
+            wishState.setText("已完成");
+        }
+        wishStartTime.setText(wish.getStartTime());
+        wishEndTime.setText(wish.getFinishedTime());
 
         wishModify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wishList.get(position).setName(wishName.getText().toString());
-                wishList.get(position).setValue(Integer.parseInt(wishValue.getText().toString()));
-               // Intent intent = new Intent()
+                wish.setName(wishName.getText().toString());
+                wish.setValue(Double.parseDouble(wishValue.getText().toString()));
+                wish.setComment(wishDetails.getText().toString());
+                wishDao.update(wish);
+                finish();
             }
         });
         wishDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wishList.remove(position);
+                wishDao.delete(wish);
+                finish();
             }
         });
 
-    }
+        wishName.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
 
-    private void initDetails() {
-        wishName.setText(wishList.get(position).getName());
-        wishValue.setText(wishList.get(position).getValue());
-        if(wishList.get(position).getState()==0){
-            wishState.setText("未完成");
-        }else if(wishList.get(position).getState()==1){
-            wishState.setText("已取消");
-        }else {
-            wishState.setText("已完成");
-        }
-        wishStartTime.setText(wishList.get(position).getStartTime());
-        wishEndTime.setText(wishList.get(position).getFinishedTime());
-    }
+        wishValue.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        //默认控制输入9位数，小数点前6位，后2位，小数一位，共9位
+        InputFilter[] filters={new CashierInputFilter(9),new InputFilter.LengthFilter(9)};
 
+        wishValue.setFilters(filters);
+
+    }
 }

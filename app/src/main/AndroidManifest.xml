@@ -21,6 +21,7 @@
             android:name=".OptionActivity"
             android:label="@string/title_activity_setting"
             android:theme="@style/AppSettingTheme" />
+        <activity android:name=".WishDetailsActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
