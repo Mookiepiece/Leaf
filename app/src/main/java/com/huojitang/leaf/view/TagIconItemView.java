@@ -51,9 +51,9 @@ public class TagIconItemView extends View {
     }
 
     //图标缩放比
-    private final double SCALE=0.6;
-    private final double SCALE_0=(1-SCALE)/2;
-    private final double SCALE_1=SCALE+SCALE_0;
+    private  static final double SCALE=0.6;
+    private  static final double SCALE_0=(1-SCALE)/2;
+    private static final double SCALE_1=SCALE+SCALE_0;
 
     @Override
     protected void onDraw(Canvas canvas) {
