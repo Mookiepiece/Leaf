@@ -16,6 +16,10 @@ import androidx.core.content.res.ResourcesCompat;
 import com.huojitang.leaf.R;
 import com.huojitang.leaf.global.LeafApplication;
 
+/**
+ * 自定义View实现标签预览
+ * @author Mookiepiece
+ */
 public class TagIconResultView extends View {
 
     private Paint paint; //画背景颜色

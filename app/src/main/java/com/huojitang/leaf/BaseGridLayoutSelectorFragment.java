@@ -18,6 +18,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * 一个实现recyclerView自动网格布局并且里面的item能被选择的类
+ * 尽管这里只是在TagColor 和 TagIcon里用到了
+ * @author Mookiepiece
+ * @param <T> list的类型
+ * @param <T2> 需要重载的ViewHolder
+ */
 public abstract class BaseGridLayoutSelectorFragment<T,T2 extends androidx.recyclerview.widget.RecyclerView.ViewHolder > extends Fragment {
 
     protected RecyclerView recyclerView;

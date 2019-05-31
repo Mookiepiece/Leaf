@@ -12,6 +12,10 @@ import androidx.core.content.res.ResourcesCompat;
 import com.huojitang.leaf.global.LeafApplication;
 import com.huojitang.leaf.R;
 
+/**
+ * 自定义圆形颜色View实现供用户选择颜色
+ * @author Mookiepiece
+ */
 public class TagColorItemView extends View {
 
     private Paint paint; //画背景颜色
