@@ -61,7 +61,7 @@
                 android:id="@+id/activity_edit_tag_icon_result"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                app:bgColor="@color/leaf_blueGreen"
+                app:bgColor="@color/blueGreen"
                 app:fgIcon="@drawable/analytics_graph_bar"/>
 
         </LinearLayout>
@@ -101,10 +101,15 @@
 
         <Button
             android:id="@+id/activity_edit_tag_confirm"
-            style="@style/btn_dialog_option"
+            style="@style/btn_dialog_confirm"
             android:layout_height="wrap_content"
             android:text="@string/g_confirm" />
-
+        <Button
+            android:id="@+id/activity_edit_tag_delete"
+            style="@style/btn_dialog_warning"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/g_delete" />
         <Button
             android:id="@+id/activity_edit_tag_cancel"
             style="@style/btn_dialog_option"

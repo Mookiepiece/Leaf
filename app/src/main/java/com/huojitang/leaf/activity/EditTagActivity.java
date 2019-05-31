@@ -19,11 +19,13 @@ import com.google.android.material.tabs.TabLayout;
 import com.huojitang.leaf.BaseGridLayoutSelectorFragment;
 import com.huojitang.leaf.CashierInputFilter;
 import com.huojitang.leaf.TagResManager;
+import com.huojitang.leaf.dao.TagDao;
 import com.huojitang.leaf.global.LeafApplication;
 import com.huojitang.leaf.EditTagColorFragment;
 import com.huojitang.leaf.EditTagIconFragment;
 import com.huojitang.leaf.LeafFragmentPagerAdapter;
 import com.huojitang.leaf.R;
+import com.huojitang.leaf.util.LeafDateSupport;
 import com.huojitang.leaf.view.TagIconResultView;
 
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ public class EditTagActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private LeafFragmentPagerAdapter adapter;
     private TagIconResultView iconResultView;
+    private TagDao tagDao=TagDao.getInstance();
 
     private EditText tagNameEditText;
     private EditText tagBudgetEditText;
@@ -63,9 +66,12 @@ public class EditTagActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_tag);
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra(LeafApplication.LEAF_MASSAGE);
+        int id = intent.getIntExtra(LeafApplication.LEAF_MASSAGE,-1);
+
 
         initViews();
+
+
     }
 
     private void initViews() {
@@ -100,9 +106,24 @@ public class EditTagActivity extends AppCompatActivity {
         findViewById(R.id.activity_edit_tag_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(RESULT_CANCELED, new Intent());
                 finish();
             }
         });
+        //确定按钮
+        findViewById(R.id.activity_edit_tag_confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //使用Intent返回受改变项
+                Intent intent = new Intent();
+                intent.putExtra(LeafApplication.LEAF_MASSAGE, "My name is linjiqin");
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
+
+
 
         //文本框判断输入
         tagNameEditText=findViewById(R.id.activity_edit_tag_name);

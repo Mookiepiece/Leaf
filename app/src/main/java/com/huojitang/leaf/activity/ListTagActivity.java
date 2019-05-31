@@ -2,8 +2,11 @@ package com.huojitang.leaf.activity;
 
 import androidx.annotation.NonNull;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +26,7 @@ import java.util.List;
 import com.huojitang.leaf.R;
 import com.huojitang.leaf.TagResManager;
 import com.huojitang.leaf.dao.TagDao;
+import com.huojitang.leaf.global.LeafApplication;
 import com.huojitang.leaf.model.Tag;
 import com.huojitang.leaf.view.TagIconResultView;
 import com.huojitang.leaf.util.PriceTransUtil;
@@ -58,30 +62,29 @@ public class ListTagActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowAddTagDialog();
+                ShowEditTagActivity();
             }
         });
     }
 
-    public void ShowAddTagDialog(){
+    public void ShowEditTagActivity(){
         Intent intent = new Intent(ListTagActivity.this, EditTagActivity.class);
-        //显式意图
-        //MainActivity.this是为了防止这个东西声明在内部类里的情况，此处可以改为this
-//        EditText editText = (EditText) findViewById(R.id.editText);
-//        String message = editText.getText().toString();
-//        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivityForResult(intent, 1);
     }
 
-    public void ShowAddTagDialog(int id){
-        startActivity(new Intent(ListTagActivity.this, EditTagActivity.class));
-//        Intent intent = new Intent(MainActivity.this, DisplayMessageActivity.class);
-//        //显式意图
-//        //MainActivity.this是为了防止这个东西声明在内部类里的情况，此处可以改为this
-//        EditText editText = (EditText) findViewById(R.id.editText);
-//        String message = editText.getText().toString();
-//        intent.putExtra(EXTRA_MESSAGE, message);
+    public void ShowEditTagActivity(int id){
+        Intent intent = new Intent(ListTagActivity.this, EditTagActivity.class);
+        intent.putExtra(LeafApplication.LEAF_MASSAGE, id);
+        startActivityForResult(intent, 1);
     }
 
+    //TODO MK
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Bundle result = data.getExtras();//关闭编辑界面后返回的数据
+        if(result==null) return;
+
+    }
 
     class EditTagTouchCallback extends ItemTouchHelper.Callback {
         EditTagAdapter adapter;
@@ -128,8 +131,7 @@ public class ListTagActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         }
 
         //手指松开
@@ -174,8 +176,7 @@ public class ListTagActivity extends AppCompatActivity {
             editTagViewHolder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ShowAddTagDialog();//TODO
-
+                    ShowEditTagActivity(position);
                 }
             });
         }

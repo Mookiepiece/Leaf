@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/leaf_green</color>
-    <color name="colorPrimaryDark">@color/leaf_green</color>
-    <color name="colorAccent">@color/leaf_deepBlue</color>
+    <color name="colorPrimary">@color/green</color>
+    <color name="colorPrimaryDark">@color/green</color>
+    <color name="colorAccent">@color/deepBlue</color>
 
     <color name="black_overlay">#66000000</color>
 
@@ -14,11 +14,13 @@
     <color name="gray">#999</color>
     <color name="dark_gray">#333</color>
 
-    <color name="leaf_deepBlue">#69e</color>
-    <color name="leaf_blue">#5af</color>
-    <color name="leaf_blueGreen">#7cd</color>
-    <color name="leaf_green">#1b3</color>
-    <color name="leaf_springGreen">#5c9</color>
+    <color name="deepBlue">#69e</color>
+    <color name="blue">#5af</color>
+    <color name="blueGreen">#7cd</color>
+    <color name="green">#1b3</color>
+    <color name="springGreen">#5c9</color>
+    <color name="red">#e74</color>
+    <color name="darkRed">#b50</color>
     <color name="GoldenColor">#e2b85f</color>
     <color name="list_bac">#222d34</color>
 

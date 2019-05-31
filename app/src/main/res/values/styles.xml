@@ -12,7 +12,7 @@
     <style name="AppSettingTheme" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="colorPrimaryDark">@color/leaf_springGreen</item>
+        <item name="colorPrimaryDark">@color/springGreen</item>
     </style>
 
 
@@ -60,6 +60,20 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">44dp</item>
         <item name="android:background">@drawable/leaf_btn_dialog_option</item>
+        <item name="android:letterSpacing">1</item>
+    </style>
+    <style name="btn_dialog_warning">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:background">@drawable/leaf_btn_dialog_warning</item>
+        <item name="android:letterSpacing">1</item>
+    </style>
+    <style name="btn_dialog_confirm">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:background">@drawable/leaf_btn_dialog_confirm</item>
         <item name="android:letterSpacing">1</item>
     </style>
 </resources>

@@ -278,7 +278,7 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
             pieEntries.add(PieEntry(pair.second / 100.0f, pair.first.name))
             val colorResId = TagResManager.getTagColorResId(pair.first.color)
             val color = ResourcesCompat.getColor(LeafApplication.getContext().resources, colorResId, null)
-            colors.add(pair.first.color)
+            colors.add(color)
         }
 
         val dataSet = PieDataSet(pieEntries, "详情")

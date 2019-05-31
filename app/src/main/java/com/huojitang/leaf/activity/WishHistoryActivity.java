@@ -20,6 +20,7 @@ import com.huojitang.leaf.global.LeafApplication;
 import com.huojitang.leaf.model.Wish;
 import com.huojitang.leaf.util.LeafDateSupport;
 
+import java.time.LocalDate;
 import java.time.Year;
 import java.time.YearMonth;
 import java.util.List;
@@ -34,20 +35,17 @@ public class WishHistoryActivity extends AppCompatActivity {
     WebView webView;
     WishDao wishDao= WishDao.getInstance();
 
-    //存储在sharedPreference的心愿头尾日期
-    private YearMonth firstWishStartTime;
-    private YearMonth lastWishEndTime;
+    //心愿头尾日期
+    private LocalDate firstWishStartTime;
+    private LocalDate lastWishEndTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
 
-
-        SharedPreferences preferences=LeafApplication.getPreferences();
-
-        firstWishStartTime=LeafDateSupport.parseFromShortDate(preferences.getString("FirstWishStartTime",null));
-        lastWishEndTime=LeafDateSupport.parseFromShortDate(preferences.getString("LastWishEndTime",null));
+        firstWishStartTime=LeafDateSupport.parseFromLongDate(wishDao.getEarliestStartTime());
+        lastWishEndTime=LeafDateSupport.parseFromLongDate(wishDao.getLatestFinishedTime());
 
         //初始化
         webView =findViewById(R.id.web_view);

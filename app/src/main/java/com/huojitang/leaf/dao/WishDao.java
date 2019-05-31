@@ -52,7 +52,7 @@ public class WishDao extends BaseDao<Wish> {
 
     /**
      * 返回所有心愿里的最早开始时间
-     * @return 一个字符串（yyyy-MM），表示心愿单中所有心愿的最早开始时间
+     * @return 一个字符串（yyyy-MM-DD），表示心愿单中所有心愿的最早开始时间
      */
     public String getEarliestStartTime() {
         return LitePal.min(Wish.class, "startTime", String.class);
@@ -60,7 +60,7 @@ public class WishDao extends BaseDao<Wish> {
 
     /**
      * 返回所有心愿里的最晚结束时间
-     * @return 一个字符串（yyyy-MM）表示心愿单中所有心愿的最晚结束时间
+     * @return 一个字符串（yyyy-MM-DD）表示心愿单中所有心愿的最晚结束时间
      */
     public String getLatestFinishedTime() {
         return LitePal.max(Wish.class, "finishedTime", String.class);
