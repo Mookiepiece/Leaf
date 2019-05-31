@@ -106,6 +106,10 @@ public class Wish extends LitePalSupport {
         return finishedTime;
     }
 
+    public void setFinishedTime(LocalDate finishedTime) {
+        this.finishedTime = finishedTime.toString();
+    }
+
     public void setFinishedTime(String finishedTime) {
         this.finishedTime = finishedTime;
     }

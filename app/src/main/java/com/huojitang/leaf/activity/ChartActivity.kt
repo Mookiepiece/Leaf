@@ -9,6 +9,7 @@ import android.text.style.RelativeSizeSpan
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.*
@@ -19,8 +20,10 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.MPPointF
 import com.huojitang.leaf.R
+import com.huojitang.leaf.TagResManager
 import com.huojitang.leaf.dao.MonthlyBillDao
 import com.huojitang.leaf.dao.TagDao
+import com.huojitang.leaf.global.LeafApplication
 import com.huojitang.leaf.model.BillItem
 import com.huojitang.leaf.model.MonthlyBill
 import com.huojitang.leaf.model.Tag
@@ -273,6 +276,8 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
 
         for (pair in data) {
             pieEntries.add(PieEntry(pair.second / 100.0f, pair.first.name))
+            val colorResId = TagResManager.getTagColorResId(pair.first.color)
+            val color = ResourcesCompat.getColor(LeafApplication.getContext().resources, colorResId, null)
             colors.add(pair.first.color)
         }
 

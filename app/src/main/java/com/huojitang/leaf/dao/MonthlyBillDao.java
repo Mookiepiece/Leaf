@@ -3,6 +3,7 @@ package com.huojitang.leaf.dao;
 import com.huojitang.leaf.model.MonthlyBill;
 import org.litepal.LitePal;
 
+import java.time.YearMonth;
 import java.util.List;
 
 /**
@@ -21,6 +22,16 @@ public class MonthlyBillDao extends BaseDao<MonthlyBill> {
      */
     public MonthlyBill getByDate(String date) {
         return LitePal.where("date = ?", date)
+                .findFirst(MonthlyBill.class);
+    }
+
+    /**
+     * 基本功能与 getByDate(String) 相同，但是传入的参数变为 YearMonth 对象
+     * @param yearMonth 月度账单的年月
+     * @return 包含查询结果的 MonthlyBill 对象，或者 null
+     */
+    public MonthlyBill getByYearMonth(YearMonth yearMonth) {
+        return LitePal.where("date = ?", yearMonth.toString())
                 .findFirst(MonthlyBill.class);
     }
 

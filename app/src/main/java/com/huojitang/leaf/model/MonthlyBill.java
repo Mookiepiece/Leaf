@@ -3,6 +3,7 @@ package com.huojitang.leaf.model;
 import org.litepal.LitePal;
 import org.litepal.crud.LitePalSupport;
 
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,10 @@ public class MonthlyBill extends LitePalSupport {
 
     public String getDate() {
         return date;
+    }
+
+    public void setDate(YearMonth date) {
+        this.date = date.toString();
     }
 
     public void setDate(String date) {

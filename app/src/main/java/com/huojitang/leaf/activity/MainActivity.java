@@ -14,7 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.huojitang.leaf.dao.MonthlyBillDao;
+import com.huojitang.leaf.model.MonthlyBill;
+import com.huojitang.leaf.util.LeafDateSupport;
 
+import java.time.YearMonth;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +30,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        YearMonth currentYearMonth = LeafDateSupport.getCurrentYearMonth();
+        if (MonthlyBillDao.getInstance().getByYearMonth(currentYearMonth) == null) {
+            MonthlyBill monthlyBill = new MonthlyBill();
+            monthlyBill.setDate(currentYearMonth);
+            monthlyBill.setBudget(0);
+            MonthlyBillDao.getInstance().add(monthlyBill);
+        }
         initViews();
     }
 
