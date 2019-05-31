@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.huojitang.leaf.TagColorItemView
+    <com.huojitang.leaf.view.TagColorItemView
         android:id="@+id/tag_color_item_view"
         android:layout_width="50dp"
         android:layout_height="50dp" />

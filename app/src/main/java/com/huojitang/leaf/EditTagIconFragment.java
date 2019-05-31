@@ -4,68 +4,65 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import com.huojitang.leaf.view.TagIconItemView;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 选择标签图标Fragment（照搬主页）
  * @author Mookiepiece
  */
-public class EditTagIconFragment extends Fragment {
-
-    //创建进度条
-    private int status = 0;
-    private ProgressBar bar;
-
-    private RecyclerView recyclerView;
-    private TagColorAdapter tagColorAdapter;
-
-    private static List<Integer> resIdList = TagResHelper.getAllTagIconResId();
+public class EditTagIconFragment extends BaseGridLayoutSelectorFragment<Integer, EditTagIconFragment.TagIconSelectorAdapter.TagIconViewHolder> {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.only_a_recycler_view, container, false);
-        recyclerView = view.findViewById(R.id.tag_color_icon_fragment);
-        initRecyclerView();
-        return view;
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState,TagResManager.getAllTagIconResId(),new TagIconSelectorAdapter());
     }
 
-    private void initRecyclerView() {
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),EditTagActivity.ITEM_NUMBER_FOR_RECYCLER_VIEW));
-        tagColorAdapter = new TagColorAdapter();
-        recyclerView.setAdapter(tagColorAdapter);
-        tagColorAdapter.notifyDataSetChanged();
-    }
-
-    public class TagColorAdapter extends RecyclerView.Adapter<TagColorAdapter.ViewHolder> {
+    protected class TagIconSelectorAdapter extends RecyclerView.Adapter<TagIconSelectorAdapter.TagIconViewHolder> {
 
 
         @Override
-        public int getItemCount() {
-            return resIdList.size();
+        public TagIconViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tag_icon_item, parent, false);
+            return new TagIconViewHolder(view);
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder {
+        @Override
+        public void onBindViewHolder(TagIconViewHolder holder, int position) {
+            holder.view.setFgIcon(list.get(position));
+            if(getSelectedIndex()==position){
+                holder.view.setActive(true);
+            }
+            else{
+                holder.view.setActive(false);
+            }
+            holder.view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int temp=getSelectedIndex();
+                    setSelectedIndex(position);
+                    adapter.notifyItemChanged(temp);
+                    adapter.notifyItemChanged(getSelectedIndex());
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+
+        class TagIconViewHolder extends RecyclerView.ViewHolder {
             TagIconItemView view;
-            ViewHolder(View view) {
+            TagIconViewHolder(View view) {
                 super(view);
                 this.view=view.findViewById(R.id.tag_icon_item_view);
             }
         }
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tag_icon_item, parent, false);
-            return new ViewHolder(view);
-        }
 
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.view.setFgIcon(resIdList.get(position));
-            }
-        }
+    }
 }

@@ -1,10 +1,11 @@
-package com.huojitang.leaf;
+package com.huojitang.leaf.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.huojitang.leaf.R;
 
 
 public class AboutActivity extends AppCompatActivity {

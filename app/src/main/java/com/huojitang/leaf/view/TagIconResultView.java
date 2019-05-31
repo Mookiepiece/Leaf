@@ -1,4 +1,4 @@
-package com.huojitang.leaf;
+package com.huojitang.leaf.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,29 +12,31 @@ import android.util.AttributeSet;
 import android.view.View;
 import androidx.annotation.Nullable;
 
-public class TagIconView extends View {
+import com.huojitang.leaf.R;
+
+public class TagIconResultView extends View {
 
     private Paint paint; //画背景颜色
     private Bitmap bitmap; //缓存图标
 
-    public TagIconView(Context context, @Nullable AttributeSet attrs) {
+    public TagIconResultView(Context context, @Nullable AttributeSet attrs) {
         this(context,attrs,0);
     }
 
-    public TagIconView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public TagIconResultView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TagIconView, defStyleAttr, 0);
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TagIconResultView, defStyleAttr, 0);
         int n = a.getIndexCount();
         for (int i = 0; i <= n; i++) {
             int attr = a.getIndex(i);
             switch (attr) {
-                case R.styleable.TagIconView_bgColor:
+                case R.styleable.TagIconResultView_bgColor:
                     paint=new Paint();
                     paint.setColor(a.getColor(attr, Color.WHITE));
                     paint.setStrokeWidth(5);
                     paint.setAntiAlias(true);
                     break;
-                case R.styleable.TagIconView_fgIcon:
+                case R.styleable.TagIconResultView_fgIcon:
                     bitmap=BitmapFactory.decodeResource(getResources(),a.getResourceId(attr,R.drawable.baby_trolley));
                     break;
             }

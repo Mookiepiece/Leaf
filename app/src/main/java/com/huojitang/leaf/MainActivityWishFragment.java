@@ -17,12 +17,11 @@ import android.widget.Toast;
 
 import com.huojitang.leaf.dao.WishDao;
 import com.huojitang.leaf.model.Wish;
-import com.huojitang.util.LeafDateSupport;
+import com.huojitang.leaf.util.LeafDateSupport;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
 
 public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
 //    private String[] names = {"相机","小米九","平板电脑","内存条","移动硬盘"};

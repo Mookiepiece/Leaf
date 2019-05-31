@@ -6,13 +6,18 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-public class MainActivityFragmentPagerAdapter extends FragmentPagerAdapter {
-    private String[] mTitles = new String[]{"帐单","心愿单"};
+/**
+ * （照搬主页）
+ * @author Mookiepiece
+ */
+public class LeafFragmentPagerAdapter extends FragmentPagerAdapter {
+    private String[] mTitles;
     private ArrayList<Fragment> fragments;
 
-    public MainActivityFragmentPagerAdapter(FragmentManager fm,ArrayList<Fragment> fragments) {
+    public LeafFragmentPagerAdapter(FragmentManager fm, String[] mTitles, ArrayList<Fragment> fragments) {
         super(fm);
         this.fragments=fragments;
+        this.mTitles=mTitles;
     }
 
     @Override

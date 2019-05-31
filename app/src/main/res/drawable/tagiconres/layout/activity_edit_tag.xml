@@ -57,7 +57,7 @@
                 android:hint="@string/tag_limit"
                 android:inputType="textPersonName|numberDecimal" />
 
-            <com.huojitang.leaf.TagIconView
+            <com.huojitang.leaf.view.TagIconResultView
                 android:id="@+id/activity_edit_tag_shortcut"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
@@ -82,10 +82,10 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="#00000000"
-        app:tabIndicatorColor="#ff3336"
+        app:tabIndicatorColor="@color/GoldenColor"
         app:tabIndicatorHeight="1dp"
         app:tabMode="fixed"
-        app:tabSelectedTextColor="#ff4433"
+        app:tabSelectedTextColor="@color/GoldenColor"
         app:tabTextColor="#0b0b0b" />
 
     <androidx.viewpager.widget.ViewPager

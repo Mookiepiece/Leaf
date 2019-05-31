@@ -1,12 +1,5 @@
 package com.huojitang.leaf.dao;
 
-import com.huojitang.leaf.model.Tag;
-import com.huojitang.util.ColorConverter;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
-
 public class TagDaoTest {
 
 //    @Test

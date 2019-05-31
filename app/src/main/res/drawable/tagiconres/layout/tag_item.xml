@@ -16,7 +16,7 @@
         android:padding="15dp"
         android:showDividers="middle">
 
-        <com.huojitang.leaf.TagIconView
+        <com.huojitang.leaf.view.TagIconResultView
             android:id="@+id/list_tag_item_icon"
             android:layout_width="50dp"
             android:layout_height="50dp" />

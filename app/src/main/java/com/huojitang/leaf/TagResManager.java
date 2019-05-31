@@ -2,7 +2,7 @@ package com.huojitang.leaf;
 
 import java.util.ArrayList;
 
-public class TagResHelper {
+public class TagResManager {
 
     private static ArrayList<Integer> tagColors=new ArrayList<>();
     private static ArrayList<Integer> tagIcons=new ArrayList<>();
@@ -57,7 +57,7 @@ public class TagResHelper {
             tagIcons.add(i);
     }
 
-    private TagResHelper() {
+    private TagResManager() {
 
     }
 }

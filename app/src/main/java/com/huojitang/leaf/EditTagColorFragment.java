@@ -1,75 +1,70 @@
 package com.huojitang.leaf;
 
-import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import com.huojitang.leaf.global.LeafApplication;
+import com.huojitang.leaf.view.TagColorItemView;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 选择标签颜色Fragment（照搬主页）
  * @author Mookiepiece
  */
-public class EditTagColorFragment extends Fragment {
-
-    private RecyclerView recyclerView;
-    private TagColorAdapter tagColorAdapter;
-
-    private static List<Integer> colorIdList= TagResHelper.getAllTagColorResId();;
+public class EditTagColorFragment extends BaseGridLayoutSelectorFragment<Integer, EditTagColorFragment.TagColorSelectorAdapter.TagColorViewHolder> {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.only_a_recycler_view, container, false);
-        recyclerView = view.findViewById(R.id.tag_color_icon_fragment);
-        initRecyclerView();
-        return view;
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState,TagResManager.getAllTagColorResId(),new TagColorSelectorAdapter());
     }
 
-    private void initRecyclerView() {
+    protected class TagColorSelectorAdapter extends RecyclerView.Adapter<TagColorSelectorAdapter.TagColorViewHolder> {
 
-        GridLayoutManager layoutManager=new GridLayoutManager(getContext(),EditTagActivity.ITEM_NUMBER_FOR_RECYCLER_VIEW);
-        recyclerView.setLayoutManager(layoutManager);
-        tagColorAdapter = new TagColorAdapter();
-        recyclerView.setAdapter(tagColorAdapter);
-        tagColorAdapter.notifyDataSetChanged();
-    }
+        @NotNull
+        @Override
+        public TagColorViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tag_color_item, parent, false);
+            return new TagColorViewHolder(view);
+        }
 
-    public class TagColorAdapter extends RecyclerView.Adapter<TagColorAdapter.ViewHolder> {
+        @Override
+        public void onBindViewHolder(@NotNull TagColorViewHolder holder, int position) {
+            holder.view.setBgColor(ResourcesCompat.getColor(LeafApplication.getContext().getResources(), list.get(position), null));
+            if(getSelectedIndex()==position){
+                holder.view.setActive(true);
+            }
+            else{
+                holder.view.setActive(false);
+            }
+            holder.view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int temp=getSelectedIndex();
+                    setSelectedIndex(position);
+                    adapter.notifyItemChanged(temp);
+                    adapter.notifyItemChanged(getSelectedIndex());
+                }
+            });
+        }
 
         @Override
         public int getItemCount() {
-            return colorIdList.size();
+            return list.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder {
+        class TagColorViewHolder extends RecyclerView.ViewHolder {
             TagColorItemView view;
-            ViewHolder(View view) {
+            TagColorViewHolder(View view) {
                 super(view);
                 this.view=view.findViewById(R.id.tag_color_item_view);
             }
         }
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tag_color_item, parent, false);
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.view.setBgColor(ResourcesCompat.getColor(getResources(),
-                    colorIdList.get(position), null));
-            }
-        }
+    }
 
 }

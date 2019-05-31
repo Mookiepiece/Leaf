@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="#00000000"
-        app:tabIndicatorColor="#ff3336"
+        app:tabIndicatorColor="@color/colorPrimary"
         app:tabIndicatorHeight="1dp"
         app:tabMode="fixed"
-        app:tabSelectedTextColor="#ff4433"
+        app:tabSelectedTextColor="@color/colorPrimary"
         app:tabTextColor="#0b0b0b" />
 
     <androidx.viewpager.widget.ViewPager

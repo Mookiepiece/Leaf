@@ -1,4 +1,4 @@
-package com.huojitang.leaf;
+package com.huojitang.leaf.activity;
 
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.huojitang.leaf.R;
 
 
 public class OptionActivity extends AppCompatActivity {
@@ -49,7 +51,7 @@ public class OptionActivity extends AppCompatActivity {
 
         @JavascriptInterface
         public void about(){
-            startActivity(new Intent(OptionActivity.this ,AboutActivity.class));
+            startActivity(new Intent(OptionActivity.this , AboutActivity.class));
         }
 
         @JavascriptInterface

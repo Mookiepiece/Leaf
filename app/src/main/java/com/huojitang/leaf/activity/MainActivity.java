@@ -1,8 +1,12 @@
-package com.huojitang.leaf;
+package com.huojitang.leaf.activity;
 
 import android.content.Intent;
 
 import com.google.android.material.tabs.TabLayout;
+import com.huojitang.leaf.LeafFragmentPagerAdapter;
+import com.huojitang.leaf.MainActivityBillFragment;
+import com.huojitang.leaf.MainActivityWishFragment;
+import com.huojitang.leaf.R;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -16,7 +20,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private MainActivityFragmentPagerAdapter myFragmentPagerAdapter;
+    private LeafFragmentPagerAdapter myFragmentPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(new MainActivityBillFragment());
         fragments.add(new MainActivityWishFragment());
 
-        myFragmentPagerAdapter = new MainActivityFragmentPagerAdapter(getSupportFragmentManager(),fragments);
+        myFragmentPagerAdapter = new LeafFragmentPagerAdapter(getSupportFragmentManager(),new String[]{"账单","心愿单"},fragments);
         mViewPager.setAdapter(myFragmentPagerAdapter);
 
         //将TabLayout与ViewPager绑定在一起

@@ -3,7 +3,7 @@
     <attr name="bgColor" format="reference"/>
     <attr name="fgIcon" format="reference"/>
 
-    <declare-styleable name="TagIconView">
+    <declare-styleable name="TagIconResultView">
         <attr name="bgColor" />
         <attr name="fgIcon" />
     </declare-styleable>

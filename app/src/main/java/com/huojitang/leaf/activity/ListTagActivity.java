@@ -1,4 +1,4 @@
-package com.huojitang.leaf;
+package com.huojitang.leaf.activity;
 
 import androidx.annotation.NonNull;
 
@@ -20,9 +20,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.huojitang.leaf.R;
+import com.huojitang.leaf.TagResManager;
 import com.huojitang.leaf.dao.TagDao;
 import com.huojitang.leaf.model.Tag;
-import com.huojitang.util.PriceTransUtil;
+import com.huojitang.leaf.view.TagIconResultView;
+import com.huojitang.leaf.util.PriceTransUtil;
 
 /**
  * 编辑标签界面
@@ -61,7 +64,7 @@ public class ListTagActivity extends AppCompatActivity {
     }
 
     public void ShowAddTagDialog(){
-        startActivity(new Intent(ListTagActivity.this,EditTagActivity.class));
+        startActivity(new Intent(ListTagActivity.this, EditTagActivity.class));
         //TODO MK 实现传递tag数据
         /*if(tagDao.getCount(true)>=99){
             Toast.makeText(ListTagActivity.this,"不能再增加标签数量了", Toast.LENGTH_SHORT).show();
@@ -69,7 +72,7 @@ public class ListTagActivity extends AppCompatActivity {
         }
 
         Tag tag=new Tag();
-        new AddTagDialog(ListTagActivity.this,tag, new AddTagDialog.ConfirmOnclickListener(){
+        new _AddTagDialog(ListTagActivity.this,tag, new _AddTagDialog.ConfirmOnclickListener(){
             @Override
             public void ConfirmClick() {
 
@@ -156,12 +159,12 @@ public class ListTagActivity extends AppCompatActivity {
         public void onBindViewHolder(EditTagViewHolder editTagViewHolder, int position) {
             Tag tag=tagList.get(position);
 
-            int color= ResourcesCompat.getColor(getResources(), TagResHelper.getTagColorResId(tag.getColor()), null);
+            int color= ResourcesCompat.getColor(getResources(), TagResManager.getTagColorResId(tag.getColor()), null);
 
             editTagViewHolder.name.setText(tag.getName());
             editTagViewHolder.name.setTextColor(color);
             editTagViewHolder.icon.setBgColor(color);
-            editTagViewHolder.icon.setFgIcon(TagResHelper.getTagIconsResId(tag.getIcon()));
+            editTagViewHolder.icon.setFgIcon(TagResManager.getTagIconsResId(tag.getIcon()));
 
             editTagViewHolder.limit.setText(PriceTransUtil.Int2Decimal(tag.getBudget()));
             editTagViewHolder.cmt.setText( tag.getComment());
@@ -185,7 +188,7 @@ public class ListTagActivity extends AppCompatActivity {
     class EditTagViewHolder extends RecyclerView.ViewHolder{
         TextView name;
         TextView limit;
-        TagIconView icon;
+        TagIconResultView icon;
         TextView cmt;
         LinearLayout layout;
 

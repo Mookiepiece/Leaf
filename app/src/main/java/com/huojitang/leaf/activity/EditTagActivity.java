@@ -1,4 +1,4 @@
-package com.huojitang.leaf;
+package com.huojitang.leaf.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,7 +12,12 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.huojitang.global.LeafApplication;
+import com.huojitang.leaf.TagResManager;
+import com.huojitang.leaf.global.LeafApplication;
+import com.huojitang.leaf.EditTagColorFragment;
+import com.huojitang.leaf.EditTagIconFragment;
+import com.huojitang.leaf.LeafFragmentPagerAdapter;
+import com.huojitang.leaf.R;
 
 import java.util.ArrayList;
 
@@ -24,7 +29,7 @@ import java.util.ArrayList;
 public class EditTagActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private EditTagFragmentPagerAdapter adapter;
+    private LeafFragmentPagerAdapter adapter;
 
     public static final int ITEM_NUMBER_FOR_RECYCLER_VIEW;
     static {
@@ -55,7 +60,7 @@ public class EditTagActivity extends AppCompatActivity {
         fragments.add(new EditTagColorFragment());
         fragments.add(new EditTagIconFragment());
 
-        adapter = new EditTagFragmentPagerAdapter(getSupportFragmentManager(),fragments);
+        adapter = new LeafFragmentPagerAdapter(getSupportFragmentManager(),new String[]{"背景","图标"},fragments);
         viewPager.setAdapter(adapter);
 
         //将TabLayout与ViewPager绑定在一起

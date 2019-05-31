@@ -1,29 +1,25 @@
-package com.huojitang.leaf;
+package com.huojitang.leaf.view;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 
-import com.huojitang.global.LeafApplication;
+import com.huojitang.leaf.global.LeafApplication;
+import com.huojitang.leaf.R;
 
 public class TagColorItemView extends View {
 
     private Paint paint; //画背景颜色
-    private static Paint borderPaint=new Paint();
+    private static final Paint PAINT_1 =new Paint();
     private boolean active;
 
     static{
-        borderPaint.setColor(ResourcesCompat.getColor(LeafApplication.getContext().getResources(),R.color.GoldenColor, null));
+        PAINT_1.setColor(ResourcesCompat.getColor(LeafApplication.getContext().getResources(), R.color.GoldenColor, null));
     }
 
     /**
@@ -53,8 +49,9 @@ public class TagColorItemView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(active)
-            canvas.drawOval(0,0,this.getMeasuredWidth(),this.getMeasuredHeight(),paint);
-        canvas.drawOval(4,4,this.getMeasuredWidth()-4,this.getMeasuredHeight()-4,paint);
+        if(active) {
+            canvas.drawOval(0, 0, this.getMeasuredWidth(), this.getMeasuredHeight(), PAINT_1);
+        }
+            canvas.drawOval(16,16,this.getMeasuredWidth()-16,this.getMeasuredHeight()-16,paint);
     }
 }

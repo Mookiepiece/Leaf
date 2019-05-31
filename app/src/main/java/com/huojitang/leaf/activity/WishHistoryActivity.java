@@ -1,4 +1,4 @@
-package com.huojitang.leaf;
+package com.huojitang.leaf.activity;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,7 @@ import android.webkit.WebViewClient;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.huojitang.leaf.R;
 import com.huojitang.leaf.dao.WishDao;
 
 import java.time.YearMonth;

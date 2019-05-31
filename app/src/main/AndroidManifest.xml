@@ -6,22 +6,22 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.huojitang.global.LeafApplication"
+        android:name=".global.LeafApplication"
         android:allowBackup="true"
         android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChartActivity" android:exported="true"></activity>
-        <activity android:name=".AboutActivity" />
-        <activity android:name=".ListTagActivity" />
-        <activity android:name=".EditTagActivity" />
+        <activity android:name=".activity.ChartActivity" android:exported="true"></activity>
+        <activity android:name=".activity.AboutActivity" />
+        <activity android:name=".activity.ListTagActivity" />
+        <activity android:name=".activity.EditTagActivity" />
         <activity
-            android:name=".OptionActivity"
+            android:name=".activity.OptionActivity"
             android:label="@string/title_activity_setting"
             android:theme="@style/AppSettingTheme" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

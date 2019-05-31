@@ -1,17 +1,13 @@
 package com.huojitang.leaf.dao;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
-import androidx.annotation.Nullable;
-
-import com.huojitang.global.LeafApplication;
-import com.huojitang.leaf.WishHistoryActivity;
+import com.huojitang.leaf.global.LeafApplication;
 import com.huojitang.leaf.model.BillItem;
 import com.huojitang.leaf.model.MonthlyBill;
 import com.huojitang.leaf.model.Tag;
 import com.huojitang.leaf.model.Wish;
-import com.huojitang.util.ColorConverter;
+import com.huojitang.leaf.util.ColorConverter;
 
 import org.junit.Test;
 import org.litepal.LitePal;

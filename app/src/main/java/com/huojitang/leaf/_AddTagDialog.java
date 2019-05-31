@@ -14,7 +14,7 @@ import com.huojitang.leaf.model.Tag;
  * 添加标签对话框
  * 传入一个TagEntity对象并对其进行修改
  */
-public class AddTagDialog extends Dialog {
+public class _AddTagDialog extends Dialog {
 
     //一些从界面里的组件
     private Button cancel;
@@ -28,7 +28,7 @@ public class AddTagDialog extends Dialog {
     //TODO MK 构造方法里传入的空的一个实体，但是得想办法给它赋值并返回
     private Tag tag;
 
-    public AddTagDialog(Context context,Tag tag, final ConfirmOnclickListener listener) {
+    public _AddTagDialog(Context context, Tag tag, final ConfirmOnclickListener listener) {
         super(context);
         this.setCancelable(true);
         this.setCanceledOnTouchOutside(true);
@@ -42,14 +42,14 @@ public class AddTagDialog extends Dialog {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddTagDialog.this.dismiss();
+                _AddTagDialog.this.dismiss();
             }
         });
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.ConfirmClick();
-                AddTagDialog.this.dismiss();
+                _AddTagDialog.this.dismiss();
             }
         });
 

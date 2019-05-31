@@ -1,4 +1,4 @@
-package com.huojitang.leaf;
+package com.huojitang.leaf.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,23 +11,22 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
+
+import com.huojitang.leaf.R;
+import com.huojitang.leaf.global.LeafApplication;
 
 public class TagIconItemView extends View {
 
-    private static Paint paintBlack; //画背景颜色
-    private static Paint paintWhite; //画背景颜色(active)
+    private static final Paint PAINT_1; //画背景颜色
     private Bitmap bitmap; //缓存图标
     private boolean active;
 
     static{
-        paintBlack =new Paint();
-        paintBlack.setColor(Color.BLACK);
-        paintBlack.setStrokeWidth(5);
-        paintBlack.setAntiAlias(true);
-        paintWhite=new Paint();
-        paintWhite.setColor(Color.WHITE);
-        paintWhite.setStrokeWidth(5);
-        paintWhite.setAntiAlias(true);
+        PAINT_1 =new Paint();
+        PAINT_1.setColor(ResourcesCompat.getColor(LeafApplication.getContext().getResources(), R.color.GoldenColor, null));
+        PAINT_1.setStrokeWidth(5);
+        PAINT_1.setAntiAlias(true);
     }
 
     /**
@@ -61,8 +60,7 @@ public class TagIconItemView extends View {
         super.onDraw(canvas);
 
         if(active) {
-            canvas.drawOval(0, 0, this.getMeasuredWidth(), this.getMeasuredHeight(), paintBlack);
-            canvas.drawOval(4, 4, this.getMeasuredWidth() - 4, this.getMeasuredHeight() - 4, paintWhite);
+            canvas.drawOval(0, 0, this.getMeasuredWidth(), this.getMeasuredHeight(), PAINT_1);
         }
         canvas.drawBitmap(bitmap,
                 new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight()),
