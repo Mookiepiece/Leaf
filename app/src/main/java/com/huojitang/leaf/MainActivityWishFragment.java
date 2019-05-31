@@ -23,7 +23,6 @@ import com.huojitang.leaf.model.Wish;
 import com.huojitang.leaf.util.LeafDateSupport;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
@@ -41,27 +40,16 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
     String wishName;
     double wishPrice;
     String wishDetails;
-    String year;
-    String month;
-    String day;
-    Calendar calendar;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wish, container, false);
-        calendar = Calendar.getInstance();
-        calendar.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-        year = String.valueOf(calendar.get(Calendar.YEAR));
-        if (calendar.get(Calendar.MONTH) < 10) {
-            month = "0" + String.valueOf(calendar.get(Calendar.MONTH) + 1);
-        } else {
-            month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
-        }
 
-        fab = view.findViewById(R.id.floatingActionButton);
 
-        mListView = view.findViewById(R.id.LV_2);
+        fab = view.findViewById(R.id.floating_action_button_wish_fragment);
+
+        mListView = view.findViewById(R.id.list_view_wish);
         initWishMessage();
 
         final WishAdapter wishAdapter = new WishAdapter();
@@ -182,7 +170,13 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
             holder.startTime.setText(wishList.get(position).getStartTime());
             holder.finishedTime.setText(wishList.get(position).getFinishedTime());
 
-            if(wishList)
+            if(wishList.get(position).getState()==0){
+                holder.state.setText("未完成");
+            }else if(wishList.get(position).getState()==1){
+                holder.state.setText("已取消");
+            }else {
+                holder.state.setText("已完成");
+            }
             return convertView;
         }
 

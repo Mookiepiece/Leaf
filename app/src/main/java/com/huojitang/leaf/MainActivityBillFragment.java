@@ -11,7 +11,7 @@ import com.huojitang.leaf.dao.TagDao;
 import com.huojitang.leaf.model.BillItem;
 import com.huojitang.leaf.model.MonthlyBill;
 import com.huojitang.leaf.model.Tag;
-import com.huojitang.util.LeafDateSupport;
+import com.huojitang.leaf.util.LeafDateSupport;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -68,7 +68,7 @@ public class MainActivityBillFragment extends Fragment {
         initRecyclerView();
 
         //设置悬浮按钮的点击事件
-        FloatingActionButton floatingActionButton =  view.findViewById(R.id.floatingActionButton2);
+        FloatingActionButton floatingActionButton =  view.findViewById(R.id.floating_action_button_bill_fragment);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -5,27 +5,25 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="45dp"
-        android:layout_height="41dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="11dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="12dp"
+        android:id="@+id/floating_action_button_wish_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/list_view_wish_linear_layout"
+        android:layout_alignBottom="@+id/list_view_wish_linear_layout"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:clickable="true"
         app:backgroundTint="@android:color/holo_blue_dark"
-        app:layout_constraintBottom_toBottomOf="@+id/listview_linear"
-        app:rippleColor="#00C55959"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:layout_constraintBottom_toBottomOf="@+id/list_view_wish_linear_layout"
+        app:srcCompat="@drawable/baseline" />
     <LinearLayout
-        android:id="@+id/listview_linear"
+        android:id="@+id/list_view_wish_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <ListView
-            android:id="@+id/LV_2"
+            android:id="@+id/list_view_wish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
