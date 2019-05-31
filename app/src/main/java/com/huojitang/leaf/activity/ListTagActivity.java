@@ -159,11 +159,11 @@ public class ListTagActivity extends AppCompatActivity {
         public void onBindViewHolder(EditTagViewHolder editTagViewHolder, int position) {
             Tag tag=tagList.get(position);
 
-            int color= ResourcesCompat.getColor(getResources(), TagResManager.getTagColorResId(tag.getColor()), null);
+            int colorResId=TagResManager.getTagColorResId(tag.getColor());
 
             editTagViewHolder.name.setText(tag.getName());
-            editTagViewHolder.name.setTextColor(color);
-            editTagViewHolder.icon.setBgColor(color);
+            editTagViewHolder.name.setTextColor(ResourcesCompat.getColor(getResources(), colorResId, null));
+            editTagViewHolder.icon.setBgColor(colorResId);
             editTagViewHolder.icon.setFgIcon(TagResManager.getTagIconsResId(tag.getIcon()));
 
             editTagViewHolder.limit.setText(PriceTransUtil.Int2Decimal(tag.getBudget()));

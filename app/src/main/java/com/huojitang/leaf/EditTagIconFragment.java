@@ -17,9 +17,14 @@ import org.jetbrains.annotations.NotNull;
  */
 public class EditTagIconFragment extends BaseGridLayoutSelectorFragment<Integer, EditTagIconFragment.TagIconSelectorAdapter.TagIconViewHolder> {
 
+    public EditTagIconFragment(OnItemSelectedListener listener) {
+        super(listener);
+    }
+
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState,TagResManager.getAllTagIconResId(),new TagIconSelectorAdapter());
+        return super.onCreateView(inflater, container, savedInstanceState,
+                TagResManager.getAllTagIconResId(),new TagIconSelectorAdapter());
     }
 
     protected class TagIconSelectorAdapter extends RecyclerView.Adapter<TagIconSelectorAdapter.TagIconViewHolder> {
@@ -47,6 +52,7 @@ public class EditTagIconFragment extends BaseGridLayoutSelectorFragment<Integer,
                     setSelectedIndex(position);
                     adapter.notifyItemChanged(temp);
                     adapter.notifyItemChanged(getSelectedIndex());
+                    listener.OnItemSelected(position);
                 }
             });
         }

@@ -11,8 +11,10 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.huojitang.leaf.R;
+import com.huojitang.leaf.global.LeafApplication;
 
 public class TagIconResultView extends View {
 
@@ -45,11 +47,11 @@ public class TagIconResultView extends View {
 
     /**
      * 更新背景
-     * @param bgColor 传入color
+     * @param bgColor 传入rid
      */
     public void setBgColor(int bgColor) {
         paint=new Paint();
-        paint.setColor(bgColor);
+        paint.setColor(ResourcesCompat.getColor(LeafApplication.getContext().getResources(), bgColor, null));
         paint.setStrokeWidth(5);
         paint.setAntiAlias(true);
         invalidate();

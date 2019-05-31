@@ -58,7 +58,7 @@
                 android:inputType="textPersonName|numberDecimal" />
 
             <com.huojitang.leaf.view.TagIconResultView
-                android:id="@+id/activity_edit_tag_shortcut"
+                android:id="@+id/activity_edit_tag_icon_result"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 app:bgColor="@color/leaf_blueGreen"

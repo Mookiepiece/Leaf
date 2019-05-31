@@ -24,9 +24,13 @@ public abstract class BaseGridLayoutSelectorFragment<T,T2 extends androidx.recyc
     protected List<T> list;
     private int selectedIndex=0;
     protected RecyclerView.Adapter<T2> adapter;
+    protected OnItemSelectedListener listener;
 
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState,List<T> list, RecyclerView.Adapter<T2> adapter) {
+    public BaseGridLayoutSelectorFragment(OnItemSelectedListener listener) {
+        this.listener = listener;
+    }
 
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState, List<T> list, RecyclerView.Adapter<T2> adapter) {
         this.list = list;
         View view = inflater.inflate(R.layout.only_a_recycler_view, container, false);
         recyclerView = view.findViewById(R.id.tag_color_icon_fragment);
@@ -43,5 +47,9 @@ public abstract class BaseGridLayoutSelectorFragment<T,T2 extends androidx.recyc
 
     protected void setSelectedIndex(int position){
         this.selectedIndex=position;
+    }
+
+    public interface OnItemSelectedListener {
+        public void OnItemSelected(int position);
     }
 }

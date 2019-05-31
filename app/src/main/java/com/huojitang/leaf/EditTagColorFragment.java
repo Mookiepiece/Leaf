@@ -19,9 +19,15 @@ import org.jetbrains.annotations.NotNull;
  */
 public class EditTagColorFragment extends BaseGridLayoutSelectorFragment<Integer, EditTagColorFragment.TagColorSelectorAdapter.TagColorViewHolder> {
 
+
+    public EditTagColorFragment(OnItemSelectedListener listener) {
+        super(listener);
+    }
+
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState,TagResManager.getAllTagColorResId(),new TagColorSelectorAdapter());
+        return super.onCreateView(inflater, container, savedInstanceState,
+                TagResManager.getAllTagColorResId(),new TagColorSelectorAdapter());
     }
 
     protected class TagColorSelectorAdapter extends RecyclerView.Adapter<TagColorSelectorAdapter.TagColorViewHolder> {
@@ -35,7 +41,7 @@ public class EditTagColorFragment extends BaseGridLayoutSelectorFragment<Integer
 
         @Override
         public void onBindViewHolder(@NotNull TagColorViewHolder holder, int position) {
-            holder.view.setBgColor(ResourcesCompat.getColor(LeafApplication.getContext().getResources(), list.get(position), null));
+            holder.view.setBgColor(list.get(position));
             if(getSelectedIndex()==position){
                 holder.view.setActive(true);
             }
@@ -49,6 +55,7 @@ public class EditTagColorFragment extends BaseGridLayoutSelectorFragment<Integer
                     setSelectedIndex(position);
                     adapter.notifyItemChanged(temp);
                     adapter.notifyItemChanged(getSelectedIndex());
+                    listener.OnItemSelected(position);
                 }
             });
         }

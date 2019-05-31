@@ -12,12 +12,14 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.huojitang.leaf.BaseGridLayoutSelectorFragment;
 import com.huojitang.leaf.TagResManager;
 import com.huojitang.leaf.global.LeafApplication;
 import com.huojitang.leaf.EditTagColorFragment;
 import com.huojitang.leaf.EditTagIconFragment;
 import com.huojitang.leaf.LeafFragmentPagerAdapter;
 import com.huojitang.leaf.R;
+import com.huojitang.leaf.view.TagIconResultView;
 
 import java.util.ArrayList;
 
@@ -30,6 +32,7 @@ public class EditTagActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private LeafFragmentPagerAdapter adapter;
+    private TagIconResultView iconResultView;
 
     public static final int ITEM_NUMBER_FOR_RECYCLER_VIEW;
     static {
@@ -57,8 +60,18 @@ public class EditTagActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.activity_edit_tag_viewPager);
 
         ArrayList<Fragment> fragments=new ArrayList<>();
-        fragments.add(new EditTagColorFragment());
-        fragments.add(new EditTagIconFragment());
+        fragments.add(new EditTagColorFragment(new BaseGridLayoutSelectorFragment.OnItemSelectedListener() {
+            @Override
+            public void OnItemSelected(int position) {
+                iconResultView.setBgColor(TagResManager.getTagColorResId(position));
+            }
+        }));
+        fragments.add(new EditTagIconFragment(new BaseGridLayoutSelectorFragment.OnItemSelectedListener() {
+            @Override
+            public void OnItemSelected(int position) {
+                iconResultView.setFgIcon(TagResManager.getTagIconsResId(position));
+            }
+        }));
 
         adapter = new LeafFragmentPagerAdapter(getSupportFragmentManager(),new String[]{"背景","图标"},fragments);
         viewPager.setAdapter(adapter);
@@ -66,6 +79,9 @@ public class EditTagActivity extends AppCompatActivity {
         //将TabLayout与ViewPager绑定在一起
         tabLayout = findViewById(R.id.activity_edit_tag_tabLayout);
         tabLayout.setupWithViewPager(viewPager);
+
+        //其他组件
+        iconResultView=findViewById(R.id.activity_edit_tag_icon_result);
     }
 
 
