@@ -2,6 +2,7 @@ package com.huojitang.leaf.model;
 
 import org.litepal.crud.LitePalSupport;
 
+import java.time.LocalDate;
 import java.time.YearMonth;
 
 /**
@@ -85,8 +86,16 @@ public class Wish extends LitePalSupport {
         this.value = value;
     }
 
+    public void setValue(double value) {
+        this.value = (int)(value * 100);
+    }
+
     public String getStartTime() {
         return startTime;
+    }
+
+    public void setStartTime(LocalDate localDate) {
+        this.startTime = localDate.toString();
     }
 
     public void setStartTime(String startTime) {
