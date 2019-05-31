@@ -1,11 +1,15 @@
 package com.huojitang.leaf;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.huojitang.leaf.activity.ChartActivity;
+import com.huojitang.leaf.activity.OptionActivity;
+import com.huojitang.leaf.activity.WishHistoryActivity;
 import com.huojitang.leaf.dao.MonthlyBillDao;
 import com.huojitang.leaf.dao.TagDao;
 import com.huojitang.leaf.model.BillItem;
@@ -58,18 +62,20 @@ public class MainActivityBillFragment extends Fragment {
         bar = view.findViewById(R.id.fragment_bill_progressbar);
         status = 20;
 
-        //bar.setProgress(status);
-
-//        ButterKnife.bind(getActivity());
-
         //数据库填充
         tags=tagDao.list(false);
 
         initRecyclerView();
 
+        //设置跳转报表界面
+        view.findViewById(R.id.button_to_bill_chart_activity).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext() , ChartActivity.class));
+            }
+        });
         //设置悬浮按钮的点击事件
-        FloatingActionButton floatingActionButton =  view.findViewById(R.id.floating_action_button_bill_fragment);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.button_add_bill).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addBillDialog = new AddBillDialog(getActivity(), new AddBillDialog.ConfirmOnclickListener() {

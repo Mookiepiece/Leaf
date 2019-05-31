@@ -15,11 +15,13 @@
         android:clickable="true"
         app:backgroundTint="@android:color/holo_blue_dark"
         app:layout_constraintBottom_toBottomOf="@+id/list_view_wish_linear_layout"
+        app:rippleColor="#00C55959"
         app:srcCompat="@drawable/baseline" />
+
     <LinearLayout
         android:id="@+id/list_view_wish_linear_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <ListView

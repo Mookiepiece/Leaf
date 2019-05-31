@@ -58,7 +58,7 @@ public class InitializeExampleData {
 
         tag =new Tag();
         tag.setName("未分类");
-        tag.setColor(ColorConverter.String2Color("aaa"));
+        tag.setColor(0);
         tag.setReserved(true);
         tagDao.add(tag);
 

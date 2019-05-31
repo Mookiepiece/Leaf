@@ -7,6 +7,11 @@ import android.text.TextUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+/**
+ * 默认控制输入9位数，小数点前6位，后2位，小数一位，共9位
+ *
+ */
 public class CashierInputFilter implements InputFilter {
 
     private Pattern mPattern;
