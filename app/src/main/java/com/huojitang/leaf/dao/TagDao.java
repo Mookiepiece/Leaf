@@ -27,6 +27,11 @@ public class TagDao extends BaseDao<Tag> {
         return LitePal.findAll(Tag.class);
     }
 
+    @Override
+    public int count() {
+        return LitePal.count(Tag.class);
+    }
+
     /**
      * 获得给定标签在给定月份下的消费总额
      * @param tag   需要统计的标签

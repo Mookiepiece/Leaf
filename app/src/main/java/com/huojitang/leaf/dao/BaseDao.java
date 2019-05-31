@@ -56,4 +56,9 @@ public abstract class BaseDao<T extends LitePalSupport> {
      * @return 一个包含数据表中所有实体的列表。
      */
     public abstract List<T> listAll();
+
+    /**
+     * 计算表中的记录数
+     */
+    public abstract int count();
 }

@@ -22,7 +22,7 @@ public class InitializeExampleData {
     @Test
     public void spTest(){
         SharedPreferences sp=LeafApplication.getPreferences();
-        assertEquals("2019-1-15",sp.getString("FirstWishStartTime",""));
+        assertEquals("2019-01-15",sp.getString("FirstWishStartTime",""));
     }
 
     @Test
@@ -74,15 +74,15 @@ public class InitializeExampleData {
         wish=new Wish();
         wish.setName("wish2");
         wish.setComment("454w252");
-        wish.setStartTime("2019-03-5");
+        wish.setStartTime("2019-03-05");
         wish.setFinishedTime("20");
         wish.setState(Wish.WISH_ACHIEVED);
-        wish.setFinishedTime("2019-05-5");
+        wish.setFinishedTime("2019-05-05");
         wishDao.add(wish);
         wish=new Wish();
         wish.setName("wish3");
         wish.setComment("454w252");
-        wish.setStartTime("2019-03-5");
+        wish.setStartTime("2019-03-05");
         wish.setFinishedTime("20");
         wish.setState(Wish.WISH_CANCELLED);
         wish.setFinishedTime("2019-04-15");
@@ -99,11 +99,11 @@ public class InitializeExampleData {
         monthlyBill=new MonthlyBill();
         monthlyBill.setBudget(120000);
         monthlyBill.setComment("comment of month");
-        monthlyBill.setDate("2019-5");
+        monthlyBill.setDate("2019-05");
         monthlyBillDao.add(monthlyBill);
         monthlyBill=new MonthlyBill();
         monthlyBill.setBudget(150000);
-        monthlyBill.setDate("2019-4");
+        monthlyBill.setDate("2019-04");
         monthlyBillDao.add(monthlyBill);
 
         BillItemDao billItemDao=BillItemDao.getInstance();

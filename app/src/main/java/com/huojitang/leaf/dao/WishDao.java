@@ -22,6 +22,11 @@ public class WishDao extends BaseDao<Wish> {
         return entity.save();
     }
 
+    @Override
+    public int count() {
+        return LitePal.count(Wish.class);
+    }
+
     /**
      * MK
      * 根据开始时间获取部分心愿

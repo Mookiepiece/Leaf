@@ -26,6 +26,7 @@ import com.huojitang.leaf.model.MonthlyBill
 import com.huojitang.leaf.model.Tag
 import com.huojitang.leaf.util.LeafDateSupport
 import java.time.YearMonth
+import kotlin.math.max
 
 /**
  * ChartActivity
@@ -40,7 +41,7 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
     private lateinit var nextMonthButton: Button
     private lateinit var currentMonthTextView: TextView
     private lateinit var selectedYearMonth: YearMonth
-    private lateinit var currentMonthlyBill: MonthlyBill
+    private var currentMonthlyBill: MonthlyBill? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,7 +95,7 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
 
     /** 设定 LineChart 的相关属性（这些属性似乎无法通过 xml 配置） */
     private fun setupLineChart() {
-        lineChart.setBackgroundColor(Color.WHITE);
+        lineChart.setBackgroundColor(Color.WHITE)
         lineChart.description.isEnabled = false
         lineChart.setTouchEnabled(true)
 
@@ -103,9 +104,8 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
         xAxis.enableGridDashedLine(10f, 10f, 0f)
 
         val yAxis = lineChart.axisLeft
+        lineChart.axisRight.isEnabled = false
         yAxis.enableGridDashedLine(10f, 10f, 10f)
-        yAxis.axisMaximum = 100f
-        yAxis.axisMinimum = 10f
     }
 
     /**
@@ -131,6 +131,7 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
         currentMonthTextView.text = String.format(
                 resources.getString(R.string.current_month_text_view_text), selectedYearMonth
         )
+        currentMonthlyBill = MonthlyBillDao.getInstance().getByDate(selectedYearMonth.toString())
         setLineChartData()
         setPieChartData()
     }
@@ -143,6 +144,7 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
         currentMonthTextView.text = String.format(
                 resources.getString(R.string.current_month_text_view_text), selectedYearMonth
         )
+        currentMonthlyBill = MonthlyBillDao.getInstance().getByDate(selectedYearMonth.toString())
         setLineChartData()
         setPieChartData()
     }
@@ -163,16 +165,34 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
         }
     }
 
+    /**
+     * 返回当前月（selectedYearMonth）对应的 billItems
+     * @return 一个 List<BillItem> 实体，如果对应的 billItem 不存在，则该实体为一个空的 List
+     */
     private fun fetchBillItems(): List<BillItem> {
-        return currentMonthlyBill.billItems
+        return if (currentMonthlyBill != null) {
+            currentMonthlyBill!!.billItems
+        } else {
+            ArrayList()
+        }
     }
 
+    /**
+     * 获取饼图的数据，饼图数据以如下类型返回：Pair<Tag, Int>
+     * 其中 Tag -> 标签，Int -> 对应标签下的消费额
+     * @return 一个 ArrayList<Pair<Tag, Int>> 对象
+     */
     private fun fetchPieChartData(): ArrayList<Pair<Tag, Int>> {
         val data = ArrayList<Pair<Tag, Int>>()
         val allTags = TagDao.getInstance().listAll()
+        if (currentMonthlyBill == null) {
+            return data
+        }
         for (tag in allTags) {
             val consumption = TagDao.getInstance().getConsumption(tag, currentMonthlyBill)
-            data.add(Pair(tag, consumption))
+            if (consumption != 0) {
+                data.add(Pair(tag, consumption))
+            }
         }
         return data
     }
@@ -190,6 +210,11 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
         return result
     }
 
+    /**
+     * 填充曲线图的数据
+     * 调用示例：fillLineChart(fetchLineChartData())
+     * @param data 经过处理后的数据
+     */
     private fun fillLineChart(data: FloatArray) {
         val lineChartEntries = ArrayList<Entry>(data.size)
         for (i in 0 until data.size) {
@@ -227,10 +252,21 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
 
         val dataSets = arrayListOf<ILineDataSet>(lineDataSet)
 
+        // 根据输入的数据设定 y 轴值的范围
+        val maxDataValue = if (data.max() != null) data.max()!! else 0f
+        val yAxis = lineChart.axisLeft
+        yAxis.axisMinimum = 0f
+        yAxis.axisMaximum = max(maxDataValue + 10f, 100f)
+
         lineChart.data = LineData(dataSets)
         lineChart.invalidate()
     }
 
+    /**
+     * 填充饼图的数据
+     * 调用示例：fillPieChart(fetchPieChartData())
+     * @param data 经过处理，可以用于显示的数据
+     */
     private fun fillPieChart(data: ArrayList<Pair<Tag, Int>>) {
         val pieEntries = ArrayList<PieEntry>(data.size)
         val colors = ArrayList<Int>(data.size)
@@ -252,6 +288,7 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
         pieData.setValueTextSize(14f)
         pieData.setValueTextColor(Color.WHITE)
 
+        pieChart.centerText = ""
         pieChart.data = pieData
         pieChart.highlightValues(null)
         pieChart.invalidate()
