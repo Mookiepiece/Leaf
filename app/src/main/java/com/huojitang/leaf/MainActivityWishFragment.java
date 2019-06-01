@@ -25,10 +25,7 @@ import com.huojitang.leaf.util.LeafDateSupport;
 import com.huojitang.leaf.util.PriceTransUtil;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
-import java.util.UUID;
 
 public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
 
@@ -52,7 +49,7 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wish, container, false);
 
-        fab = view.findViewById(R.id.floating_action_button_wish_fragment);
+        fab = view.findViewById(R.id.fab_wish_fragment_add);
 
         mListView = view.findViewById(R.id.list_view_wish);
         initWishMessage();

@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floating_action_button_wish_fragment"
+        android:id="@+id/fab_wish_fragment_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/list_view_wish_linear_layout"
@@ -15,8 +15,20 @@
         android:clickable="true"
         app:backgroundTint="@android:color/holo_blue_dark"
         app:layout_constraintBottom_toBottomOf="@+id/list_view_wish_linear_layout"
-        app:rippleColor="#00C55959"
         app:srcCompat="@drawable/baseline" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_wish_fragment_to_chart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fab_wish_fragment_add"
+        android:layout_alignEnd="@+id/list_view_wish_linear_layout"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_blue_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/list_view_wish_linear_layout"
+        app:srcCompat="@drawable/leaf_icon_go_chart" />
 
     <LinearLayout
         android:id="@+id/list_view_wish_linear_layout"

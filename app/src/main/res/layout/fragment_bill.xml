@@ -34,7 +34,7 @@
         app:backgroundTint="@color/deepBlue"
         app:layout_constraintBottom_toTopOf="@+id/button_add_bill"
         app:layout_constraintEnd_toEndOf="parent"
-        app:rippleColor="#00C55959"
+
         app:srcCompat="@drawable/leaf_icon_go_chart" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -48,7 +48,7 @@
         app:srcCompat="@drawable/baseline"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-        app:rippleColor="#00C55959" />
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
