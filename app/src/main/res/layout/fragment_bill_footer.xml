@@ -5,21 +5,17 @@
     android:orientation="horizontal"
     android:gravity="center">
 
-    <Button
+    <EditText
         android:id="@+id/note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:gravity="top"
+        android:maxLines="5"
+        android:minHeight="100dp"
         android:text="笔记"
         android:textSize="14dp" />
-
-    <Button
-        android:id="@+id/chart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="分析报表"
-        android:textSize="14dp"/>
 
 
 </LinearLayout>

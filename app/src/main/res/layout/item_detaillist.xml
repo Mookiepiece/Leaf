@@ -13,31 +13,43 @@
         android:layout_marginTop="5dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/bill_fragment_tag_title"
+        <ImageView
+            android:id="@+id/bill_fragment_br"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:focusable="false"
-            android:gravity="center"
-            android:text="xxxx"
-            android:textColor="@color/GoldenColor"
-            android:layout_margin="3dp"
-            android:textSize="14dp" />
+            android:layout_height="5dp"
+            android:contentDescription="@string/about_activity_title"
+            app:srcCompat="@color/GoldenColor" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_item"
-                android:layout_width="match_parent"
+            <com.huojitang.leaf.view.TagIconResultView
+                android:id="@+id/bill_fragment_tag_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+
+            <TextView
+                android:id="@+id/bill_fragment_tag_title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp" />
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
+                android:focusable="false"
+                android:gravity="center"
+                android:text="xxxx"
+                android:textColor="@color/GoldenColor"
+                android:textSize="24sp" />
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_bill_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp" />
     </LinearLayout>
 
 </LinearLayout>

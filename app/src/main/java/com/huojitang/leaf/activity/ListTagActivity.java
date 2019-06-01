@@ -87,31 +87,29 @@ public class ListTagActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //TODO MK
-
     /**
      * 返回时重读数据库
      */
     @Override
     protected void onResume() {
         super.onResume();
-        tagList = tagDao.list(false); //TODO MK 暴力重读不可取(划掉，试着在onActivityResult写逻辑但是失败了)
+        tagList = tagDao.list(false); //MK： 暴力重读不可取(划掉，试着在onActivityResult写逻辑但是失败了)
         adapter.notifyDataSetChanged();
     }
 
-    /**
-     * 重载接收 标签编辑界面 的返回值
-     * @param requestCode 请求码 参见ShowEditTagActivity方法 -1 或 position
-     * @param resultCode 结果码 参见EditTagActivity内的调用
-     * @param data 返回的意图（结果值
-     */
+//    /**
+//     * 重载接收 标签编辑界面 的返回值
+//     * @param requestCode 请求码 参见ShowEditTagActivity方法 -1 或 position
+//     * @param resultCode 结果码 参见EditTagActivity内的调用
+//     * @param data 返回的意图（结果值
+//     */
 //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        //Bundle result = data.getExtras();//关闭编辑界面后返回的数据
 //        //if(result==null) return;
 //
 //
-//      //  tagList = tagDao.list(false); //TODO MK 暴力重读不可取
+//      //  tagList = tagDao.list(false);
 //      //  adapter.notifyDataSetChanged();
 //        /*
 //        if(requestCode!=-1){ //修改标签

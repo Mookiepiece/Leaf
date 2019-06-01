@@ -6,11 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.huojitang.leaf.activity.ChartActivity;
-import com.huojitang.leaf.activity.OptionActivity;
-import com.huojitang.leaf.activity.WishHistoryActivity;
-import com.huojitang.leaf.dao.BillItemDao;
 import com.huojitang.leaf.dao.MonthlyBillDao;
 import com.huojitang.leaf.dao.TagDao;
 import com.huojitang.leaf.global.LeafApplication;
@@ -18,14 +14,21 @@ import com.huojitang.leaf.model.BillItem;
 import com.huojitang.leaf.model.MonthlyBill;
 import com.huojitang.leaf.model.Tag;
 import com.huojitang.leaf.util.LeafDateSupport;
+import com.huojitang.leaf.view.TagIconResultView;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,8 +36,6 @@ import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +55,7 @@ public class MainActivityBillFragment extends Fragment {
     List<Tag> tags;
     TagDao tagDao= TagDao.getInstance();
 
+    private MonthlyBill currentMonthlyBill = MonthlyBillDao.getInstance().getByYearMonth(LeafDateSupport.getCurrentYearMonth());
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,16 +104,26 @@ public class MainActivityBillFragment extends Fragment {
 
         //footerView的初始化
         View footer = LayoutInflater.from(getContext()).inflate(R.layout.fragment_bill_footer,recyclerView,false);
-        Button btn1 = footer.findViewById(R.id.note);
-        btn1.setOnClickListener(new View.OnClickListener() {
+        EditText noteEditText = footer.findViewById(R.id.note);
+        noteEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(),"您点击了笔记按钮，正在为您跳转",Toast.LENGTH_SHORT).show();
-                //TODO
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                currentMonthlyBill.setComment(s.toString());
+                MonthlyBillDao.getInstance().update(currentMonthlyBill);
             }
         });
 
-        //Adapter 需要一个footerView和headerView来初始化
+                //Adapter 需要一个footerView和headerView来初始化
         mRvAdapter = new RvAdapter(getContext(), tags,header,footer);
         recyclerView.setAdapter(mRvAdapter);
         mRvAdapter.notifyDataSetChanged();
@@ -154,13 +166,17 @@ public class MainActivityBillFragment extends Fragment {
 
         class ViewHolder extends RecyclerView.ViewHolder {
             TextView tv_title;
+            TagIconResultView tagIconResultView;
+            ImageView br;
             RecyclerView innerRecyclerView;
             private RvvAdapter mRvvAdapter;
             private List<BillItem> list = new ArrayList<>();
             ViewHolder(View view) {
                 super(view);
                 tv_title = view.findViewById(R.id.bill_fragment_tag_title);
-                innerRecyclerView = view.findViewById(R.id.rv_item);
+                innerRecyclerView = view.findViewById(R.id.rv_bill_item);
+                tagIconResultView= view.findViewById(R.id.bill_fragment_tag_icon);
+                br= view.findViewById(R.id.bill_fragment_br);
             }
         }
 
@@ -181,9 +197,18 @@ public class MainActivityBillFragment extends Fragment {
             if(getItemViewType(position) == ITEM_TYPE) {    //header和footer不需要设定布局和赋值
                 if(headerView!=null)
                     position-=1;
+
+
+                holder.tagIconResultView.setBgColor(tags.get(position).getColor());
+                holder.tagIconResultView.setFgIcon(tags.get(position).getIcon());
+                int color= ResourcesCompat.getColor(getResources(), TagResManager.getTagColorResId(tags.get(position).getColor()), null);
+                holder.tv_title.setTextColor(color);
                 holder.tv_title.setText(tags.get(position).getName());
+                holder.br.setBackgroundColor(color);
+
                 holder.list.clear();
-                holder.list.addAll(tags.get(position).getBillItems());
+                holder.list.addAll(tags.get(position).getBillItems(currentMonthlyBill));
+
                 if (holder.mRvvAdapter == null) {
                     holder.mRvvAdapter = new RvvAdapter(mContext, holder.list, position);
 
@@ -198,9 +223,7 @@ public class MainActivityBillFragment extends Fragment {
                 }
             }
         }
-
     }
-
 
     public class RvvAdapter extends RecyclerView.Adapter<RvvAdapter.ViewHolder> {
         private Context mContext;

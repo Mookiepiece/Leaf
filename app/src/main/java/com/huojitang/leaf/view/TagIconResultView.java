@@ -26,8 +26,8 @@ import com.huojitang.leaf.global.LeafApplication;
  */
 public class TagIconResultView extends View {
 
-    private int ColorIndex;
-    private int IconIndex;
+    private int ColorIndex=0;
+    private int IconIndex=0;
 
     private Paint paint; //画背景颜色
     private Bitmap bitmap; //缓存图标
