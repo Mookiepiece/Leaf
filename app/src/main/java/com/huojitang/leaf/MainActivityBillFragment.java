@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.huojitang.leaf.activity.ChartActivity;
+import com.huojitang.leaf.activity.EditTagActivity;
+import com.huojitang.leaf.activity.ListTagActivity;
 import com.huojitang.leaf.dao.MonthlyBillDao;
 import com.huojitang.leaf.dao.TagDao;
 import com.huojitang.leaf.global.LeafApplication;
@@ -66,11 +68,17 @@ public class MainActivityBillFragment extends Fragment {
 
     private MonthlyBill currentMonthlyBill = MonthlyBillDao.getInstance().getByYearMonth(LeafDateSupport.getCurrentYearMonth());
 
+    private boolean containResevrerdTag = false;
+
     private void reread(){
-        if(tagDao.getReservedTag().getBillItems(currentMonthlyBill).size()>0)
+        if(tagDao.getReservedTag().getBillItems(currentMonthlyBill).size()>0){
+            containResevrerdTag=true;
             tags = tagDao.list(true);
-        else
+        }
+        else{
+            containResevrerdTag=false;
             tags = tagDao.list(false);
+        }
         mRvAdapter.notifyDataSetChanged();
     }
 
@@ -80,10 +88,8 @@ public class MainActivityBillFragment extends Fragment {
         recyclerView = view.findViewById(R.id.bill_recycler_view_1);
         status = 20;
 
-        //数据库填充
-        tags=tagDao.list(true);
-
         initRecyclerView();
+        reread();
 
         //设置跳转报表界面
         view.findViewById(R.id.button_to_bill_chart_activity).setOnClickListener(new View.OnClickListener() {
@@ -96,9 +102,17 @@ public class MainActivityBillFragment extends Fragment {
         view.findViewById(R.id.button_add_bill).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(LeafApplication.getContext(),""+tags.contains(tagDao.getReservedTag()),Toast.LENGTH_SHORT).show();
 
-                List<Tag> selectableTags=tags;
+                if(tags.size()==0||(tags.size()==1&&containResevrerdTag)){
+                    Toast.makeText(LeafApplication.getContext(),"未检测到标签，加入你的第一个标签吧",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getContext() , ListTagActivity.class));
+                    return;
+                }
+
                 if(tags.contains(tagDao.getReservedTag())){
+
+                    List<Tag> selectableTags=tags;
                     Collections.copy(selectableTags, tags);
                     selectableTags.remove(tagDao.getReservedTag());
                 }

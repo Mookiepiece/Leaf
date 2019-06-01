@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lay_option"
+    style="?buttonBarButtonStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
+    android:gravity="center_vertical"
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/lay_option"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:orientation="horizontal"
-        style="?buttonBarButtonStyle">
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/OP_name"
@@ -21,7 +22,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:gravity="start"
+            android:gravity="start|center_vertical"
             android:paddingStart="10dp"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
@@ -32,7 +33,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:gravity="end"
+            android:gravity="center_vertical|end"
             android:paddingEnd="10dp"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
