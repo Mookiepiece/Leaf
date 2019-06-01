@@ -75,14 +75,41 @@ public class EditTagActivity extends AppCompatActivity {
         Intent intent = getIntent();
         message = intent.getIntExtra(LeafApplication.LEAF_MASSAGE,-1);
 
-        //先初始化界面
+
         tagNameEditText=findViewById(R.id.activity_edit_tag_name);
         tagCommentEditText=findViewById(R.id.activity_edit_tag_cmt);
         tagBudgetEditText=findViewById(R.id.activity_edit_tag_budget);
         iconPreview =findViewById(R.id.activity_edit_tag_icon_result);
-        initViews();
 
-        //然后添加tag原来的内容
+
+
+        //初始化界面
+        initViews();
+    }
+
+    private void initViews() {
+        //使用适配器将ViewPager与Fragment绑定在一起（参考MainActivity）
+        ViewPager viewPager = findViewById(R.id.activity_edit_tag_viewPager);
+        ArrayList<Fragment> fragments=new ArrayList<>();
+        BaseGridLayoutSelectorFragment colorFragment = new EditTagColorFragment(new BaseGridLayoutSelectorFragment.OnItemSelectedListener() {
+            @Override
+            public void OnItemSelected(int position) {
+                iconPreview.setBgColor(position);
+                tag.setColor(position);
+            }
+        });
+
+        BaseGridLayoutSelectorFragment iconFragment = new EditTagIconFragment(new BaseGridLayoutSelectorFragment.OnItemSelectedListener() {
+            @Override
+            public void OnItemSelected(int position) {
+                iconPreview.setFgIcon(position);
+                tag.setIcon(position);
+            }
+        });
+        fragments.add(colorFragment);
+        fragments.add(iconFragment);
+
+        //添加tag原来的内容
         //-1表示不是编辑而是添加
         if(message==-1){
             tag=new Tag();
@@ -93,28 +120,10 @@ public class EditTagActivity extends AppCompatActivity {
             tagCommentEditText.setText(tag.getComment());
             iconPreview.setFgIcon(tag.getIcon());
             iconPreview.setBgColor(tag.getColor());
+            colorFragment.setSelectedIndex(tag.getColor());
+            iconFragment.setSelectedIndex(tag.getIcon());
         }
-    }
 
-    private void initViews() {
-
-        //使用适配器将ViewPager与Fragment绑定在一起（参考MainActivity）
-        ViewPager viewPager = findViewById(R.id.activity_edit_tag_viewPager);
-        ArrayList<Fragment> fragments=new ArrayList<>();
-        fragments.add(new EditTagColorFragment(new BaseGridLayoutSelectorFragment.OnItemSelectedListener() {
-            @Override
-            public void OnItemSelected(int position) {
-                iconPreview.setBgColor(position);
-                tag.setColor(position);
-            }
-        }));
-        fragments.add(new EditTagIconFragment(new BaseGridLayoutSelectorFragment.OnItemSelectedListener() {
-            @Override
-            public void OnItemSelected(int position) {
-                iconPreview.setFgIcon(position);
-                tag.setIcon(position);
-            }
-        }));
         adapter = new LeafFragmentPagerAdapter(getSupportFragmentManager(),new String[]{"背景","图标"},fragments);
         viewPager.setAdapter(adapter);
 

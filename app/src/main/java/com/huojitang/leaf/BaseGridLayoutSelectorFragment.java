@@ -52,7 +52,7 @@ public abstract class BaseGridLayoutSelectorFragment<T,T2 extends androidx.recyc
         return selectedIndex;
     }
 
-    protected void setSelectedIndex(int position){
+    public void setSelectedIndex(int position){
         this.selectedIndex=position;
     }
 

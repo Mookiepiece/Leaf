@@ -57,6 +57,7 @@ public class MainActivityBillFragment extends Fragment {
     List<Tag> tags;
     TagDao tagDao= TagDao.getInstance();
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bill, container, false);
@@ -296,5 +297,6 @@ public class MainActivityBillFragment extends Fragment {
     public void onResume() {
         super.onResume();
         tags = tagDao.list(false);
+        mRvAdapter.notifyDataSetChanged();
     }
 }
