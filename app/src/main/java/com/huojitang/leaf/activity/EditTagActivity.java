@@ -195,7 +195,7 @@ public class EditTagActivity extends AppCompatActivity {
 
                 //更新数据库(图标)
                 tag.setName(tagNameEditText.getText().toString());
-                tag.setBudget(Double.valueOf(tagBudgetEditText.getText().toString()));
+                tag.setBudget(tagBudgetEditText.getText().length()==0?0:Double.valueOf(tagBudgetEditText.getText().toString()));
                 tag.setComment(tagCommentEditText.getText().toString());
                 tag.setIcon(iconPreview.getFgIcon());
                 tag.setColor(iconPreview.getBgColor());

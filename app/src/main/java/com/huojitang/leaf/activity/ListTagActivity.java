@@ -10,6 +10,8 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.ItemTouchHelper;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +74,7 @@ public class ListTagActivity extends AppCompatActivity {
      */
     public void ShowEditTagActivity(){
         Intent intent = new Intent(ListTagActivity.this, EditTagActivity.class);
-        startActivityForResult(intent, -1);
+        startActivity(intent);
     }
 
     /**
@@ -82,10 +84,20 @@ public class ListTagActivity extends AppCompatActivity {
     public void ShowEditTagActivity(int position){
         Intent intent = new Intent(ListTagActivity.this, EditTagActivity.class);
         intent.putExtra(LeafApplication.LEAF_MASSAGE, tagList.get(position).getId());
-        startActivityForResult(intent, position);
+        startActivity(intent);
     }
 
     //TODO MK
+
+    /**
+     * 返回时重读数据库
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        tagList = tagDao.list(false); //TODO MK 暴力重读不可取(划掉，试着在onActivityResult写逻辑但是失败了)
+        adapter.notifyDataSetChanged();
+    }
 
     /**
      * 重载接收 标签编辑界面 的返回值
@@ -93,45 +105,46 @@ public class ListTagActivity extends AppCompatActivity {
      * @param resultCode 结果码 参见EditTagActivity内的调用
      * @param data 返回的意图（结果值
      */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //Bundle result = data.getExtras();//关闭编辑界面后返回的数据
-        //if(result==null) return;
-
-
-
-        if(requestCode!=-1){ //修改标签
-            switch (resultCode){
-                case EditTagActivity.RESULT_CANCELED:
-                    break;
-                case EditTagActivity.RESULT_OK:
-                    int id=tagList.get(requestCode).getId();
-                    tagList.remove(requestCode);
-                    tagList.add(requestCode,tagDao.getById(id));
-                    adapter.notifyItemChanged(requestCode);
-                    break;
-                case EditTagActivity.RESULT_DELETED:
-                    tagList.remove(requestCode);
-                    adapter.notifyItemRemoved(requestCode);
-                    break;
-                default:
-                    break;
-            }
-        }
-        else{  //新建（插入标签）
-            switch (resultCode){
-                case EditTagActivity.RESULT_CANCELED:
-                    break;
-                case EditTagActivity.RESULT_OK:
-                    tagList = tagDao.list(false); //TODO MK 暴力重读不可取
-                    adapter.notifyDataSetChanged();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        //Bundle result = data.getExtras();//关闭编辑界面后返回的数据
+//        //if(result==null) return;
+//
+//
+//      //  tagList = tagDao.list(false); //TODO MK 暴力重读不可取
+//      //  adapter.notifyDataSetChanged();
+//        /*
+//        if(requestCode!=-1){ //修改标签
+//            switch (resultCode){
+//                case EditTagActivity.RESULT_CANCELED:
+//                    break;
+//                case EditTagActivity.RESULT_OK:
+//                    int id=tagList.get(requestCode).getId();
+//                    tagList.remove(requestCode);
+//                    tagList.add(requestCode,tagDao.getById(id));
+//                    adapter.notifyItemChanged(requestCode);
+//                    break;
+//                case EditTagActivity.RESULT_DELETED:
+//                    tagList.remove(requestCode);
+//                    adapter.notifyItemRemoved(requestCode);
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//        else{  //新建（插入标签）
+//            switch (resultCode){
+//                case EditTagActivity.RESULT_CANCELED:
+//                    break;
+//                case EditTagActivity.RESULT_OK:
+//
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//        Log.d("JAVA", "onActivityResult: ");*/
+//    }
 
     /**
      * touchcallbback实现了拖拽排序
@@ -222,7 +235,13 @@ public class ListTagActivity extends AppCompatActivity {
             editTagViewHolder.icon.setBgColor(tag.getColor());
             editTagViewHolder.icon.setFgIcon(tag.getIcon());
 
-            editTagViewHolder.limit.setText(PriceTransUtil.Int2Decimal(tag.getBudget()));
+            if(tag.getBudget()==0){
+                editTagViewHolder.limit.setText("");
+            }
+            else{
+                editTagViewHolder.limit.setText(PriceTransUtil.Int2Decimal(tag.getBudget()));
+            }
+
             editTagViewHolder.cmt.setText( tag.getComment());
 
             editTagViewHolder.layout.setOnClickListener(new View.OnClickListener() {
