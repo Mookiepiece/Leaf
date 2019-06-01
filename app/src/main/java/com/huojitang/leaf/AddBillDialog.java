@@ -32,10 +32,14 @@ public class AddBillDialog extends Dialog {
     private TagDao tagDao = TagDao.getInstance();
     private List<String> data_list;
     private ArrayAdapter<String> arr_adapter;
+    private ArrayAdapter<String> earn_adapter;
     private int tagId;
+    private int isAccount;
 
     //一些从界面里的组件
     private Button cancel;
+    private Spinner getOrBuy;
+    private String[] earnOrAccount = {"支出","收入"};
     private EditText name;
     private Spinner tagName;
     private EditText price;
@@ -47,6 +51,7 @@ public class AddBillDialog extends Dialog {
         this.setCanceledOnTouchOutside(true);
 
         this.setContentView(R.layout.bill_dialog_lay);
+        this.getOrBuy = findViewById(R.id.get_or_buy);
         this.tagName = findViewById(R.id.tag_spinner);
         this.name = findViewById(R.id.dialog_add_item_name);
         this.price = findViewById(R.id.item_price);
@@ -74,14 +79,26 @@ public class AddBillDialog extends Dialog {
                     MonthlyBill currentMonthlyBill = MonthlyBillDao.getInstance().getByDate(currentYearMonth.toString());
 
                     //插入数据
-                    BillItemDao billItemDao = BillItemDao.getInstance();
-                    BillItem billItem = new BillItem();
-                    billItem.setName(getName());
-                    billItem.setValue(getPrice());
-                    billItem.setTag(tagDao.getById(getId()));
-                    billItem.setMonthlyBill(currentMonthlyBill);
-                    billItem.setDay(localDate.getDayOfMonth());
-                    billItemDao.add(billItem);
+                    if(isAccount == 0){
+                        BillItemDao billItemDao = BillItemDao.getInstance();
+                        BillItem billItem = new BillItem();
+                        billItem.setName(getName());
+                        billItem.setValue(getPrice());
+                        billItem.setTag(tagDao.getById(getId()));
+                        billItem.setMonthlyBill(currentMonthlyBill);
+                        billItem.setDay(localDate.getDayOfMonth());
+                        billItemDao.add(billItem);
+                    }else {
+                        BillItemDao billItemDao = BillItemDao.getInstance();
+                        BillItem billItem = new BillItem();
+                        billItem.setName(getName());
+                        billItem.setValue(-getPrice());
+                        billItem.setTag(tagDao.getById(getId()));
+                        billItem.setMonthlyBill(currentMonthlyBill);
+                        billItem.setDay(localDate.getDayOfMonth());
+                        billItemDao.add(billItem);
+                    }
+
                 }
 
                 listener.ConfirmClick();
@@ -90,7 +107,9 @@ public class AddBillDialog extends Dialog {
         });
         initDateList();
 
-        initAdapter();
+        initTagAdapter();
+
+        initGetOrBuy();
 
         name.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
 
@@ -102,6 +121,27 @@ public class AddBillDialog extends Dialog {
         price.setFilters(filters);
 
     }
+
+    private void initGetOrBuy() {
+        earn_adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,earnOrAccount);
+
+        earn_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        getOrBuy.setAdapter(earn_adapter);
+
+        getOrBuy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                isAccount = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
     private void initDateList() {
         data_list = new ArrayList<>();
         for (int i = 0; i < tags.size(); i++) {
@@ -110,7 +150,7 @@ public class AddBillDialog extends Dialog {
         }
     }
 
-    private void initAdapter() {
+    private void initTagAdapter() {
         //适配器
         arr_adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, data_list);
         //设置样式
@@ -132,6 +172,8 @@ public class AddBillDialog extends Dialog {
             }
         });
     }
+
+    private int getIsAccount() { return isAccount;}
 
     private int getId() {
         return tagId;

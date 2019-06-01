@@ -51,6 +51,7 @@ public class WishDetailsActivity extends AppCompatActivity {
         wishModify = findViewById(R.id.detail_modify);
         wishDelete = findViewById(R.id.detail_delete);
 
+
         wishName.setText(wish.getName());
         wishValue.setText(PriceTransUtil.Int2Decimal(wish.getValue()));
         wishDetails.setText(wish.getComment());

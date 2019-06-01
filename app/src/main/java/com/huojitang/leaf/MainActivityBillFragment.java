@@ -227,7 +227,7 @@ public class MainActivityBillFragment extends Fragment {
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.position = position;
             holder.op_name.setText(mList.get(position).getName());
-            holder.op_price.setText(String.valueOf(mList.get(position).getValue()));
+            holder.op_price.setText(String.valueOf((double) (mList.get(position).getValue())/100));
             holder.lay_option.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
