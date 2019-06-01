@@ -22,6 +22,7 @@ import com.huojitang.leaf.dao.WishDao;
 import com.huojitang.leaf.global.LeafApplication;
 import com.huojitang.leaf.model.Wish;
 import com.huojitang.leaf.util.LeafDateSupport;
+import com.huojitang.leaf.util.PriceTransUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -176,7 +177,7 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
 
             ViewHolder holder = (ViewHolder) convertView.getTag();
             holder.name.setText(wishList.get(position).getName());
-            holder.value.setText(String.valueOf( (double) wishList.get(position).getValue()/100));
+            holder.value.setText(PriceTransUtil.Int2Decimal(wishList.get(position).getValue()));
             holder.startTime.setText(wishList.get(position).getStartTime());
             holder.finishedTime.setText(wishList.get(position).getFinishedTime());
 

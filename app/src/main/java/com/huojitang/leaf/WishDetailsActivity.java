@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +17,7 @@ import com.huojitang.leaf.dao.WishDao;
 import com.huojitang.leaf.global.LeafApplication;
 import com.huojitang.leaf.model.Tag;
 import com.huojitang.leaf.model.Wish;
+import com.huojitang.leaf.util.PriceTransUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +52,7 @@ public class WishDetailsActivity extends AppCompatActivity {
         wishDelete = findViewById(R.id.detail_delete);
 
         wishName.setText(wish.getName());
-        wishValue.setText(String.valueOf((double)wish.getValue()/100));
+        wishValue.setText(PriceTransUtil.Int2Decimal(wish.getValue()));
         wishDetails.setText(wish.getComment());
         if(wish.getState()==0){
             wishState.setText("未完成");
@@ -61,14 +64,19 @@ public class WishDetailsActivity extends AppCompatActivity {
         wishStartTime.setText(wish.getStartTime());
         wishEndTime.setText(wish.getFinishedTime());
 
+
         wishModify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wish.setName(wishName.getText().toString());
-                wish.setValue(Double.parseDouble(wishValue.getText().toString()));
-                wish.setComment(wishDetails.getText().toString());
-                wishDao.update(wish);
-                finish();
+                if(wishName.getText().toString().trim().equals("")){
+                    Toast.makeText(WishDetailsActivity.this,"修改后的物品名不能为空", Toast.LENGTH_SHORT).show();
+                }else {
+                    wish.setName(wishName.getText().toString());
+                    wish.setValue(wishValue.getText().length() == 0?0:Double.parseDouble(wishValue.getText().toString()));
+                    wish.setComment(wishDetails.getText().toString());
+                    wishDao.update(wish);
+                    finish();
+                }
             }
         });
         wishDelete.setOnClickListener(new View.OnClickListener() {
@@ -80,12 +88,11 @@ public class WishDetailsActivity extends AppCompatActivity {
         });
 
         wishName.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
-
-        wishValue.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        wishValue.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
         //默认控制输入9位数，小数点前6位，后2位，小数一位，共9位
         InputFilter[] filters={new CashierInputFilter(9),new InputFilter.LengthFilter(9)};
-
         wishValue.setFilters(filters);
+
 
     }
 }
