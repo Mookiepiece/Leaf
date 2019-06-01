@@ -130,18 +130,10 @@ public class MainActivityBillFragment extends Fragment {
         //footerView的初始化
         View footer = LayoutInflater.from(getContext()).inflate(R.layout.fragment_bill_footer,recyclerView,false);
         Button btn1 = footer.findViewById(R.id.note);
-        Button btn2 = footer.findViewById(R.id.chart);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(),"您点击了笔记按钮，正在为您跳转",Toast.LENGTH_SHORT).show();
-                //TODO
-            }
-        });
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(),"您点击了分析报表按钮，正在为您跳转",Toast.LENGTH_SHORT).show();
                 //TODO
             }
         });
