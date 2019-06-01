@@ -4,40 +4,52 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/item_detail_list_main_layout">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp"
         android:focusable="false"
-        android:layout_marginTop="5dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/bill_fragment_tag_title"
+        <ImageView
+            android:id="@+id/bill_fragment_br"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:focusable="false"
-            android:gravity="center"
-            android:text="xxxx"
-            android:textColor="@color/GoldenColor"
-            android:layout_margin="3dp"
-            android:textSize="14dp" />
+            android:layout_height="1dp"
+            android:contentDescription="@string/about_activity_title"
+            app:srcCompat="@color/l_gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_item"
-                android:layout_width="match_parent"
+            <com.huojitang.leaf.view.TagIconResultView
+                android:id="@+id/bill_fragment_tag_icon"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginHorizontal="20dp" />
+
+            <TextView
+                android:id="@+id/bill_fragment_tag_title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp" />
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
+                android:focusable="false"
+                android:gravity="center"
+                android:text="xxxx"
+                android:textColor="@color/GoldenColor"
+                android:textSize="18sp" />
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_bill_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>
