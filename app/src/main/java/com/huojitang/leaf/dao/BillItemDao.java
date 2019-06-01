@@ -14,12 +14,12 @@ import java.util.List;
 public class BillItemDao extends BaseDao<BillItem> {
     @Override
     public BillItem getById(long id) {
-        return LitePal.find(BillItem.class, id);
+        return LitePal.find(BillItem.class, id, true);
     }
 
     @Override
     public List<BillItem> listAll() {
-        return LitePal.findAll(BillItem.class);
+        return LitePal.findAll(BillItem.class, true);
     }
 
     @Override
