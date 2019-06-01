@@ -44,7 +44,7 @@ public class BillDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_billdetails);
+        setContentView(R.layout.activity_bill_details);
 
         tags = tagDao.list(false);
         initData();

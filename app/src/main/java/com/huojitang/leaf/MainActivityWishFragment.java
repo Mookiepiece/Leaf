@@ -17,8 +17,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.huojitang.leaf.activity.OptionActivity;
 import com.huojitang.leaf.activity.WishHistoryActivity;
 import com.huojitang.leaf.dao.WishDao;
 import com.huojitang.leaf.global.LeafApplication;
@@ -178,7 +176,7 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = View.inflate(getContext(), R.layout.wish_list, null);
+                convertView = View.inflate(getContext(), R.layout.item_wish, null);
                 new ViewHolder(convertView);
             }
 

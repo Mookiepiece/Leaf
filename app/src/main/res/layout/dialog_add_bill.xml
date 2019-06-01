@@ -35,51 +35,54 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="30dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="收入或支出"
-                android:textSize="14sp"
-                android:layout_weight="1"/>
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/get_or_buy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:text="选择所属标签"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="14sp"/>
+                android:text="所属标签"
+                android:textSize="18sp" />
 
             <Spinner
-                android:layout_weight="1"
                 android:id="@+id/tag_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
         </LinearLayout>
-
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -112,15 +115,15 @@
 
         <Button
             android:id="@+id/dialog_add_tag_confirm"
-            android:layout_weight="1"
-            android:background="@android:color/white"
+            style="@style/btn_dialog_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="添加" />
 
         <Button
             android:id="@+id/dialog_add_tag_cancel"
-            android:background="@android:color/white"
+            style="@style/btn_dialog_option"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_weight="1"

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,12 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.huojitang.leaf.dao.WishDao;
 import com.huojitang.leaf.global.LeafApplication;
-import com.huojitang.leaf.model.Tag;
 import com.huojitang.leaf.model.Wish;
 import com.huojitang.leaf.util.PriceTransUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class WishDetailsActivity extends AppCompatActivity {
     private Wish wish;
@@ -37,7 +32,7 @@ public class WishDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wishdetails);
+        setContentView(R.layout.activity_wish_details);
         Intent i = getIntent();
         int po = i.getIntExtra(LeafApplication.LEAF_MASSAGE,0);
         wish = wishDao.getById(po);

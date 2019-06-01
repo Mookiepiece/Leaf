@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.huojitang.leaf.dao.BillItemDao;
 import com.huojitang.leaf.dao.MonthlyBillDao;
 import com.huojitang.leaf.dao.TagDao;
-import com.huojitang.leaf.global.LeafApplication;
 import com.huojitang.leaf.model.BillItem;
 import com.huojitang.leaf.model.MonthlyBill;
 import com.huojitang.leaf.model.Tag;
@@ -50,7 +49,7 @@ public class AddBillDialog extends Dialog {
         this.setCancelable(true);
         this.setCanceledOnTouchOutside(true);
 
-        this.setContentView(R.layout.bill_dialog_lay);
+        this.setContentView(R.layout.dialog_add_bill);
         this.getOrBuy = findViewById(R.id.get_or_buy);
         this.tagName = findViewById(R.id.tag_spinner);
         this.name = findViewById(R.id.dialog_add_item_name);

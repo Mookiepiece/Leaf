@@ -194,8 +194,9 @@ public class EditTagActivity extends AppCompatActivity {
                     Toast.makeText(EditTagActivity.this, "名称不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 for(Tag t: tagDao.listAll()){
-                    if(nameString.equals(t.getName())){
+                    if(nameString.equals(t.getName())&&t.getId()!=message){
                         Toast.makeText(EditTagActivity.this, "标签名称重复", Toast.LENGTH_SHORT).show();
                         return;
                     }

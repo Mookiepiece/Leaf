@@ -70,7 +70,7 @@
             android:id="@+id/activity_edit_tag_cmt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
+            android:ems="20"
             android:hint="@string/tag_comment"
             android:inputType="textPersonName"
             android:textSize="14sp" />

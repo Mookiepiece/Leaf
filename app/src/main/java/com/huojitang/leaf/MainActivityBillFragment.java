@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.huojitang.leaf.activity.ChartActivity;
-import com.huojitang.leaf.activity.EditTagActivity;
 import com.huojitang.leaf.activity.ListTagActivity;
 import com.huojitang.leaf.dao.MonthlyBillDao;
 import com.huojitang.leaf.dao.TagDao;
@@ -29,7 +28,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -303,7 +301,7 @@ public class MainActivityBillFragment extends Fragment {
 
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_detail_option, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bill, parent, false);
             return new ViewHolder(view);
         }
 
