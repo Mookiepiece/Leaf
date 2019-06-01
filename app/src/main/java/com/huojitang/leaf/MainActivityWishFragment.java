@@ -74,12 +74,14 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
                                     wishList.get(position).setState(Wish.WISH_ACHIEVED);
                                     wishList.get(position).setFinishedTime(LeafDateSupport.getCurrentLocalDate().toString());
                                     wishAdapter.notifyDataSetChanged();
+                                    wishDao.update(wishList.get(position));
                                     Toast.makeText(getContext(), "你选择了完成选项", Toast.LENGTH_SHORT).show();
                                     break;
                                 case R.id.wish_cancel:
                                     wishList.get(position).setState(Wish.WISH_CANCELLED);
                                     wishList.get(position).setFinishedTime(LeafDateSupport.getCurrentLocalDate().toString());
                                     wishAdapter.notifyDataSetChanged();
+                                    wishDao.update(wishList.get(position));
                                     Toast.makeText(getContext(), "你选择了取消选项", Toast.LENGTH_SHORT).show();
                                     break;
                                 case R.id.see_details:
