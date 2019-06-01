@@ -131,12 +131,12 @@ public class Tag extends LitePalSupport {
 
     public List<BillItem> getBillItems() {
         return LitePal.where("tag_id = ?", String.valueOf(id))
-                .find(BillItem.class);
+                .find(BillItem.class, true);
     }
 
     public List<BillItem> getBillItems(MonthlyBill monthlyBill) {
         return LitePal.where("tag_id = ? and monthlybill_id = ?", String.valueOf(id), String.valueOf(monthlyBill.getId()))
-                .find(BillItem.class);
+                .find(BillItem.class, true);
     }
 
     public void setBillItems(List<BillItem> billItems) {
