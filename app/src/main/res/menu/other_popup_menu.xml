@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/other_add_wish"
-        android:title="心愿添加" />
+        android:id="@+id/other_wish_detail"
+        android:title="心愿详情" />
 
 </menu>

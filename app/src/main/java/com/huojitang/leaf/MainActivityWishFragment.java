@@ -86,7 +86,6 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
                                     Intent intent = new Intent(getContext(), WishDetailsActivity.class);
                                     intent.putExtra(LeafApplication.LEAF_MASSAGE, wishList.get(position).getId());
                                     startActivity(intent);
-                                    wishAdapter.notifyDataSetChanged();
                                     Toast.makeText(getContext(), "你选择了心愿详情选项", Toast.LENGTH_SHORT).show();
                                     break;
                             }
@@ -102,8 +101,11 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             switch (item.getItemId()) {
-                                case R.id.other_add_wish:
-                                    Toast.makeText(getContext(), "你选择了添加选项", Toast.LENGTH_SHORT).show();
+                                case R.id.other_wish_detail:
+                                    Intent intent = new Intent(getContext(), WishDetailsActivity.class);
+                                    intent.putExtra(LeafApplication.LEAF_MASSAGE, wishList.get(position).getId());
+                                    startActivity(intent);
+                                    Toast.makeText(getContext(), "你选择了心愿详情选项", Toast.LENGTH_SHORT).show();
                                     break;
                             }
                             return true;

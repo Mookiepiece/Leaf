@@ -10,8 +10,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.huojitang.leaf.activity.ChartActivity;
 import com.huojitang.leaf.activity.OptionActivity;
 import com.huojitang.leaf.activity.WishHistoryActivity;
+import com.huojitang.leaf.dao.BillItemDao;
 import com.huojitang.leaf.dao.MonthlyBillDao;
 import com.huojitang.leaf.dao.TagDao;
+import com.huojitang.leaf.global.LeafApplication;
 import com.huojitang.leaf.model.BillItem;
 import com.huojitang.leaf.model.MonthlyBill;
 import com.huojitang.leaf.model.Tag;
@@ -48,7 +50,7 @@ public class MainActivityBillFragment extends Fragment {
     private RecyclerView recyclerView;
     private RvAdapter mRvAdapter;
     private AddBillDialog addBillDialog;
-    private String tagName;
+    private int tagId;
     private String itemName;
     private int itemValue;
 
@@ -84,7 +86,7 @@ public class MainActivityBillFragment extends Fragment {
                         if(addBillDialog.getName().getText().toString().trim().equals("")||addBillDialog.getPrice().getText().toString().trim().equals("")){
                             Toast.makeText(getContext(),"物品名为空或者价格为空，无法添加",Toast.LENGTH_SHORT).show();
                         }else{
-                            tagName = addBillDialog.getMessage();
+                            tagId = addBillDialog.getId();
                             itemName = addBillDialog.getName().getText().toString();
                             itemValue = Integer.parseInt(addBillDialog.getPrice().getText().toString());
                             LocalDate localDate = LeafDateSupport.getCurrentLocalDate();
@@ -92,18 +94,18 @@ public class MainActivityBillFragment extends Fragment {
                             MonthlyBill currentMonthlyBill = MonthlyBillDao.getInstance().getByDate(currentYearMonth.toString());
 
                             for(int i = 0;i < tags.size();i++){
-                                if(tagName.equals(tags.get(i).getName())){
-
+                                if(tagId==tags.get(i).getId()){
+                                    BillItemDao billItemDao = BillItemDao.getInstance();
                                     BillItem billItem = new BillItem();
                                     billItem.setName(itemName);
                                     billItem.setValue(itemValue);
+                                    billItem.setTag(tags.get(i));
                                     billItem.setMonthlyBill(currentMonthlyBill);
                                     billItem.setDay(localDate.getDayOfMonth());
-                                    tags.get(i).getBillItems().add(billItem);
-                                    mRvAdapter.notifyDataSetChanged();
+                                    billItemDao.add(billItem);
                                 }
                             }
-                            Toast.makeText(getContext(),tagName+" "+itemName+" "+itemValue,Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(),tagId+" "+itemName+" "+itemValue,Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -151,17 +153,14 @@ public class MainActivityBillFragment extends Fragment {
 
     public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder> {
 
-
-
         private Context mContext;
-        private List<Tag> mList;
 
         private View footerView;
         private View headerView;
 
         private RvAdapter(Context context, List<Tag> list, View headerView, View footerView) {
             mContext = context;
-            mList = list;
+            tags = list;
             if(headerView!=null)
                 this.headerView = headerView;
             if(headerView!=null)
@@ -184,13 +183,13 @@ public class MainActivityBillFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return mList.size()+(headerView !=null?1:0)+(footerView !=null?1:0);
+            return tags.size()+(headerView !=null?1:0)+(footerView !=null?1:0);
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
             TextView tv_title;
             RecyclerView innerRecyclerView;
-            private RvvAdapter mRvAdapter;
+            private RvvAdapter mRvvAdapter;
             private List<BillItem> list = new ArrayList<>();
             ViewHolder(View view) {
                 super(view);
@@ -216,20 +215,20 @@ public class MainActivityBillFragment extends Fragment {
             if(getItemViewType(position) == ITEM_TYPE) {    //header和footer不需要设定布局和赋值
                 if(headerView!=null)
                     position-=1;
-                holder.tv_title.setText(mList.get(position).getName());
+                holder.tv_title.setText(tags.get(position).getName());
                 holder.list.clear();
-                holder.list.addAll(mList.get(position).getBillItems());
-                if (holder.mRvAdapter == null) {
-                    holder.mRvAdapter = new RvvAdapter(mContext, holder.list, position);
+                holder.list.addAll(tags.get(position).getBillItems());
+                if (holder.mRvvAdapter == null) {
+                    holder.mRvvAdapter = new RvvAdapter(mContext, holder.list, position);
 
                     LinearLayoutManager layoutManager=new LinearLayoutManager(mContext);
                     layoutManager.setOrientation(RecyclerView.VERTICAL);
                     holder.innerRecyclerView.setLayoutManager(layoutManager);
 
-                    holder.innerRecyclerView.setAdapter(holder.mRvAdapter);
+                    holder.innerRecyclerView.setAdapter(holder.mRvvAdapter);
                 } else {
-                    holder.mRvAdapter.setPosition(position);
-                    holder.mRvAdapter.notifyDataSetChanged();
+                    holder.mRvvAdapter.setPosition(position);
+                    holder.mRvvAdapter.notifyDataSetChanged();
                 }
             }
         }
@@ -266,7 +265,9 @@ public class MainActivityBillFragment extends Fragment {
             holder.lay_option.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO
+                    Intent intent = new Intent(getContext(),BillDetailsActivity.class);
+                    intent.putExtra(LeafApplication.LEAF_MASSAGE,mList.get(position).getId());
+                    startActivity(intent);
                 }
             });
         }
@@ -290,5 +291,10 @@ public class MainActivityBillFragment extends Fragment {
                 ButterKnife.bind(this, view);
             }
         }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        tags = tagDao.list(false);
     }
 }
