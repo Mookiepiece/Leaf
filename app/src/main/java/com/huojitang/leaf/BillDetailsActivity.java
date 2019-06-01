@@ -2,6 +2,8 @@ package com.huojitang.leaf;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,7 +40,6 @@ public class BillDetailsActivity extends AppCompatActivity {
     private BillItemDao billItemDao = BillItemDao.getInstance();
     private ArrayAdapter<String> tagAdapter;
     private int tagPosition;
-    //private int []tagIdArr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,6 @@ public class BillDetailsActivity extends AppCompatActivity {
         billModify = findViewById(R.id.bill_detail_modify);
         billDelete = findViewById(R.id.bill_detail_delete);
 
-        Tag t=billItem.getTag();
         detailBillName.setText(billItem.getName());
         detailBillPrice.setText(String.valueOf((double)billItem.getValue()/100));
         detailBillTime.setText(""+billItem.getDay());
@@ -73,7 +73,6 @@ public class BillDetailsActivity extends AppCompatActivity {
                 if (detailBillName.getText().toString().trim().equals("") || detailBillPrice.getText().toString().trim().equals("")) {
                     Toast.makeText(getContext(), "物品名或价格不能为空", Toast.LENGTH_SHORT).show();
                 } else {
-                    billItem = billItemDao.getById(po);
                     billItem.setName(detailBillName.getText().toString());
                     billItem.setValue(Double.parseDouble(detailBillPrice.getText().toString()));
                     billItem.setTag(tags.get(tagPosition));
@@ -89,6 +88,13 @@ public class BillDetailsActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        detailBillName.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
+        //输入限制
+        detailBillPrice.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        InputFilter[] filters = {new CashierInputFilter(9), new InputFilter.LengthFilter(9)};
+        detailBillPrice.setFilters(filters);
+
     }
 
     private void initAdapter() {

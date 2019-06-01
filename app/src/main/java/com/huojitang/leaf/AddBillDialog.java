@@ -117,7 +117,6 @@ public class AddBillDialog extends Dialog {
 
         //默认控制输入9位数，小数点前6位，后2位，小数一位，共9位
         InputFilter[] filters = {new CashierInputFilter(9), new InputFilter.LengthFilter(9)};
-
         price.setFilters(filters);
 
     }
