@@ -15,7 +15,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.huojitang.leaf.dao.MonthlyBillDao;
+import com.huojitang.leaf.dao.TagDao;
 import com.huojitang.leaf.model.MonthlyBill;
+import com.huojitang.leaf.model.Tag;
 import com.huojitang.leaf.util.LeafDateSupport;
 
 import java.time.YearMonth;
@@ -31,11 +33,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         YearMonth currentYearMonth = LeafDateSupport.getCurrentYearMonth();
+
+        // 以下这部分内容为应用启动时需要做的操作
+        // 考虑是否把它封装进 Dao 里
         if (MonthlyBillDao.getInstance().getByYearMonth(currentYearMonth) == null) {
             MonthlyBill monthlyBill = new MonthlyBill();
             monthlyBill.setDate(currentYearMonth);
             monthlyBill.setBudget(0);
             MonthlyBillDao.getInstance().add(monthlyBill);
+        }
+
+        if (TagDao.getInstance().getResrvedTag() == null) {
+            Tag reservedTag = new Tag();
+            reservedTag.setReserved(true);
+            reservedTag.setName("未分类");
+            reservedTag.setColor(0);
+            TagDao.getInstance().add(reservedTag);
         }
         initViews();
     }

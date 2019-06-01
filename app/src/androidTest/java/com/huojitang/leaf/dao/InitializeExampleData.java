@@ -56,12 +56,6 @@ public class InitializeExampleData {
         tag.setIndex(2);
         tagDao.add(tag);
 
-        tag =new Tag();
-        tag.setName("未分类");
-        tag.setColor(0);
-        tag.setReserved(true);
-        tagDao.add(tag);
-
         WishDao wishDao=WishDao.getInstance();
         Wish wish;
         wish=new Wish();
