@@ -97,13 +97,19 @@ public class AddBillDialog extends Dialog {
                         billItem.setDay(localDate.getDayOfMonth());
                         billItemDao.add(billItem);
                     }
-
                 }
 
                 listener.ConfirmClick();
                 AddBillDialog.this.dismiss();
             }
         });
+        findViewById(R.id.dialog_add_tag_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddBillDialog.this.dismiss();
+            }
+        });
+
         initDateList();
 
         initTagAdapter();
@@ -160,12 +166,12 @@ public class AddBillDialog extends Dialog {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 tagId = tags.get(position).getId();
-                Toast.makeText(getContext(), "你选择了第" + position + "个", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "你选择了第" + position + "个", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(getContext(), "nothing", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "nothing", Toast.LENGTH_SHORT).show();
 
             }
         });

@@ -76,17 +76,17 @@
 
         <Button
             android:id="@+id/wish_dialog_add_confirm"
-            android:layout_weight="1"
-            android:background="@android:color/white"
+            style="@style/btn_dialog_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="添加" />
 
         <Button
             android:id="@+id/wish_dialog_add_cancel"
-            android:background="@android:color/white"
-            android:layout_height="wrap_content"
+            style="@style/btn_dialog_option"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="取消" />
     </LinearLayout>

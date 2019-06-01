@@ -67,9 +67,9 @@ public class WishDetailsActivity extends AppCompatActivity {
                 if(wishName.getText().toString().trim().equals("")){
                     Toast.makeText(WishDetailsActivity.this,"修改后的物品名不能为空", Toast.LENGTH_SHORT).show();
                 }else {
-                    wish.setName(wishName.getText().toString());
+                    wish.setName(wishName.getText().toString().trim());
                     wish.setValue(wishValue.getText().length() == 0?0:Double.parseDouble(wishValue.getText().toString()));
-                    wish.setComment(wishDetails.getText().toString());
+                    wish.setComment(wishDetails.getText().toString().trim());
                     wishDao.update(wish);
                     finish();
                 }
@@ -79,6 +79,12 @@ public class WishDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 wishDao.delete(wish);
+                finish();
+            }
+        });
+        findViewById(R.id.detail_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 finish();
             }
         });

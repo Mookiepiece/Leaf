@@ -100,7 +100,7 @@ public class MainActivityBillFragment extends Fragment {
         view.findViewById(R.id.button_add_bill).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LeafApplication.getContext(),""+tags.contains(tagDao.getReservedTag()),Toast.LENGTH_SHORT).show();
+                Toast.makeText(LeafApplication.getContext(),""+containResevrerdTag,Toast.LENGTH_SHORT).show();
 
                 if(tags.size()==0||(tags.size()==1&&containResevrerdTag)){
                     Toast.makeText(LeafApplication.getContext(),"未检测到标签，加入你的第一个标签吧",Toast.LENGTH_SHORT).show();
@@ -108,14 +108,17 @@ public class MainActivityBillFragment extends Fragment {
                     return;
                 }
 
-                if(tags.contains(tagDao.getReservedTag())){
-
-                    List<Tag> selectableTags=tags;
+                List<Tag> selectableTags=tags;
+                if(containResevrerdTag){
                     Collections.copy(selectableTags, tags);
-                    selectableTags.remove(tagDao.getReservedTag());
+                    for(int i=0;i<selectableTags.size();i++){
+                        if(selectableTags.get(i).isReserved()){
+                            selectableTags.remove(i);
+                        }
+                    }
                 }
 
-                addBillDialog = new AddBillDialog(getActivity(),tags, new AddBillDialog.ConfirmOnclickListener() {
+                addBillDialog = new AddBillDialog(getActivity(),selectableTags, new AddBillDialog.ConfirmOnclickListener() {
                     @Override
                     public void ConfirmClick() {
                         reread();

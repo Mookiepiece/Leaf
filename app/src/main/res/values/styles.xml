@@ -43,33 +43,42 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <!-- 添加按钮 -->
-    <style name="btn_add_full">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">40dp</item>
-        <item name="android:background">@drawable/leaf_btn_add</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@drawable/leaf_btn_add_textcolor</item>
-        <item name="android:textSize">24sp</item>
+
+    <style name="detail_layout" >
+        <item name="android:layout_marginTop">5dp</item>
     </style>
 
+    <!-- 自定义文本框 -->
+    <style name="detail_text_view">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="detail_edit_text_main">
+        <item name="android:textSize">18sp</item>
+        <!--<item name="android:ems">10</item>-->
+    </style>
+
+    <style name="detail_edit_text_cmt">
+        <!--<item name="android:ems">20</item>-->
+        <item name="android:textSize">14sp</item>
+    </style>
 
     <!-- 自定义对话框底下的确定取消按钮 -->
-    <style name="btn_dialog_option" parent="android:ButtonBar">
+    <style name="btn_dialog_option" >
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">44dp</item>
         <item name="android:background">@drawable/leaf_btn_dialog_option</item>
         <item name="android:letterSpacing">1</item>
     </style>
-    <style name="btn_dialog_warning" parent="android:ButtonBar">
+    <style name="btn_dialog_warning" >
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">44dp</item>
         <item name="android:background">@drawable/leaf_btn_dialog_warning</item>
         <item name="android:letterSpacing">1</item>
     </style>
-    <style name="btn_dialog_confirm" parent="android:ButtonBar">
+    <style name="btn_dialog_confirm" >
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">44dp</item>

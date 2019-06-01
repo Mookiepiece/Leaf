@@ -230,7 +230,7 @@ public class EditTagActivity extends AppCompatActivity {
         return tagNameEditText.getText().toString().trim();
     }
     private double getBudget(){
-        return tagBudgetEditText.getText().length()==0?0:Double.valueOf(tagBudgetEditText.getText().toString());
+        return tagBudgetEditText.getText().toString().trim().length()==0?0:Double.valueOf(tagBudgetEditText.getText().toString());
     }
     private String getComment(){
         return tagCommentEditText.getText().toString();

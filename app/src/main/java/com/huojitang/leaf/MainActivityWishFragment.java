@@ -72,20 +72,20 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
                                     wishList.get(position).setFinishedTime(LeafDateSupport.getCurrentLocalDate().toString());
                                     wishAdapter.notifyDataSetChanged();
                                     wishDao.update(wishList.get(position));
-                                    Toast.makeText(getContext(), "你选择了完成选项", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getContext(), "你选择了完成选项", Toast.LENGTH_SHORT).show();
                                     break;
                                 case R.id.wish_cancel:
                                     wishList.get(position).setState(Wish.WISH_CANCELLED);
                                     wishList.get(position).setFinishedTime(LeafDateSupport.getCurrentLocalDate().toString());
                                     wishAdapter.notifyDataSetChanged();
                                     wishDao.update(wishList.get(position));
-                                    Toast.makeText(getContext(), "你选择了取消选项", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getContext(), "你选择了取消选项", Toast.LENGTH_SHORT).show();
                                     break;
                                 case R.id.see_details:
                                     Intent intent = new Intent(getContext(), WishDetailsActivity.class);
                                     intent.putExtra(LeafApplication.LEAF_MASSAGE, wishList.get(position).getId());
                                     startActivity(intent);
-                                    Toast.makeText(getContext(), "你选择了心愿详情选项", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getContext(), "你选择了心愿详情选项", Toast.LENGTH_SHORT).show();
                                     break;
                             }
                             return true;
@@ -104,7 +104,7 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
                                     Intent intent = new Intent(getContext(), WishDetailsActivity.class);
                                     intent.putExtra(LeafApplication.LEAF_MASSAGE, wishList.get(position).getId());
                                     startActivity(intent);
-                                    Toast.makeText(getContext(), "你选择了心愿详情选项", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getContext(), "你选择了心愿详情选项", Toast.LENGTH_SHORT).show();
                                     break;
                             }
                             return true;
@@ -130,22 +130,20 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
                 addWishDialog = new AddWishDialog(getContext(), new AddWishDialog.WishConfirmOnclickListener() {
                     @Override
                     public void ConfirmClick() {
-                        if (addWishDialog.getWishName().getText().toString().trim().equals("") || addWishDialog.getWishPrice().trim().equals("")) {
-                            Toast.makeText(getContext(), "心愿名为空或者价格为空，无法添加", Toast.LENGTH_SHORT).show();
+                        if (addWishDialog.getWishName().getText().toString().trim().equals("")) {
+                            Toast.makeText(getContext(), "心愿名为空无法添加", Toast.LENGTH_SHORT).show();
                         } else {
-
-                            wishName = addWishDialog.getWishName().getText().toString();
-                            wishPrice = Double.parseDouble(addWishDialog.getWishPrice());
+                            wishName = addWishDialog.getWishName().getText().toString().trim();
                             wishDetails = addWishDialog.getWishDetails().getText().toString();
                             Wish wish = new Wish();
                             wish.setName(wishName);
-                            wish.setValue(wishPrice);
+                            wish.setValue(addWishDialog.getWishPrice().length() == 0?0:Double.parseDouble(addWishDialog.getWishPrice()));
                             wish.setComment(wishDetails);
                             wish.setStartTime(LeafDateSupport.getCurrentLocalDate());
                             WishDao.getInstance().add(wish);
                             wishList.add(wish);
                             wishAdapter.notifyDataSetChanged();
-                            Toast.makeText(getContext(), "悬浮按钮添加心愿", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), "悬浮按钮添加心愿", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

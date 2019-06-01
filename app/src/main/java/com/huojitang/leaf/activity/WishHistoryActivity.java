@@ -44,8 +44,21 @@ public class WishHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
 
-        firstWishStartTime=LeafDateSupport.parseFromLongDate(wishDao.getEarliestStartTime());
-        lastWishEndTime=LeafDateSupport.parseFromLongDate(wishDao.getLatestFinishedTime());
+        boolean dateParseSuccessFlag=false;
+        if(wishDao.getEarliestStartTime()!=null){
+            firstWishStartTime=LeafDateSupport.parseFromLongDate(wishDao.getEarliestStartTime());
+
+            if(wishDao.getLatestFinishedTime()!=null){
+                lastWishEndTime=LeafDateSupport.parseFromLongDate(wishDao.getLatestFinishedTime());
+            }
+            else{
+                lastWishEndTime=LeafDateSupport.getCurrentLocalDate();
+            }
+        }
+        else{
+            firstWishStartTime=lastWishEndTime=LeafDateSupport.getCurrentLocalDate();
+        }
+
 
         //初始化
         webView =findViewById(R.id.web_view);

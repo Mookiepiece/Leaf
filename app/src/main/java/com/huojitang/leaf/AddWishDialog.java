@@ -4,14 +4,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.text.Spanned;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 public class AddWishDialog extends Dialog {
@@ -26,7 +21,7 @@ public class AddWishDialog extends Dialog {
         this.setCancelable(true);
         this.setCanceledOnTouchOutside(true);
 
-        this.setContentView(R.layout.wish_dialog_lay);
+        this.setContentView(R.layout.dialog_add_wish);
         this.wishName = findViewById(R.id.wish_add_item_name);
         this.wishPrice = findViewById(R.id.add_wish_price);
         this.wishDetails = findViewById(R.id.wish_details);
@@ -62,7 +57,7 @@ public class AddWishDialog extends Dialog {
     }
 
     public String getWishPrice() {
-        return wishPrice.getText().toString();
+        return wishPrice.getText().toString().trim();
     }
 
     public EditText getWishDetails() { return wishDetails; }
