@@ -14,13 +14,20 @@ import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.huojitang.leaf.R;
+import com.huojitang.leaf.TagResManager;
 import com.huojitang.leaf.global.LeafApplication;
 
 /**
  * 自定义View实现标签预览
  * @author Mookiepiece
+ *
+ * 名词index指TagResManager里定义了数组储存Rid,index指所选颜色在数组中的位置
+ *
  */
 public class TagIconResultView extends View {
+
+    private int ColorIndex;
+    private int IconIndex;
 
     private Paint paint; //画背景颜色
     private Bitmap bitmap; //缓存图标
@@ -43,7 +50,7 @@ public class TagIconResultView extends View {
                     paint.setAntiAlias(true);
                     break;
                 case R.styleable.TagIconResultView_fgIcon:
-                    bitmap=BitmapFactory.decodeResource(getResources(),a.getResourceId(attr,R.drawable.baby_trolley));
+                    bitmap=BitmapFactory.decodeResource(getResources(),a.getResourceId(attr,R.drawable.icon_1));
                     break;
             }
         }
@@ -51,21 +58,36 @@ public class TagIconResultView extends View {
 
     /**
      * 更新背景
-     * @param bgColor 传入rid
+     * @param position 传入index
      */
-    public void setBgColor(int bgColor) {
+    public void setBgColor(int position) {
+        int bgColorRid = TagResManager.getTagColorResId(position);
+        this.ColorIndex=position;
+
         paint=new Paint();
-        paint.setColor(ResourcesCompat.getColor(LeafApplication.getContext().getResources(), bgColor, null));
+        paint.setColor(ResourcesCompat.getColor(LeafApplication.getContext().getResources(), bgColorRid, null));
         paint.setStrokeWidth(5);
         paint.setAntiAlias(true);
         invalidate();
     }
 
+    /** 获得颜色的index */
+    public int getBgColor(){
+        return this.ColorIndex;
+    }
+
+    /** 获得图标的index */
+    public int getFgIcon(){
+        return this.IconIndex;
+    }
     /**
      * 更新图标
-     * @param resId 传入R，Id
+     * @param position 传入index
      */
-    public void setFgIcon(int resId) {
+    public void setFgIcon(int position) {
+        int resId = TagResManager.getTagIconsResId(position);
+        this.IconIndex=position;
+
         bitmap=BitmapFactory.decodeResource(getResources(),resId);
         invalidate();
     }

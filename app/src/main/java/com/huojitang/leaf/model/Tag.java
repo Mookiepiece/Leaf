@@ -64,8 +64,29 @@ public class Tag extends LitePalSupport {
         return budget;
     }
 
+    /**
+     * 添加：budgetSting方法
+     * @return 额度，一个String字符串
+     * by Mookiepiece
+     */
+    public String getBudgetString() {
+        if(budget%100==0){
+            return String.valueOf(budget/100)+".00";
+        }
+        return String.valueOf(budget/100)+"."+String.valueOf(budget%100);
+    }
+
     public void setBudget(int budget) {
         this.budget = budget;
+    }
+
+    /**
+     * 添加：适配double方法
+     * @param value 一个浮点数
+     * by Mookiepiece
+     */
+    public void setBudget(double value) {
+        this.budget = (int)(value * 100);
     }
 
     public int getColor() {

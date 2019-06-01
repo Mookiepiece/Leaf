@@ -2,11 +2,9 @@ package com.huojitang.leaf.activity;
 
 import androidx.annotation.NonNull;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,13 +30,15 @@ import com.huojitang.leaf.model.Tag;
 import com.huojitang.leaf.view.TagIconResultView;
 import com.huojitang.leaf.util.PriceTransUtil;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * 编辑标签界面
  */
 public class ListTagActivity extends AppCompatActivity {
     private TagDao tagDao=TagDao.getInstance();
     List<Tag> tagList=new ArrayList<>();
-
+    EditTagAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,15 +52,14 @@ public class ListTagActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         rv.setLayoutManager(layoutManager);
-        EditTagAdapter adapter=new EditTagAdapter();
+        adapter=new EditTagAdapter();
         rv.setAdapter(adapter);
         EditTagTouchCallback callback=new EditTagTouchCallback(adapter);
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(rv);
 
         //添加标签按钮
-        Button add=findViewById(R.id.list_tag_activity_add_btn);
-        add.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.list_tag_activity_add_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ShowEditTagActivity();
@@ -67,34 +67,83 @@ public class ListTagActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 弹出标签编辑界面（添加）
+     */
     public void ShowEditTagActivity(){
         Intent intent = new Intent(ListTagActivity.this, EditTagActivity.class);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, -1);
     }
 
-    public void ShowEditTagActivity(int id){
+    /**
+     * 弹出标签编辑界面（修改）
+     * @param position 被选择的item在list中的位置
+     */
+    public void ShowEditTagActivity(int position){
         Intent intent = new Intent(ListTagActivity.this, EditTagActivity.class);
-        intent.putExtra(LeafApplication.LEAF_MASSAGE, id);
-        startActivityForResult(intent, 1);
+        intent.putExtra(LeafApplication.LEAF_MASSAGE, tagList.get(position).getId());
+        startActivityForResult(intent, position);
     }
 
     //TODO MK
+
+    /**
+     * 重载接收 标签编辑界面 的返回值
+     * @param requestCode 请求码 参见ShowEditTagActivity方法 -1 或 position
+     * @param resultCode 结果码 参见EditTagActivity内的调用
+     * @param data 返回的意图（结果值
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Bundle result = data.getExtras();//关闭编辑界面后返回的数据
-        if(result==null) return;
+        //Bundle result = data.getExtras();//关闭编辑界面后返回的数据
+        //if(result==null) return;
+
+
+
+        if(requestCode!=-1){ //修改标签
+            switch (resultCode){
+                case EditTagActivity.RESULT_CANCELED:
+                    break;
+                case EditTagActivity.RESULT_OK:
+                    int id=tagList.get(requestCode).getId();
+                    tagList.remove(requestCode);
+                    tagList.add(requestCode,tagDao.getById(id));
+                    adapter.notifyItemChanged(requestCode);
+                    break;
+                case EditTagActivity.RESULT_DELETED:
+                    tagList.remove(requestCode);
+                    adapter.notifyItemRemoved(requestCode);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else{  //新建（插入标签）
+            switch (resultCode){
+                case EditTagActivity.RESULT_CANCELED:
+                    break;
+                case EditTagActivity.RESULT_OK:
+                    tagList = tagDao.list(false); //TODO MK 暴力重读不可取
+                    adapter.notifyDataSetChanged();
+                    break;
+                default:
+                    break;
+            }
+        }
 
     }
 
+    /**
+     * touchcallbback实现了拖拽排序
+     */
     class EditTagTouchCallback extends ItemTouchHelper.Callback {
         EditTagAdapter adapter;
         int swapStartPosition=-1;
         int swapEndPosition=-1;
 
-        public EditTagTouchCallback(EditTagAdapter adapter) {
+        EditTagTouchCallback(EditTagAdapter adapter) {
             this.adapter = adapter;
         }
-
 
         @Override
         public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
@@ -136,7 +185,7 @@ public class ListTagActivity extends AppCompatActivity {
 
         //手指松开
         @Override
-        public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+        public void clearView(@NotNull RecyclerView recyclerView, @NotNull RecyclerView.ViewHolder viewHolder) {
             super.clearView(recyclerView, viewHolder);
             adapter.notifyDataSetChanged();
 
@@ -148,27 +197,30 @@ public class ListTagActivity extends AppCompatActivity {
         }
     }
 
-    //适配器负责将Entity内容映射成item
+    /**
+     * 适配器负责将Entity内容映射成item
+     */
     class EditTagAdapter extends RecyclerView.Adapter<EditTagViewHolder>{
 
         //创建ViewHolder
+        @NotNull
         @Override
-        public EditTagViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        public EditTagViewHolder onCreateViewHolder(@NotNull ViewGroup viewGroup, int viewType) {
             View view = LayoutInflater.from(ListTagActivity.this).inflate(R.layout.tag_item, viewGroup,false);
             return new EditTagViewHolder(view);
         }
 
         //为item赋值
         @Override
-        public void onBindViewHolder(EditTagViewHolder editTagViewHolder, int position) {
+        public void onBindViewHolder(@NotNull EditTagViewHolder editTagViewHolder, int position) {
             Tag tag=tagList.get(position);
 
             int colorResId=TagResManager.getTagColorResId(tag.getColor());
-
+            editTagViewHolder.name.setTextColor(colorResId);
             editTagViewHolder.name.setText(tag.getName());
-            editTagViewHolder.name.setTextColor(ResourcesCompat.getColor(getResources(), colorResId, null));
-            editTagViewHolder.icon.setBgColor(colorResId);
-            editTagViewHolder.icon.setFgIcon(TagResManager.getTagIconsResId(tag.getIcon()));
+
+            editTagViewHolder.icon.setBgColor(tag.getColor());
+            editTagViewHolder.icon.setFgIcon(tag.getIcon());
 
             editTagViewHolder.limit.setText(PriceTransUtil.Int2Decimal(tag.getBudget()));
             editTagViewHolder.cmt.setText( tag.getComment());
@@ -187,7 +239,9 @@ public class ListTagActivity extends AppCompatActivity {
         }
     }
 
-    //ViewHolder负责缓存界面组件的id，避免重复读id以提升性能
+    /**
+     * ViewHolder负责缓存界面组件的id，避免重复读id以提升性能
+     */
     class EditTagViewHolder extends RecyclerView.ViewHolder{
         TextView name;
         TextView limit;
@@ -195,7 +249,7 @@ public class ListTagActivity extends AppCompatActivity {
         TextView cmt;
         LinearLayout layout;
 
-        public EditTagViewHolder(View itemView) {
+        EditTagViewHolder(View itemView) {
             super(itemView);
             this.name=itemView.findViewById(R.id.list_tag_item_name);
             this.limit=itemView.findViewById(R.id.list_tag_item_limit);

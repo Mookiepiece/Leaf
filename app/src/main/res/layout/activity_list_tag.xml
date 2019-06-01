@@ -2,11 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_list_tag_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ListTagActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
@@ -16,11 +18,18 @@
             android:id="@+id/list_tag_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/list_tag_activity_add_btn"
-            android:text="@string/add"
-            style="@style/btn_add_full" />
+        </androidx.recyclerview.widget.RecyclerView>
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/list_tag_activity_add_btn"
+        style="@style/btn_ok_full"
+        android:text="@string/add"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

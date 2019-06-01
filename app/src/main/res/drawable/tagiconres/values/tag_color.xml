@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="tag_color_0">@color/colorPrimary</color>
-    <color name="tag_color_1">@color/blueGreen</color>
-    <color name="tag_color_2">@color/deepBlue</color>
-    <color name="tag_color_3">@color/blue</color>
+    <color name="tag_color_0">@color/gray</color>
+
+    <color name="tag_color_1">#f16</color>
+    <color name="tag_color_2">#f44</color>
+    <color name="tag_color_3">#e74</color>
+    <color name="tag_color_4">#dd0</color>
+    <color name="tag_color_5">#7e3</color>
+    <color name="tag_color_6">#1b3</color>
+    <color name="tag_color_7">#7cd</color>
+    <color name="tag_color_8">#69e</color>
+    <color name="tag_color_9">#a5f</color>
+    <color name="tag_color_10">#d8d</color>
+    <color name="tag_color_11">#faa</color>
+    <color name="tag_color_12">#eee</color>
+    <color name="tag_color_13">#888</color>
 </resources>

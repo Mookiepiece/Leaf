@@ -61,8 +61,8 @@
                 android:id="@+id/activity_edit_tag_icon_result"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                app:bgColor="@color/blueGreen"
-                app:fgIcon="@drawable/analytics_graph_bar"/>
+                app:bgColor="@color/tag_color_0"
+                app:fgIcon="@drawable/icon_1"/>
 
         </LinearLayout>
 
@@ -106,7 +106,7 @@
             android:text="@string/g_confirm" />
         <Button
             android:id="@+id/activity_edit_tag_delete"
-            style="@style/btn_dialog_warning"
+            style="@style/btn_dialog_option"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/g_delete" />

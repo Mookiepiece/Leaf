@@ -37,20 +37,24 @@ public class TagResManager {
                 R.color.tag_color_1,
                 R.color.tag_color_2,
                 R.color.tag_color_3,
+                R.color.tag_color_4,
+                R.color.tag_color_5,
+                R.color.tag_color_6,
+                R.color.tag_color_7,
+                R.color.tag_color_8,
+                R.color.tag_color_9,
+                R.color.tag_color_10,
+                R.color.tag_color_11,
+                R.color.tag_color_12,
+                R.color.tag_color_13,
         };
 
         for(int i : a)
             tagColors.add(i);
 
         int[] b={
-                R.drawable.analytics_graph_bar,
-                R.drawable.baby_trolley,
-                R.drawable.baggage,
-                R.drawable.beach_parasol_water_1,
-                R.drawable.biking_person,
-                R.drawable.bin_2,
-                R.drawable.binocular,
-                R.drawable.bomb_grenade,
+                R.drawable.icon_1, R.drawable.icon_2, R.drawable.icon_3, R.drawable.icon_4, R.drawable.icon_5, R.drawable.icon_6, R.drawable.icon_7, R.drawable.icon_8, R.drawable.icon_9, R.drawable.icon_10, R.drawable.icon_11, R.drawable.icon_12, R.drawable.icon_13, R.drawable.icon_14, R.drawable.icon_15, R.drawable.icon_16, R.drawable.icon_17, R.drawable.icon_18, R.drawable.icon_19, R.drawable.icon_20, R.drawable.icon_21, R.drawable.icon_22, R.drawable.icon_23, R.drawable.icon_24, R.drawable.icon_25,
+                R.drawable.icon_26, R.drawable.icon_27,
         };
 
         for(int i : b)

@@ -50,7 +50,7 @@ public class AddWishDialog extends Dialog {
 
         wishDetails.setFilters(new InputFilter[]{new InputFilter.LengthFilter(100)});
 
-        wishPrice.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        wishPrice.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
         InputFilter[] filters={new CashierInputFilter(9),new InputFilter.LengthFilter(9)};
 

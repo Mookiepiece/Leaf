@@ -86,6 +86,7 @@ public class Wish extends LitePalSupport {
         this.value = value;
     }
 
+    @Deprecated
     public void setValue(double value) {
         this.value = (int)(value * 100);
     }

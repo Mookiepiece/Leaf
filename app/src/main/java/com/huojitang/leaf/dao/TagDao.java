@@ -48,6 +48,11 @@ public class TagDao extends BaseDao<Tag> {
         return LitePal.where(includesDefault?"":"reserved = 0").find(Tag.class);
     }
 
+    /** MK 查询系统保留标签,目前就一个未分类 */
+    public Tag getResrvedTag() {
+        return LitePal.where("reserved = 1").find(Tag.class).get(0);
+    }
+
     /** MK 查询总数 */
     public int getCount(boolean includesDefault){
         return LitePal.where(includesDefault?"":"reserved = 0").count(Tag.class);
