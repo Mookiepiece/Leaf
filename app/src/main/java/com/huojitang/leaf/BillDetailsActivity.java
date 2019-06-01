@@ -6,12 +6,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.huojitang.leaf.dao.BillItemDao;
 import com.huojitang.leaf.global.LeafApplication;
 import com.huojitang.leaf.model.BillItem;
+import com.huojitang.leaf.model.Tag;
 
 public class BillDetailsActivity extends AppCompatActivity {
     private EditText detailBillName;
@@ -20,7 +22,7 @@ public class BillDetailsActivity extends AppCompatActivity {
     private TextView detailBillTag;
     private Button billModify;
     private Button billDelete;
-    private BillItem billItem =new BillItem();
+    private BillItem billItem ;
     private BillItemDao billItemDao = BillItemDao.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +39,16 @@ public class BillDetailsActivity extends AppCompatActivity {
         billModify = findViewById(R.id.bill_detail_modify);
         billDelete = findViewById(R.id.bill_detail_delete);
 
+        Tag t=billItem.getTag();
         detailBillName.setText(billItem.getName());
         detailBillPrice.setText(String.valueOf((double)billItem.getValue()/100));
         detailBillTime.setText(""+billItem.getDay());
-        detailBillTag.setText("吃");
+        detailBillTag.setText(t.getName());
 
         billModify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                billItem = billItemDao.getById(po);
                 billItem.setName(detailBillName.getText().toString());
                 billItem.setValue(Double.parseDouble(detailBillPrice.getText().toString()));
                 billItemDao.update(billItem);
