@@ -53,7 +53,7 @@ public class TagDao extends BaseDao<Tag> {
      *
      * @return 包含查询结果的 Tag 实体，或者 null（如果查询不到）
      */
-    public Tag getResrvedTag() {
+    public Tag getReservedTag() {
         return LitePal.where("reserved = 1")
                 .findFirst(Tag.class);
     }

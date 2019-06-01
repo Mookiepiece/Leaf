@@ -150,7 +150,7 @@ public class EditTagActivity extends AppCompatActivity {
                             //移动到未分类
                             List<BillItem> list=tag.getBillItems();
                             BillItemDao billItemDao=BillItemDao.getInstance();
-                            Tag reserved=tagDao.getResrvedTag();
+                            Tag reserved=tagDao.getReservedTag();
                             for(BillItem i:list){
                                 i.setTag(reserved);
                                 billItemDao.update(i);
