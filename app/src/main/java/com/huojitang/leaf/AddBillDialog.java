@@ -4,14 +4,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.text.Spanned;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -20,8 +17,6 @@ import com.huojitang.leaf.model.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class AddBillDialog extends Dialog {
 
@@ -29,7 +24,7 @@ public class AddBillDialog extends Dialog {
     private TagDao tagDao = TagDao.getInstance();
     private List<String> data_list;
     private ArrayAdapter<String> arr_adapter;
-    private int thisId;
+    private int tagId;
 
     //一些从界面里的组件
     private Button cancel;
@@ -91,7 +86,7 @@ public class AddBillDialog extends Dialog {
         tagName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                thisId = position;
+                tagId = position;
                 Toast.makeText(getContext(), "你选择了第" + position + "个", Toast.LENGTH_SHORT).show();
             }
 
@@ -112,7 +107,7 @@ public class AddBillDialog extends Dialog {
     }
 
     public int getId() {
-        return thisId;
+        return tagId;
     }
 
     public EditText getName() {
