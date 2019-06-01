@@ -13,6 +13,8 @@ public class LeafApplication extends LitePalApplication {
     private static Context mContext;
     private static SharedPreferences preferences;
 
+    public static final String LEAF_MASSAGE = "com.huojitang.leaf.MESSAGE";
+
     @Override
     public void onCreate() {
         super.onCreate();

@@ -25,7 +25,20 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floating_action_button_bill_fragment"
+        android:id="@+id/button_to_bill_chart_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
+        app:backgroundTint="@color/leaf_deepBlue"
+        app:layout_constraintBottom_toTopOf="@+id/button_add_bill"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="#00C55959"
+        app:srcCompat="@drawable/leaf_icon_go_chart" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_add_bill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"

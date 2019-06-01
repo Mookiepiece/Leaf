@@ -19,11 +19,15 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.huojitang.leaf.dao.WishDao;
+import com.huojitang.leaf.global.LeafApplication;
 import com.huojitang.leaf.model.Wish;
 import com.huojitang.leaf.util.LeafDateSupport;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
+import java.util.UUID;
 
 public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
 
@@ -34,25 +38,25 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
 
     private List<Wish> wishList = new ArrayList<>();//TODO
     private WishDao wishDao = WishDao.getInstance();
-    ListView mListView;
-    FloatingActionButton fab;
-    AddWishDialog addWishDialog;
-    String wishName;
-    double wishPrice;
-    String wishDetails;
+    private ListView mListView;
+    private FloatingActionButton fab;
+    private AddWishDialog addWishDialog;
+    private String wishName;
+    private double wishPrice;
+    private String wishDetails;
+    private WishAdapter wishAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wish, container, false);
 
-
         fab = view.findViewById(R.id.floating_action_button_wish_fragment);
 
         mListView = view.findViewById(R.id.list_view_wish);
         initWishMessage();
 
-        final WishAdapter wishAdapter = new WishAdapter();
+        wishAdapter = new WishAdapter();
         mListView.setAdapter(wishAdapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,15 +77,16 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
                                     Toast.makeText(getContext(), "你选择了完成选项", Toast.LENGTH_SHORT).show();
                                     break;
                                 case R.id.wish_cancel:
-                                    wishList.get(position).setState(Wish.WISH_ACHIEVED);
+                                    wishList.get(position).setState(Wish.WISH_CANCELLED);
                                     wishList.get(position).setFinishedTime(LeafDateSupport.getCurrentLocalDate().toString());
                                     wishAdapter.notifyDataSetChanged();
                                     Toast.makeText(getContext(), "你选择了取消选项", Toast.LENGTH_SHORT).show();
                                     break;
                                 case R.id.see_details:
                                     Intent intent = new Intent(getContext(), WishDetailsActivity.class);
-                                    intent.putExtra("position", position);
+                                    intent.putExtra(LeafApplication.LEAF_MASSAGE, wishList.get(position).getId());
                                     startActivity(intent);
+                                    wishAdapter.notifyDataSetChanged();
                                     Toast.makeText(getContext(), "你选择了心愿详情选项", Toast.LENGTH_SHORT).show();
                                     break;
                             }
@@ -164,9 +169,10 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
                 convertView = View.inflate(getContext(), R.layout.wish_list, null);
                 new ViewHolder(convertView);
             }
+
             ViewHolder holder = (ViewHolder) convertView.getTag();
             holder.name.setText(wishList.get(position).getName());
-            holder.value.setText(String.valueOf(wishList.get(position).getValue()));
+            holder.value.setText(String.valueOf( (double) wishList.get(position).getValue()/100));
             holder.startTime.setText(wishList.get(position).getStartTime());
             holder.finishedTime.setText(wishList.get(position).getFinishedTime());
 
@@ -196,6 +202,12 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
                 view.setTag(this);
             }
         }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        wishList = wishDao.listAll();
+        wishAdapter.notifyDataSetChanged();
     }
 }
 

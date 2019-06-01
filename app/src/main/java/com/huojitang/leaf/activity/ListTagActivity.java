@@ -64,22 +64,24 @@ public class ListTagActivity extends AppCompatActivity {
     }
 
     public void ShowAddTagDialog(){
-        startActivity(new Intent(ListTagActivity.this, EditTagActivity.class));
-        //TODO MK 实现传递tag数据
-        /*if(tagDao.getCount(true)>=99){
-            Toast.makeText(ListTagActivity.this,"不能再增加标签数量了", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        Tag tag=new Tag();
-        new _AddTagDialog(ListTagActivity.this,tag, new _AddTagDialog.ConfirmOnclickListener(){
-            @Override
-            public void ConfirmClick() {
-
-            }
-        }).show();*/
-
+        Intent intent = new Intent(ListTagActivity.this, EditTagActivity.class);
+        //显式意图
+        //MainActivity.this是为了防止这个东西声明在内部类里的情况，此处可以改为this
+//        EditText editText = (EditText) findViewById(R.id.editText);
+//        String message = editText.getText().toString();
+//        intent.putExtra(EXTRA_MESSAGE, message);
     }
+
+    public void ShowAddTagDialog(int id){
+        startActivity(new Intent(ListTagActivity.this, EditTagActivity.class));
+//        Intent intent = new Intent(MainActivity.this, DisplayMessageActivity.class);
+//        //显式意图
+//        //MainActivity.this是为了防止这个东西声明在内部类里的情况，此处可以改为this
+//        EditText editText = (EditText) findViewById(R.id.editText);
+//        String message = editText.getText().toString();
+//        intent.putExtra(EXTRA_MESSAGE, message);
+    }
+
 
     class EditTagTouchCallback extends ItemTouchHelper.Callback {
         EditTagAdapter adapter;

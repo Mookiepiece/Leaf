@@ -1,10 +1,13 @@
 package com.huojitang.leaf.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -14,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.huojitang.leaf.BaseGridLayoutSelectorFragment;
+import com.huojitang.leaf.CashierInputFilter;
 import com.huojitang.leaf.TagResManager;
 import com.huojitang.leaf.global.LeafApplication;
 import com.huojitang.leaf.EditTagColorFragment;
@@ -35,10 +39,14 @@ public class EditTagActivity extends AppCompatActivity {
     private LeafFragmentPagerAdapter adapter;
     private TagIconResultView iconResultView;
 
+    private EditText tagNameEditText;
+    private EditText tagBudgetEditText;
+    private EditText tagCommentEditText;
     public static final int ITEM_NUMBER_FOR_RECYCLER_VIEW;
+
     static {
 
-        //Mookiepiece:RecyclerBiew的GridLayoutManager需要指定一个列数，利用这个根据屏幕动态拍列
+        //Mookiepiece:RecyclerView的GridLayoutManager需要指定一个列数，利用这个根据屏幕动态拍列
         //Android获取屏幕宽度 https://blog.csdn.net/wangliblog/article/details/22501141
         WindowManager wm = (WindowManager) LeafApplication.getContext().getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();
@@ -53,6 +61,10 @@ public class EditTagActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_tag);
+
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(LeafApplication.LEAF_MASSAGE);
+
         initViews();
     }
 
@@ -84,12 +96,22 @@ public class EditTagActivity extends AppCompatActivity {
         //其他组件
         iconResultView=findViewById(R.id.activity_edit_tag_icon_result);
 
+        //取消按钮
         findViewById(R.id.activity_edit_tag_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+        //文本框判断输入
+        tagNameEditText=findViewById(R.id.activity_edit_tag_name);
+        tagCommentEditText=findViewById(R.id.activity_edit_tag_cmt);
+        tagBudgetEditText=findViewById(R.id.activity_edit_tag_budget);
+
+        tagNameEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
+        tagCommentEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(100)});
+        tagBudgetEditText.setFilters(new InputFilter[] {new CashierInputFilter(9),new InputFilter.LengthFilter(9)});
     }
 
 
