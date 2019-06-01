@@ -70,12 +70,16 @@ public class BillDetailsActivity extends AppCompatActivity {
         billModify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                billItem = billItemDao.getById(po);
-                billItem.setName(detailBillName.getText().toString());
-                billItem.setValue(Double.parseDouble(detailBillPrice.getText().toString()));
-                billItem.setTag(tags.get(tagPosition));
-                billItemDao.update(billItem);
-                finish();
+                if (detailBillName.getText().toString().trim().equals("") || detailBillPrice.getText().toString().trim().equals("")) {
+                    Toast.makeText(getContext(), "物品名或价格不能为空", Toast.LENGTH_SHORT).show();
+                } else {
+                    billItem = billItemDao.getById(po);
+                    billItem.setName(detailBillName.getText().toString());
+                    billItem.setValue(Double.parseDouble(detailBillPrice.getText().toString()));
+                    billItem.setTag(tags.get(tagPosition));
+                    billItemDao.update(billItem);
+                    finish();
+                }
             }
         });
         billDelete.setOnClickListener(new View.OnClickListener() {
