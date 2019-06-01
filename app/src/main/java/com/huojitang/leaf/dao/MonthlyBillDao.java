@@ -1,6 +1,7 @@
 package com.huojitang.leaf.dao;
 
 import com.huojitang.leaf.model.MonthlyBill;
+import com.huojitang.leaf.util.LeafDateSupport;
 import org.litepal.LitePal;
 
 import java.time.YearMonth;
@@ -48,6 +49,16 @@ public class MonthlyBillDao extends BaseDao<MonthlyBill> {
     @Override
     public int count() {
         return LitePal.count(MonthlyBill.class);
+    }
+
+    public YearMonth getEarliestYearMonth() {
+        String dateStr = LitePal.min(MonthlyBill.class, "date", String.class);
+        return LeafDateSupport.parseFromShortDate(dateStr);
+    }
+
+    public YearMonth getLatestYearMonth() {
+        String dateStr = LitePal.max(MonthlyBill.class, "date", String.class);
+        return LeafDateSupport.parseFromShortDate(dateStr);
     }
 
     private static MonthlyBillDao instance = new MonthlyBillDao();

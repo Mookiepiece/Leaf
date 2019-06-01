@@ -43,7 +43,11 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
     private lateinit var prevMonthButton: Button
     private lateinit var nextMonthButton: Button
     private lateinit var currentMonthTextView: TextView
-    private lateinit var selectedYearMonth: YearMonth
+    private lateinit var selectedDate: YearMonth
+    /** 账单的最早月份 */
+    private lateinit var earliestDate: YearMonth
+    /** 账单的最晚月份，与上面的最早月份构成图表翻页的边界 */
+    private lateinit var latestDate: YearMonth
     private var currentMonthlyBill: MonthlyBill? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,15 +61,18 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
         nextMonthButton = findViewById(R.id.nextMonthButton)
         currentMonthTextView = findViewById(R.id.currentMonthTextView)
 
-        selectedYearMonth = YearMonth.now()
+        selectedDate = YearMonth.now()
+        earliestDate = MonthlyBillDao.getInstance().earliestYearMonth
+        latestDate = MonthlyBillDao.getInstance().latestYearMonth
+        enableButtons()
         currentMonthTextView.text = String.format(
-                resources.getString(R.string.current_month_text_view_text), selectedYearMonth
+                resources.getString(R.string.current_month_text_view_text), selectedDate
         )
 
         setupLineChart()
         setupPieChart()
 
-        currentMonthlyBill = MonthlyBillDao.getInstance().getByDate(selectedYearMonth.toString())
+        currentMonthlyBill = MonthlyBillDao.getInstance().getByDate(selectedDate.toString())
 
         setLineChartData()
         setPieChartData()
@@ -130,11 +137,12 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
      * 当“上一月”按钮被点击时的响应事件
      */
     fun jumpToPrevMonth(view: View) {
-        selectedYearMonth = LeafDateSupport.prevMonth(selectedYearMonth)
+        selectedDate = LeafDateSupport.prevMonth(selectedDate)
         currentMonthTextView.text = String.format(
-                resources.getString(R.string.current_month_text_view_text), selectedYearMonth
+                resources.getString(R.string.current_month_text_view_text), selectedDate
         )
-        currentMonthlyBill = MonthlyBillDao.getInstance().getByDate(selectedYearMonth.toString())
+        currentMonthlyBill = MonthlyBillDao.getInstance().getByDate(selectedDate.toString())
+        enableButtons()
         setLineChartData()
         setPieChartData()
     }
@@ -143,13 +151,22 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
      * 当“下一月”按钮被点击时的响应事件
      */
     fun jumpToNextMonth(view: View) {
-        selectedYearMonth = LeafDateSupport.nextMonth(selectedYearMonth)
+        selectedDate = LeafDateSupport.nextMonth(selectedDate)
         currentMonthTextView.text = String.format(
-                resources.getString(R.string.current_month_text_view_text), selectedYearMonth
+                resources.getString(R.string.current_month_text_view_text), selectedDate
         )
-        currentMonthlyBill = MonthlyBillDao.getInstance().getByDate(selectedYearMonth.toString())
+        currentMonthlyBill = MonthlyBillDao.getInstance().getByDate(selectedDate.toString())
+        enableButtons()
         setLineChartData()
         setPieChartData()
+    }
+
+    /**
+     * 决定“上一月”、“下一月”按钮是否可以点击
+     */
+    private fun enableButtons() {
+        prevMonthButton.isEnabled = (selectedDate != earliestDate)
+        nextMonthButton.isEnabled = (selectedDate != latestDate)
     }
 
     override fun onNothingSelected() {
@@ -169,7 +186,7 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
     }
 
     /**
-     * 返回当前月（selectedYearMonth）对应的 billItems
+     * 返回当前月（selectedDate）对应的 billItems
      * @return 一个 List<BillItem> 实体，如果对应的 billItem 不存在，则该实体为一个空的 List
      */
     private fun fetchBillItems(): List<BillItem> {
@@ -205,7 +222,7 @@ class ChartActivity : AppCompatActivity(), OnChartValueSelectedListener {
      * @return 一个 FloatArray，其长度为当月的长度，第 i 项表示当月第 i + 1 日的消费额
      */
     private fun fetchLineChartData(): FloatArray {
-        val result = FloatArray(selectedYearMonth.lengthOfMonth())
+        val result = FloatArray(selectedDate.lengthOfMonth())
         val billItems = fetchBillItems()
         for (item in billItems) {
             result[item.day - 1] += (item.value / 100.0f)
