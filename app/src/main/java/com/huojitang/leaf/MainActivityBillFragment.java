@@ -14,6 +14,7 @@ import com.huojitang.leaf.model.BillItem;
 import com.huojitang.leaf.model.MonthlyBill;
 import com.huojitang.leaf.model.Tag;
 import com.huojitang.leaf.util.LeafDateSupport;
+import com.huojitang.leaf.util.PriceTransUtil;
 import com.huojitang.leaf.view.TagIconResultView;
 
 import androidx.core.content.res.ResourcesCompat;
@@ -296,7 +297,7 @@ public class MainActivityBillFragment extends Fragment {
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.position = position;
             holder.op_name.setText(mList.get(position).getName());
-            holder.op_price.setText(String.valueOf(mList.get(position).getValue()));
+            holder.op_price.setText(PriceTransUtil.Int2Decimal((mList.get(position).getValue())));
             holder.lay_option.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

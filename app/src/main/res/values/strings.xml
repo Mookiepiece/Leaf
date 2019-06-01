@@ -23,4 +23,5 @@
   <string name="current_month_text_view_text">当前月份：%s</string>
   <string name="bill_header_date_text_view_text">当前时间：%s</string>
   <string name="bill_header_consumption_info_text_view_text">当月消费总额：%.2f</string>
+    <string name="note_hint">笔记</string>
 </resources>

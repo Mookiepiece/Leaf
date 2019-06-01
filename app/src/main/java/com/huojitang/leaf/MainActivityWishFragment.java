@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.huojitang.leaf.activity.OptionActivity;
+import com.huojitang.leaf.activity.WishHistoryActivity;
 import com.huojitang.leaf.dao.WishDao;
 import com.huojitang.leaf.global.LeafApplication;
 import com.huojitang.leaf.model.Wish;
@@ -37,7 +39,6 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
     private List<Wish> wishList = new ArrayList<>();//TODO
     private WishDao wishDao = WishDao.getInstance();
     private ListView mListView;
-    private FloatingActionButton fab;
     private AddWishDialog addWishDialog;
     private String wishName;
     private double wishPrice;
@@ -49,7 +50,7 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wish, container, false);
 
-        fab = view.findViewById(R.id.fab_wish_fragment_add);
+
 
         mListView = view.findViewById(R.id.list_view_wish);
         initWishMessage();
@@ -116,7 +117,16 @@ public class MainActivityWishFragment<FragmentAdapter> extends Fragment {
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        //心愿历史 FAB
+        view.findViewById(R.id.fab_wish_fragment_to_chart).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext() , WishHistoryActivity.class));
+            }
+        });
+
+        //添加心愿 FAB
+        view.findViewById(R.id.fab_wish_fragment_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addWishDialog = new AddWishDialog(getContext(), new AddWishDialog.WishConfirmOnclickListener() {

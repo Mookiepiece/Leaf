@@ -187,16 +187,24 @@ public class EditTagActivity extends AppCompatActivity {
         findViewById(R.id.activity_edit_tag_confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String nameString=getName();
                 //用户输入判断
-                if (tagNameEditText.getText().toString().trim().equals("")) {
+                if (getName().equals("")) {
                     Toast.makeText(EditTagActivity.this, "名称不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                for(Tag t: tagDao.listAll()){
+                    if(nameString.equals(t.getName())){
+                        Toast.makeText(EditTagActivity.this, "标签名称重复", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
 
                 //更新数据库(图标)
-                tag.setName(tagNameEditText.getText().toString());
-                tag.setBudget(tagBudgetEditText.getText().length()==0?0:Double.valueOf(tagBudgetEditText.getText().toString()));
-                tag.setComment(tagCommentEditText.getText().toString());
+                tag.setName(getName());
+                tag.setBudget(getBudget());
+                tag.setComment(getComment());
                 tag.setIcon(iconPreview.getFgIcon());
                 tag.setColor(iconPreview.getBgColor());
                 tagDao.update(tag);
@@ -215,6 +223,16 @@ public class EditTagActivity extends AppCompatActivity {
         tagBudgetEditText.setFilters(new InputFilter[] {new CashierInputFilter(9),new InputFilter.LengthFilter(9)});
         tagBudgetEditText.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
+    }
+
+    private String getName(){
+        return tagNameEditText.getText().toString().trim();
+    }
+    private double getBudget(){
+        return tagBudgetEditText.getText().length()==0?0:Double.valueOf(tagBudgetEditText.getText().toString());
+    }
+    private String getComment(){
+        return tagCommentEditText.getText().toString();
     }
 
     public final static int RESULT_DELETED=2;

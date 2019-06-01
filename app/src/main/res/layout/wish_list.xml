@@ -10,45 +10,51 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/wish_name"
-            android:layout_weight="1"
-            android:textSize="20sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        android:orientation="horizontal"
+        android:paddingHorizontal="5dp">
 
         <TextView
-            android:id="@+id/wish_price"
-            android:layout_weight="1"
-            android:textSize="20sp"
+            android:id="@+id/wish_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/wish_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingHorizontal="5dp">
 
         <TextView
+            android:id="@+id/wish_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/wish_state"
-            android:textSize="20sp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textSize="14sp" />
+
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/wish_start_time"
-            android:textSize="20sp"
-            android:layout_weight="1"/>
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp" />
+
+        <TextView
             android:id="@+id/wish_end_time"
-            android:textSize="20sp"
-            android:layout_weight="1"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>

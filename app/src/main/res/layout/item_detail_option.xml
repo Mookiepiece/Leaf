@@ -9,11 +9,11 @@
     <LinearLayout
         android:id="@+id/lay_option"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@drawable/background_grid_select"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        style="?buttonBarButtonStyle">
 
         <TextView
             android:id="@+id/OP_name"
@@ -21,9 +21,10 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:gravity="center"
-            android:textColor="#000"
-            android:textSize="13sp" />
+            android:gravity="start"
+            android:paddingStart="10dp"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/OP_price"
@@ -31,9 +32,10 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:gravity="center"
-            android:textColor="#000"
-            android:textSize="13sp" />
+            android:gravity="end"
+            android:paddingEnd="10dp"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
