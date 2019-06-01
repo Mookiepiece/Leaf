@@ -37,6 +37,7 @@ import android.widget.Toast;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -57,6 +58,14 @@ public class MainActivityBillFragment extends Fragment {
 
     private MonthlyBill currentMonthlyBill = MonthlyBillDao.getInstance().getByYearMonth(LeafDateSupport.getCurrentYearMonth());
 
+    private void reread(){
+        if(tagDao.getReservedTag().getBillItems(currentMonthlyBill).size()>0)
+            tags = tagDao.list(true);
+        else
+            tags = tagDao.list(false);
+        mRvAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bill, container, false);
@@ -65,7 +74,7 @@ public class MainActivityBillFragment extends Fragment {
         status = 20;
 
         //数据库填充
-        tags=tagDao.list(false);
+        tags=tagDao.list(true);
 
         initRecyclerView();
 
@@ -80,11 +89,17 @@ public class MainActivityBillFragment extends Fragment {
         view.findViewById(R.id.button_add_bill).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                List<Tag> selectableTags=tags;
+                if(tags.contains(tagDao.getReservedTag())){
+                    Collections.copy(selectableTags, tags);
+                    selectableTags.remove(tagDao.getReservedTag());
+                }
+
                 addBillDialog = new AddBillDialog(getActivity(),tags, new AddBillDialog.ConfirmOnclickListener() {
                     @Override
                     public void ConfirmClick() {
-                        tags = tagDao.list(false);
-                        mRvAdapter.notifyDataSetChanged();
+                        reread();
                     }
                 });
                 addBillDialog.show();
@@ -105,6 +120,7 @@ public class MainActivityBillFragment extends Fragment {
         //footerView的初始化
         View footer = LayoutInflater.from(getContext()).inflate(R.layout.fragment_bill_footer,recyclerView,false);
         EditText noteEditText = footer.findViewById(R.id.note);
+        noteEditText.setText(currentMonthlyBill.getComment());
         noteEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -198,7 +214,6 @@ public class MainActivityBillFragment extends Fragment {
                 if(headerView!=null)
                     position-=1;
 
-
                 holder.tagIconResultView.setBgColor(tags.get(position).getColor());
                 holder.tagIconResultView.setFgIcon(tags.get(position).getIcon());
                 int color= ResourcesCompat.getColor(getResources(), TagResManager.getTagColorResId(tags.get(position).getColor()), null);
@@ -284,7 +299,6 @@ public class MainActivityBillFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        tags = tagDao.list(false);
-        mRvAdapter.notifyDataSetChanged();
+        reread();
     }
 }

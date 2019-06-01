@@ -14,7 +14,6 @@
         android:gravity="top"
         android:maxLines="5"
         android:minHeight="100dp"
-        android:text="笔记"
         android:textSize="14dp" />
 
 
