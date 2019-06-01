@@ -1,5 +1,6 @@
 package com.huojitang.leaf.dao;
 
+import com.huojitang.leaf.model.BillItem;
 import com.huojitang.leaf.model.MonthlyBill;
 import com.huojitang.leaf.util.LeafDateSupport;
 import org.litepal.LitePal;
@@ -59,6 +60,16 @@ public class MonthlyBillDao extends BaseDao<MonthlyBill> {
     public YearMonth getLatestYearMonth() {
         String dateStr = LitePal.max(MonthlyBill.class, "date", String.class);
         return LeafDateSupport.parseFromShortDate(dateStr);
+    }
+
+    /**
+     * 获取特定月份的消费总额（未经转换，需要手动转换）
+     * @param entity 特定月的 MonthlyBill
+     * @return 返回该月的消费总额
+     */
+    public int getTotalConsumption(MonthlyBill entity) {
+        return LitePal.where("monthlybill_id = ?", String.valueOf(entity.getId()))
+                .sum(BillItem.class, "value", int.class);
     }
 
     private static MonthlyBillDao instance = new MonthlyBillDao();
