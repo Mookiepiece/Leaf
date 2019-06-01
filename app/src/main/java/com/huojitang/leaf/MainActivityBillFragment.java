@@ -50,9 +50,6 @@ public class MainActivityBillFragment extends Fragment {
     private RecyclerView recyclerView;
     private RvAdapter mRvAdapter;
     private AddBillDialog addBillDialog;
-    private int tagId;
-    private String itemName;
-    private int itemValue;
 
     List<Tag> tags;
     TagDao tagDao= TagDao.getInstance();
@@ -81,38 +78,14 @@ public class MainActivityBillFragment extends Fragment {
         view.findViewById(R.id.button_add_bill).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addBillDialog = new AddBillDialog(getActivity(), new AddBillDialog.ConfirmOnclickListener() {
+                addBillDialog = new AddBillDialog(getActivity(),tags, new AddBillDialog.ConfirmOnclickListener() {
                     @Override
                     public void ConfirmClick() {
-                        if(addBillDialog.getName().getText().toString().trim().equals("")||addBillDialog.getPrice().getText().toString().trim().equals("")){
-                            Toast.makeText(getContext(),"物品名为空或者价格为空，无法添加",Toast.LENGTH_SHORT).show();
-                        }else{
-                            tagId = addBillDialog.getId();
-                            itemName = addBillDialog.getName().getText().toString();
-                            itemValue = Integer.parseInt(addBillDialog.getPrice().getText().toString());
-                            LocalDate localDate = LeafDateSupport.getCurrentLocalDate();
-                            YearMonth currentYearMonth = LeafDateSupport.getCurrentYearMonth();
-                            MonthlyBill currentMonthlyBill = MonthlyBillDao.getInstance().getByDate(currentYearMonth.toString());
-
-                            for(int i = 0;i < tags.size();i++){
-                                if(tagId==tags.get(i).getId()){
-                                    BillItemDao billItemDao = BillItemDao.getInstance();
-                                    BillItem billItem = new BillItem();
-                                    billItem.setName(itemName);
-                                    billItem.setValue(itemValue);
-                                    billItem.setTag(tags.get(i));
-                                    billItem.setMonthlyBill(currentMonthlyBill);
-                                    billItem.setDay(localDate.getDayOfMonth());
-                                    billItemDao.add(billItem);
-                                }
-                            }
-                            Toast.makeText(getContext(),tagId+" "+itemName+" "+itemValue,Toast.LENGTH_SHORT).show();
-                        }
+                        tags = tagDao.list(false);
+                        mRvAdapter.notifyDataSetChanged();
                     }
                 });
                 addBillDialog.show();
-
-                Toast.makeText(getContext(),"你点击了悬浮按钮",Toast.LENGTH_SHORT).show();
             }
         });
         return view;

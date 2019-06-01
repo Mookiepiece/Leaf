@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             MonthlyBillDao.getInstance().add(monthlyBill);
         }
 
-        if (TagDao.getInstance().getResrvedTag() == null) {
+        if (TagDao.getInstance().getReservedTag() == null) {
             Tag reservedTag = new Tag();
             reservedTag.setReserved(true);
             reservedTag.setName("未分类");

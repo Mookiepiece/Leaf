@@ -12,9 +12,17 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.huojitang.leaf.dao.BillItemDao;
+import com.huojitang.leaf.dao.MonthlyBillDao;
 import com.huojitang.leaf.dao.TagDao;
+import com.huojitang.leaf.global.LeafApplication;
+import com.huojitang.leaf.model.BillItem;
+import com.huojitang.leaf.model.MonthlyBill;
 import com.huojitang.leaf.model.Tag;
+import com.huojitang.leaf.util.LeafDateSupport;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +41,7 @@ public class AddBillDialog extends Dialog {
     private EditText price;
     private Button confirm;
 
-    public AddBillDialog(Context context, final ConfirmOnclickListener listener) {
+    public AddBillDialog(Context context,List<Tag> tags, final ConfirmOnclickListener listener) {
         super(context);
         this.setCancelable(true);
         this.setCanceledOnTouchOutside(true);
@@ -45,7 +53,7 @@ public class AddBillDialog extends Dialog {
         this.confirm = findViewById(R.id.dialog_add_tag_confirm);
         this.cancel = findViewById(R.id.dialog_add_tag_cancel);
 
-        tags = tagDao.list(false);
+        this.tags=tags;
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +64,26 @@ public class AddBillDialog extends Dialog {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(getName().equals("")){
+                    Toast.makeText(getContext(),"请输入物品名",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    //时间
+                    LocalDate localDate = LeafDateSupport.getCurrentLocalDate();
+                    YearMonth currentYearMonth = LeafDateSupport.getCurrentYearMonth();
+                    MonthlyBill currentMonthlyBill = MonthlyBillDao.getInstance().getByDate(currentYearMonth.toString());
+
+                    //插入数据
+                    BillItemDao billItemDao = BillItemDao.getInstance();
+                    BillItem billItem = new BillItem();
+                    billItem.setName(getName());
+                    billItem.setValue(getPrice());
+                    billItem.setTag(tagDao.getById(getId()));
+                    billItem.setMonthlyBill(currentMonthlyBill);
+                    billItem.setDay(localDate.getDayOfMonth());
+                    billItemDao.add(billItem);
+                }
+
                 listener.ConfirmClick();
                 AddBillDialog.this.dismiss();
             }
@@ -74,8 +102,15 @@ public class AddBillDialog extends Dialog {
         price.setFilters(filters);
 
     }
+    private void initDateList() {
+        data_list = new ArrayList<>();
+        for (int i = 0; i < tags.size(); i++) {
+            String data = tags.get(i).getName();
+            data_list.add(data);
+        }
+    }
 
-    public void initAdapter() {
+    private void initAdapter() {
         //适配器
         arr_adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, data_list);
         //设置样式
@@ -86,7 +121,7 @@ public class AddBillDialog extends Dialog {
         tagName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                tagId = position;
+                tagId = tags.get(position).getId();
                 Toast.makeText(getContext(), "你选择了第" + position + "个", Toast.LENGTH_SHORT).show();
             }
 
@@ -98,29 +133,23 @@ public class AddBillDialog extends Dialog {
         });
     }
 
-    public void initDateList() {
-        data_list = new ArrayList<>();
-        for (int i = 0; i < tags.size(); i++) {
-            String data = tags.get(i).getName();
-            data_list.add(data);
-        }
-    }
-
-    public int getId() {
+    private int getId() {
         return tagId;
     }
 
-    public EditText getName() {
-        return name;
+    private String getName() {
+        return name.getText().toString().trim();
     }
 
-    public EditText getPrice() {
-        return price;
+    private double getPrice() {
+        return price.getText().length()==0?0:Double.parseDouble(price.getText().toString().trim());
     }
 
     public interface ConfirmOnclickListener {
         public void ConfirmClick();
     }
+
+
 
 
 }
