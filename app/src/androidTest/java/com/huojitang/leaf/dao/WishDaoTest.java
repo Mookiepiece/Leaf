@@ -18,7 +18,8 @@ public class WishDaoTest {
     public void init() {
         Wish aWish = new Wish();
         aWish.setName("平板电脑");
-        aWish.setValue(2000.0);
+        aWish.setValue(200000);
+        aWish.setState(Wish.WISH_ACHIEVED);
         aWish.setStartTime(LocalDate.of(2019, 3, 1));
         aWish.setFinishedTime(LocalDate.of(2019, 6, 30));
 
@@ -26,7 +27,8 @@ public class WishDaoTest {
 
         Wish anotherWish = new Wish();
         anotherWish.setName("Kindle");
-        anotherWish.setValue(998.0);
+        anotherWish.setValue(99800);
+        anotherWish.setState(Wish.WISH_ACHIEVED);
         anotherWish.setStartTime(LocalDate.of(2018, 10, 1));
         anotherWish.setFinishedTime(LocalDate.of(2018, 11, 11));
 
@@ -34,9 +36,19 @@ public class WishDaoTest {
 
         Wish unfinishedWish = new Wish();
         unfinishedWish.setName("MP3 播放器");
+        unfinishedWish.setValue(29900);
         unfinishedWish.setStartTime(LocalDate.now());
 
         WishDao.getInstance().add(unfinishedWish);
+
+        Wish cancelledWish = new Wish();
+        cancelledWish.setName("MacBook Pro");
+        cancelledWish.setStartTime(LocalDate.of(2019, 1, 1));
+        cancelledWish.setFinishedTime(LocalDate.of(2019, 3, 31));
+        cancelledWish.setState(Wish.WISH_CANCELLED);
+        cancelledWish.setValue(4999900);
+
+        WishDao.getInstance().add(cancelledWish);
     }
 
     @Test
