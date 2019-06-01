@@ -36,9 +36,11 @@ import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,9 +54,14 @@ public class MainActivityBillFragment extends Fragment {
     private RecyclerView recyclerView;
     private RvAdapter mRvAdapter;
     private AddBillDialog addBillDialog;
+    /** 首页显示当前日期 */
+    private TextView headerDateTextView;
+    /** 显示当月消费总量 */
+    private TextView totalConsumptionTextView;
 
     List<Tag> tags;
     TagDao tagDao= TagDao.getInstance();
+    private MonthlyBillDao monthlyBillDao = MonthlyBillDao.getInstance();
 
     private MonthlyBill currentMonthlyBill = MonthlyBillDao.getInstance().getByYearMonth(LeafDateSupport.getCurrentYearMonth());
 
@@ -70,7 +77,6 @@ public class MainActivityBillFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bill, container, false);
         recyclerView = view.findViewById(R.id.bill_recycler_view_1);
-        bar = view.findViewById(R.id.fragment_bill_progressbar);
         status = 20;
 
         //数据库填充
@@ -100,12 +106,31 @@ public class MainActivityBillFragment extends Fragment {
                     @Override
                     public void ConfirmClick() {
                         reread();
+                        updateHeader();
                     }
                 });
                 addBillDialog.show();
             }
         });
         return view;
+    }
+
+    private void updateHeader() {
+        LocalDate localDate = LeafDateSupport.getCurrentLocalDate();
+        headerDateTextView.setText(String.format(
+                Locale.getDefault(),
+                getResources().getString(R.string.bill_header_date_text_view_text),
+                localDate.toString()
+        ));
+        bar.setMax(localDate.lengthOfMonth());
+        bar.setProgress(localDate.getDayOfMonth());
+        totalConsumptionTextView.setText(String.format(
+                Locale.getDefault(),
+                getResources().getString(R.string.bill_header_consumption_info_text_view_text),
+                monthlyBillDao.getTotalConsumption(
+                        monthlyBillDao.getByDate(LeafDateSupport.getCurrentYearMonth().toString())
+                ) / 100.0
+        ));
     }
 
     private void initRecyclerView() {
@@ -116,6 +141,12 @@ public class MainActivityBillFragment extends Fragment {
 
         //headerView的初始化
         View header = LayoutInflater.from(getContext()).inflate(R.layout.fragment_bill_header,recyclerView,false);
+        headerDateTextView = header.findViewById(R.id.billHeaderDateTextView);
+        totalConsumptionTextView = header.findViewById(R.id.billHeaderConsumptionInfoTextView);
+        bar = header.findViewById(R.id.fragment_bill_progressbar);
+
+        // 设置头部信息
+        updateHeader();
 
         //footerView的初始化
         View footer = LayoutInflater.from(getContext()).inflate(R.layout.fragment_bill_footer,recyclerView,false);
@@ -300,5 +331,6 @@ public class MainActivityBillFragment extends Fragment {
     public void onResume() {
         super.onResume();
         reread();
+        updateHeader();
     }
 }

@@ -21,4 +21,6 @@
   <string name="prev_month_button_text">上一月</string>
   <string name="next_month_button_text">下一月</string>
   <string name="current_month_text_view_text">当前月份：%s</string>
+  <string name="bill_header_date_text_view_text">当前时间：%s</string>
+  <string name="bill_header_consumption_info_text_view_text">当月消费总额：%.2f</string>
 </resources>
