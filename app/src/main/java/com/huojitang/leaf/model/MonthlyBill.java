@@ -69,10 +69,12 @@ public class MonthlyBill extends LitePalSupport {
     }
 
     public List<BillItem> getBillItems() {
+        // 19/06/02 Mk 已取消本方法激进加载，以下注释作废
+
         // 按照库作者的说法，推荐把多对一关联中的多端部分进行延迟加载，把加载的代码移动到这里
         // 但是这样做的话我需要知道这库
         return LitePal.where("monthlybill_id = ?", String.valueOf(id))
-                .find(BillItem.class, true);
+                .find(BillItem.class);
     }
 
     public void setBillItems(List<BillItem> billItems) {

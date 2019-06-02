@@ -34,7 +34,7 @@ public class MonthlyBillDao extends BaseDao<MonthlyBill> {
      */
     public MonthlyBill getByYearMonth(YearMonth yearMonth) {
         return LitePal.where("date = ?", yearMonth.toString())
-                .findFirst(MonthlyBill.class);
+                .findFirst(MonthlyBill.class, true);
     }
 
     @Override

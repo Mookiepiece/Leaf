@@ -100,8 +100,6 @@ public class MainActivityBillFragment extends Fragment {
         view.findViewById(R.id.button_add_bill).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LeafApplication.getContext(),""+containResevrerdTag,Toast.LENGTH_SHORT).show();
-
                 if(tags.size()==0||(tags.size()==1&&containResevrerdTag)){
                     Toast.makeText(LeafApplication.getContext(),"未检测到标签，加入你的第一个标签吧",Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getContext() , ListTagActivity.class));
@@ -181,6 +179,7 @@ public class MainActivityBillFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+                currentMonthlyBill = MonthlyBillDao.getInstance().getByYearMonth(LeafDateSupport.getCurrentYearMonth());
                 currentMonthlyBill.setComment(s.toString());
                 MonthlyBillDao.getInstance().update(currentMonthlyBill);
             }
